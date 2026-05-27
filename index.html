@@ -159,9 +159,19 @@
   /* celebration confetti */
   .confetti{position:fixed;top:-20px;font-size:1.5rem;z-index:50;pointer-events:none;animation:fall 2.2s ease-in forwards;}
   @keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0;}}
+
+  /* mute button */
+  .mute{
+    position:fixed;top:14px;right:14px;z-index:20;border:none;cursor:pointer;
+    background:#fff;border-radius:50%;width:52px;height:52px;font-size:1.5rem;
+    box-shadow:0 5px 0 var(--shadow),0 8px 14px rgba(40,56,77,.14);transition:transform .1s;
+  }
+  .mute:active{transform:translateY(3px);box-shadow:0 2px 0 var(--shadow);}
 </style>
 </head>
 <body>
+
+<button class="mute" id="muteBtn" onclick="toggleMute()" title="Sound on/off">🔊</button>
 
 <div class="wrap">
   <!-- ===== MENU ===== -->
@@ -249,7 +259,43 @@
   }
 })();
 
-/* ---------- the living things, smallest to biggest ---------- */
+/* ---------- sound engine (no files, built with Web Audio) ---------- */
+let audioCtx=null, muted=false;
+function ac(){
+  if(!audioCtx){
+    try{audioCtx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){audioCtx=null;}
+  }
+  if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();
+  return audioCtx;
+}
+/* play one note: frequency in Hz, start offset, length, type, volume */
+function note(freq,start,dur,type='sine',vol=0.22){
+  const c=ac();if(!c)return;
+  const o=c.createOscillator(),g=c.createGain();
+  o.type=type;o.frequency.value=freq;
+  o.connect(g);g.connect(c.destination);
+  const t=c.currentTime+start;
+  g.gain.setValueAtTime(0,t);
+  g.gain.linearRampToValueAtTime(vol,t+0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.start(t);o.stop(t+dur+0.02);
+}
+function sCorrect(){if(muted)return;note(659,0,0.16,'triangle',0.25);note(988,0.12,0.22,'triangle',0.25);} // happy ding up
+function sWrong(){if(muted)return;note(311,0,0.18,'sine',0.18);note(247,0.12,0.22,'sine',0.18);}            // soft boop down
+function sTap(){if(muted)return;note(523,0,0.07,'square',0.10);}                                            // gentle click
+function sWin(){ // little victory tune
+  if(muted)return;
+  const tune=[523,659,784,1047];
+  tune.forEach((f,i)=>note(f,i*0.13,0.22,'triangle',0.24));
+  note(1047,0.13*4,0.4,'triangle',0.22);
+}
+function toggleMute(){
+  muted=!muted;
+  document.getElementById('muteBtn').textContent=muted?'🔇':'🔊';
+  if(!muted){ac();sTap();}
+}
+
+
 /* size = approximate length/height in METERS, used only for ordering */
 const THINGS = [
   {name:"Virus",      pic:"🦠", size:0.0000001,  fact:"Way too tiny to see, even with a normal magnifying glass!"},
@@ -328,11 +374,12 @@ function pickBigger(i){
     biggerScore++;document.getElementById('biggerScore').textContent=biggerScore;
     (i===0?optA:optB).classList.add('correct');
     fb.textContent='🎉 YES! Great job!';fb.className='feedback good';
-    confetti();
+    sCorrect();confetti();
   }else{
     (i===0?optA:optB).classList.add('wrong');
     biggerEl.classList.add('correct');
     fb.textContent='Oops! Try the other one next time 😊';fb.className='feedback oops';
+    sWrong();
   }
   learn.innerHTML=`A <b>${bigger.name.toLowerCase()}</b> ${bigger.pic} is the bigger one! ${bigger.fact}`;
   learn.className='learn show';
@@ -378,12 +425,13 @@ function pickOrder(btn,thing){
     btn.classList.add('locked');
     btn.querySelector('.num').textContent=orderPicked.length;
     btn.querySelector('.num').style.background='var(--grass)';
+    sTap();
     if(orderPicked.length===orderTargets.length){
       orderDone=true;orderScoreVal++;
       document.getElementById('orderScore').textContent=orderScoreVal;
       const fb=document.getElementById('orderFb');
       fb.textContent='🏆 PERFECT! You lined them all up!';fb.className='feedback good';
-      confetti();
+      sWin();confetti();
       const learn=document.getElementById('orderLearn');
       const big=orderPicked[orderPicked.length-1];
       learn.innerHTML=`The <b>${big.name.toLowerCase()}</b> ${big.pic} was the biggest! ${big.fact}`;
@@ -393,6 +441,7 @@ function pickOrder(btn,thing){
   }else{
     const fb=document.getElementById('orderFb');
     fb.textContent='🤏 Not yet! Find a SMALLER one first.';fb.className='feedback oops';
+    sWrong();
     btn.animate([{transform:'translateX(0)'},{transform:'translateX(-7px)'},{transform:'translateX(7px)'},{transform:'translateX(0)'}],{duration:300});
     setTimeout(()=>{if(!orderDone){fb.textContent='';fb.className='feedback';}},1300);
   }
@@ -427,7 +476,8 @@ function renderFact(){
 }
 function nextFact(){
   factPos++;
-  if(factPos>=factOrder.length){factPos=0;factOrder=shuffle(FACTS);confetti();}
+  if(factPos>=factOrder.length){factPos=0;factOrder=shuffle(FACTS);sWin();confetti();}
+  else{sTap();}
   renderFact();
 }
 </script>
