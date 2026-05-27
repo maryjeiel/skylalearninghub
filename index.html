@@ -2,171 +2,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Big & Small — A Size Adventure!</title>
+<title>Listen & Guess! — A Learning Adventure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --sky:#7ec8e3;
-    --sky2:#b8e6f0;
-    --sun:#ffd23f;
-    --coral:#ff6b6b;
-    --grass:#6bcf7f;
-    --grape:#9b5de5;
-    --ink:#28384d;
-    --cream:#fff9ec;
+    --sky:#7ec8e3; --sky2:#b8e6f0; --sun:#ffd23f; --coral:#ff6b6b;
+    --grass:#6bcf7f; --grape:#9b5de5; --ink:#28384d; --cream:#fff9ec;
     --shadow:rgba(40,56,77,.18);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;}
   body{
-    font-family:'Fredoka',sans-serif;
-    color:var(--ink);
+    font-family:'Fredoka',sans-serif;color:var(--ink);
     background:linear-gradient(180deg,var(--sky) 0%,var(--sky2) 55%,#d7f2dd 100%);
-    min-height:100vh;
-    overflow-x:hidden;
-    position:relative;
+    min-height:100vh;overflow-x:hidden;position:relative;
   }
-  /* floating bubbles background */
   .bubble{position:fixed;border-radius:50%;background:rgba(255,255,255,.35);pointer-events:none;animation:rise linear infinite;z-index:0;}
-  @keyframes rise{
-    from{transform:translateY(110vh) scale(.6);opacity:0;}
-    10%{opacity:.7;}
-    90%{opacity:.7;}
-    to{transform:translateY(-15vh) scale(1.1);opacity:0;}
-  }
-  .wrap{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:20px 18px 60px;}
+  @keyframes rise{from{transform:translateY(110vh) scale(.6);opacity:0;}10%{opacity:.7;}90%{opacity:.7;}to{transform:translateY(-15vh) scale(1.1);opacity:0;}}
+  .wrap{position:relative;z-index:2;max-width:820px;margin:0 auto;padding:20px 18px 60px;}
 
-  h1{
-    font-family:'Baloo 2',cursive;font-weight:800;
-    text-align:center;font-size:clamp(2rem,7vw,3.4rem);
-    color:#fff;line-height:1.05;margin-top:10px;
-    text-shadow:0 4px 0 var(--coral),0 8px 14px var(--shadow);
-  }
-  h1 .small{color:var(--sun);text-shadow:0 4px 0 #e0962f,0 8px 14px var(--shadow);}
-  .tagline{text-align:center;font-size:1.15rem;color:var(--ink);opacity:.8;margin:6px 0 22px;font-weight:500;}
+  h1{font-family:'Baloo 2',cursive;font-weight:800;text-align:center;font-size:clamp(2rem,7vw,3.4rem);
+     color:#fff;line-height:1.05;margin-top:6px;text-shadow:0 4px 0 var(--coral),0 8px 14px var(--shadow);}
+  h1 .y{color:var(--sun);text-shadow:0 4px 0 #e0962f,0 8px 14px var(--shadow);}
+  .tagline{text-align:center;font-size:1.15rem;color:var(--ink);opacity:.82;margin:8px 0 26px;font-weight:500;}
 
-  /* menu cards */
-  .menu{display:grid;gap:16px;}
-  .mode-btn{
-    border:none;cursor:pointer;font-family:'Baloo 2',cursive;font-weight:700;
-    background:var(--cream);border-radius:26px;padding:22px 24px;
-    box-shadow:0 8px 0 var(--shadow),0 14px 24px rgba(40,56,77,.12);
-    display:flex;align-items:center;gap:18px;text-align:left;
-    transition:transform .12s ease,box-shadow .12s ease;color:var(--ink);
-  }
-  .mode-btn:hover{transform:translateY(-3px);box-shadow:0 11px 0 var(--shadow),0 18px 30px rgba(40,56,77,.16);}
-  .mode-btn:active{transform:translateY(4px);box-shadow:0 4px 0 var(--shadow);}
-  .mode-btn .emoji{font-size:2.6rem;flex-shrink:0;filter:drop-shadow(0 3px 4px rgba(0,0,0,.12));}
-  .mode-btn .t{font-size:1.5rem;}
-  .mode-btn .d{font-family:'Fredoka',sans-serif;font-weight:400;font-size:1rem;opacity:.75;display:block;margin-top:2px;}
-  .c1{box-shadow:0 8px 0 #d98c8c,0 14px 24px rgba(40,56,77,.12);}
-  .c1:hover{box-shadow:0 11px 0 #d98c8c,0 18px 30px rgba(40,56,77,.16);}
-  .c1:active{box-shadow:0 4px 0 #d98c8c;}
-  .c2{box-shadow:0 8px 0 #4ca85f,0 14px 24px rgba(40,56,77,.12);}
-  .c2:hover{box-shadow:0 11px 0 #4ca85f,0 18px 30px rgba(40,56,77,.16);}
-  .c2:active{box-shadow:0 4px 0 #4ca85f;}
-  .c3{box-shadow:0 8px 0 #7a45c4,0 14px 24px rgba(40,56,77,.12);}
-  .c3:hover{box-shadow:0 11px 0 #7a45c4,0 18px 30px rgba(40,56,77,.16);}
-  .c3:active{box-shadow:0 4px 0 #7a45c4;}
+  .mute{position:fixed;top:14px;right:14px;z-index:20;border:none;cursor:pointer;background:#fff;
+    border-radius:50%;width:52px;height:52px;font-size:1.5rem;box-shadow:0 5px 0 var(--shadow),0 8px 14px rgba(40,56,77,.14);transition:transform .1s;}
+  .mute:active{transform:translateY(3px);box-shadow:0 2px 0 var(--shadow);}
 
-  /* screens */
   .screen{display:none;animation:pop .35s cubic-bezier(.2,1.3,.5,1);}
   .screen.active{display:block;}
   @keyframes pop{from{transform:scale(.9);opacity:0;}to{transform:scale(1);opacity:1;}}
 
-  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:10px;}
-  .back{
-    border:none;cursor:pointer;background:#fff;border-radius:18px;padding:10px 18px;
-    font-family:'Baloo 2',cursive;font-weight:700;font-size:1rem;color:var(--ink);
-    box-shadow:0 5px 0 var(--shadow);transition:transform .1s;
+  .play-wrap{text-align:center;margin-top:18px;}
+  .big-play{
+    border:none;cursor:pointer;font-family:'Baloo 2',cursive;font-weight:800;color:#fff;
+    background:var(--coral);border-radius:40px;padding:34px 54px;font-size:2.2rem;
+    box-shadow:0 12px 0 #d14d4d,0 20px 34px rgba(40,56,77,.2);transition:transform .12s,box-shadow .12s;
+    display:inline-flex;align-items:center;gap:16px;animation:beat 1.6s ease-in-out infinite;
   }
+  .big-play:hover{transform:translateY(-4px);}
+  .big-play:active{transform:translateY(6px);box-shadow:0 6px 0 #d14d4d;}
+  @keyframes beat{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+  .big-play .pe{font-size:2.6rem;}
+  .play-hint{margin-top:22px;font-size:1.1rem;opacity:.75;font-weight:500;}
+  .topics{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px;}
+  .chip{background:var(--cream);border-radius:20px;padding:10px 18px;font-family:'Baloo 2',cursive;font-weight:700;
+    font-size:1rem;box-shadow:0 4px 0 var(--shadow);}
+
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px;}
+  .back{border:none;cursor:pointer;background:#fff;border-radius:18px;padding:10px 18px;font-family:'Baloo 2',cursive;
+    font-weight:700;font-size:1rem;color:var(--ink);box-shadow:0 5px 0 var(--shadow);transition:transform .1s;}
   .back:active{transform:translateY(3px);box-shadow:0 2px 0 var(--shadow);}
-  .score{
-    background:var(--sun);border-radius:18px;padding:10px 20px;font-family:'Baloo 2',cursive;
-    font-weight:800;font-size:1.1rem;box-shadow:0 5px 0 #e0962f;color:var(--ink);
-  }
-  .score .star{color:#fff;}
+  .score{background:var(--sun);border-radius:18px;padding:10px 20px;font-family:'Baloo 2',cursive;font-weight:800;
+    font-size:1.1rem;box-shadow:0 5px 0 #e0962f;color:var(--ink);}
 
-  .card{
-    background:var(--cream);border-radius:30px;padding:26px 22px;
-    box-shadow:0 12px 30px rgba(40,56,77,.16);text-align:center;
-  }
-  .q{font-family:'Baloo 2',cursive;font-weight:700;font-size:clamp(1.4rem,5vw,2rem);margin-bottom:22px;line-height:1.2;}
+  .card{background:var(--cream);border-radius:30px;padding:24px 20px 28px;box-shadow:0 12px 30px rgba(40,56,77,.16);text-align:center;}
+  .topic-badge{display:inline-block;background:var(--grape);color:#fff;font-family:'Baloo 2',cursive;font-weight:700;
+    font-size:.95rem;padding:6px 16px;border-radius:16px;margin-bottom:14px;box-shadow:0 3px 0 #7a45c4;}
 
-  /* two-choice (which is bigger) */
-  .versus{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;}
-  .choice{
-    border:none;cursor:pointer;background:#fff;border-radius:24px;padding:24px 12px;
-    box-shadow:0 7px 0 #d6cdb6,0 12px 20px rgba(40,56,77,.1);transition:transform .12s,box-shadow .12s;
-    display:flex;flex-direction:column;align-items:center;gap:10px;
-  }
+  .speak-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:6px;flex-wrap:wrap;}
+  .say-again{border:none;cursor:pointer;background:var(--grape);color:#fff;border-radius:50%;width:70px;height:70px;
+    font-size:2rem;box-shadow:0 6px 0 #7a45c4;transition:transform .1s;flex-shrink:0;animation:bob 2.4s ease-in-out infinite;}
+  .say-again:active{transform:translateY(4px);box-shadow:0 2px 0 #7a45c4;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+  .q{font-family:'Baloo 2',cursive;font-weight:700;font-size:clamp(1.3rem,4.5vw,1.9rem);line-height:1.2;}
+  .q-sub{font-size:1rem;opacity:.6;font-weight:500;margin-top:2px;margin-bottom:18px;}
+
+  .choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:6px;}
+  .choice{border:none;cursor:pointer;background:#fff;border-radius:22px;padding:18px 10px;
+    box-shadow:0 6px 0 #d6cdb6,0 10px 18px rgba(40,56,77,.1);transition:transform .12s,box-shadow .12s;
+    display:flex;flex-direction:column;align-items:center;gap:8px;}
   .choice:hover{transform:translateY(-4px);}
   .choice:active{transform:translateY(3px);box-shadow:0 3px 0 #d6cdb6;}
-  .choice .pic{font-size:3.6rem;filter:drop-shadow(0 4px 5px rgba(0,0,0,.12));}
-  .choice .name{font-family:'Baloo 2',cursive;font-weight:700;font-size:1.25rem;}
-  .vs{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.5rem;color:var(--coral);}
-  .choice.correct{background:#d4f7d9;box-shadow:0 7px 0 #7ad08a;animation:wiggle .5s;}
-  .choice.wrong{background:#ffe0e0;box-shadow:0 7px 0 #f0a3a3;animation:shake .4s;}
+  .choice .pic{font-size:3rem;filter:drop-shadow(0 3px 4px rgba(0,0,0,.12));}
+  .choice .name{font-family:'Baloo 2',cursive;font-weight:700;font-size:1.05rem;}
+  .choice.correct{background:#d4f7d9;box-shadow:0 6px 0 #7ad08a;animation:wiggle .5s;}
+  .choice.wrong{background:#ffe0e0;box-shadow:0 6px 0 #f0a3a3;animation:shake .4s;}
   .choice:disabled{cursor:default;}
   @keyframes wiggle{0%,100%{transform:rotate(0);}25%{transform:rotate(-4deg) scale(1.05);}75%{transform:rotate(4deg) scale(1.05);}}
   @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-6px);}80%{transform:translateX(6px);}}
 
-  /* order game */
-  .order-list{display:flex;flex-direction:column;gap:10px;margin:6px 0 18px;}
-  .order-item{
-    border:none;cursor:pointer;background:#fff;border-radius:20px;padding:14px 18px;
-    display:flex;align-items:center;gap:14px;font-family:'Baloo 2',cursive;font-weight:700;font-size:1.2rem;
-    box-shadow:0 5px 0 #d6cdb6;transition:transform .1s;
-  }
-  .order-item:active{transform:scale(.97);}
-  .order-item .num{
-    background:var(--grape);color:#fff;width:34px;height:34px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;
-  }
-  .order-item .pic{font-size:2rem;}
-  .order-item.locked{opacity:.55;}
-  .hint{font-size:1rem;opacity:.7;font-weight:500;margin-bottom:8px;}
-
-  /* fact cards */
-  .fact-emoji{font-size:5rem;margin-bottom:10px;filter:drop-shadow(0 5px 8px rgba(0,0,0,.12));animation:bob 3s ease-in-out infinite;}
-  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
-  .fact-text{font-size:1.3rem;line-height:1.5;font-weight:500;margin-bottom:8px;}
-  .fact-big{font-family:'Baloo 2',cursive;font-weight:800;color:var(--coral);font-size:1.6rem;}
-
-  /* feedback */
-  .feedback{min-height:42px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.4rem;margin-top:20px;}
+  .feedback{min-height:40px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.4rem;margin-top:20px;}
   .feedback.good{color:var(--grass);}
   .feedback.oops{color:var(--coral);}
-  .learn{
-    background:#fff7d6;border-radius:18px;padding:14px 16px;margin-top:14px;font-size:1.05rem;
-    font-weight:500;line-height:1.45;display:none;border:3px dashed var(--sun);
-  }
+  .learn{background:#fff7d6;border-radius:18px;padding:14px 16px;margin-top:12px;font-size:1.05rem;font-weight:500;
+    line-height:1.45;display:none;border:3px dashed var(--sun);}
   .learn.show{display:block;animation:pop .3s;}
   .learn b{color:var(--grape);}
-
-  .next-btn{
-    border:none;cursor:pointer;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.3rem;color:#fff;
-    background:var(--grape);border-radius:22px;padding:16px 38px;margin-top:18px;
-    box-shadow:0 6px 0 #7a45c4;transition:transform .1s;display:none;
-  }
+  .next-btn{border:none;cursor:pointer;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.3rem;color:#fff;
+    background:var(--grass);border-radius:22px;padding:16px 40px;margin-top:18px;box-shadow:0 6px 0 #4ca85f;
+    transition:transform .1s;display:none;}
   .next-btn.show{display:inline-block;animation:pop .3s;}
-  .next-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #7a45c4;}
+  .next-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #4ca85f;}
 
   .footer{text-align:center;margin-top:30px;font-size:.95rem;color:var(--ink);opacity:.55;font-weight:500;}
-
-  /* celebration confetti */
   .confetti{position:fixed;top:-20px;font-size:1.5rem;z-index:50;pointer-events:none;animation:fall 2.2s ease-in forwards;}
   @keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0;}}
-
-  /* mute button */
-  .mute{
-    position:fixed;top:14px;right:14px;z-index:20;border:none;cursor:pointer;
-    background:#fff;border-radius:50%;width:52px;height:52px;font-size:1.5rem;
-    box-shadow:0 5px 0 var(--shadow),0 8px 14px rgba(40,56,77,.14);transition:transform .1s;
-  }
-  .mute:active{transform:translateY(3px);box-shadow:0 2px 0 var(--shadow);}
 </style>
 </head>
 <body>
@@ -174,312 +108,227 @@
 <button class="mute" id="muteBtn" onclick="toggleMute()" title="Sound on/off">🔊</button>
 
 <div class="wrap">
-  <!-- ===== MENU ===== -->
-  <div id="menu" class="screen active">
-    <h1>Big &amp; <span class="small">Small</span></h1>
-    <p class="tagline">🔬 A size adventure from teeny viruses to giant whales! 🐋</p>
-    <div class="menu">
-      <button class="mode-btn c1" onclick="startBigger()">
-        <span class="emoji">⚖️</span>
-        <span><span class="t">Which is BIGGER?</span><span class="d">Tap the bigger one. Easy peasy!</span></span>
-      </button>
-      <button class="mode-btn c2" onclick="startOrder()">
-        <span class="emoji">📏</span>
-        <span><span class="t">Line Them Up!</span><span class="d">Tap from smallest to biggest.</span></span>
-      </button>
-      <button class="mode-btn c3" onclick="startFacts()">
-        <span class="emoji">💡</span>
-        <span><span class="t">Wow Facts!</span><span class="d">Cool secrets about big & small.</span></span>
-      </button>
+  <div id="start" class="screen active">
+    <h1>Listen &amp; <span class="y">Guess!</span></h1>
+    <p class="tagline">🎧 I'll ask you a question out loud. You tap the answer! 🎉</p>
+    <div class="play-wrap">
+      <button class="big-play" onclick="startGame()"><span class="pe">▶️</span> PLAY</button>
+      <p class="play-hint">Put the sound up and tap PLAY! 🔊</p>
+      <div class="topics">
+        <span class="chip">🐾 Animals</span>
+        <span class="chip">🔬 Science</span>
+        <span class="chip">➕ Math</span>
+        <span class="chip">🪐 Space</span>
+        <span class="chip">⚽ Sports</span>
+        <span class="chip">🤖 Tech</span>
+      </div>
     </div>
     <p class="footer">Made with love for a curious 6-year-old 💛</p>
   </div>
 
-  <!-- ===== WHICH IS BIGGER ===== -->
-  <div id="bigger" class="screen">
+  <div id="quiz" class="screen">
     <div class="topbar">
-      <button class="back" onclick="goMenu()">⬅ Home</button>
-      <div class="score">⭐ <span id="biggerScore">0</span></div>
+      <button class="back" onclick="goStart()">⬅ Home</button>
+      <div class="score">⭐ <span id="score">0</span></div>
     </div>
     <div class="card">
-      <div class="q">Which one is <span style="color:var(--coral)">BIGGER</span>? 🤔</div>
-      <div class="versus">
-        <button class="choice" id="optA" onclick="pickBigger(0)"></button>
-        <span class="vs">VS</span>
-        <button class="choice" id="optB" onclick="pickBigger(1)"></button>
+      <div class="topic-badge" id="topicBadge">Animals</div>
+      <div class="speak-row">
+        <button class="say-again" onclick="sayQuestionAgain()" title="Say it again">🔊</button>
+        <div>
+          <div class="q" id="qText"></div>
+          <div class="q-sub">👂 Tap the speaker to hear it again</div>
+        </div>
       </div>
-      <div class="feedback" id="biggerFb"></div>
-      <div class="learn" id="biggerLearn"></div>
-      <button class="next-btn" id="biggerNext" onclick="nextBigger()">Next ➡</button>
-    </div>
-  </div>
-
-  <!-- ===== ORDER GAME ===== -->
-  <div id="order" class="screen">
-    <div class="topbar">
-      <button class="back" onclick="goMenu()">⬅ Home</button>
-      <div class="score">⭐ <span id="orderScore">0</span></div>
-    </div>
-    <div class="card">
-      <div class="q">Tap them <span style="color:var(--grass)">smallest&nbsp;➜&nbsp;biggest</span>!</div>
-      <p class="hint">Tap the tiniest one first. 🐜 ... 🐘</p>
-      <div class="order-list" id="orderList"></div>
-      <div class="feedback" id="orderFb"></div>
-      <div class="learn" id="orderLearn"></div>
-      <button class="next-btn" id="orderNext" onclick="nextOrder()">Play again ➡</button>
-    </div>
-  </div>
-
-  <!-- ===== FACTS ===== -->
-  <div id="facts" class="screen">
-    <div class="topbar">
-      <button class="back" onclick="goMenu()">⬅ Home</button>
-      <div class="score">📖 <span id="factNum">1</span>/<span id="factTotal">1</span></div>
-    </div>
-    <div class="card">
-      <div class="fact-emoji" id="factEmoji">💡</div>
-      <div class="fact-text" id="factText"></div>
-      <button class="next-btn show" id="factNext" onclick="nextFact()">Another one! ➡</button>
+      <div class="choices" id="choices"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="learn" id="learn"></div>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next ➡</button>
     </div>
   </div>
 </div>
 
 <script>
-/* ---------- floating bubbles ---------- */
-(function(){
-  for(let i=0;i<14;i++){
-    const b=document.createElement('div');
-    b.className='bubble';
-    const s=20+Math.random()*70;
-    b.style.width=s+'px';b.style.height=s+'px';
-    b.style.left=Math.random()*100+'vw';
-    b.style.animationDuration=(9+Math.random()*10)+'s';
-    b.style.animationDelay=(-Math.random()*15)+'s';
-    document.body.appendChild(b);
-  }
-})();
-
-/* ---------- sound engine (no files, built with Web Audio) ---------- */
-let audioCtx=null, muted=false;
-function ac(){
-  if(!audioCtx){
-    try{audioCtx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){audioCtx=null;}
-  }
-  if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();
-  return audioCtx;
-}
-/* play one note: frequency in Hz, start offset, length, type, volume */
-function note(freq,start,dur,type='sine',vol=0.22){
-  const c=ac();if(!c)return;
-  const o=c.createOscillator(),g=c.createGain();
-  o.type=type;o.frequency.value=freq;
-  o.connect(g);g.connect(c.destination);
-  const t=c.currentTime+start;
-  g.gain.setValueAtTime(0,t);
-  g.gain.linearRampToValueAtTime(vol,t+0.02);
-  g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
-  o.start(t);o.stop(t+dur+0.02);
-}
-function sCorrect(){if(muted)return;note(659,0,0.16,'triangle',0.25);note(988,0.12,0.22,'triangle',0.25);} // happy ding up
-function sWrong(){if(muted)return;note(311,0,0.18,'sine',0.18);note(247,0.12,0.22,'sine',0.18);}            // soft boop down
-function sTap(){if(muted)return;note(523,0,0.07,'square',0.10);}                                            // gentle click
-function sWin(){ // little victory tune
-  if(muted)return;
-  const tune=[523,659,784,1047];
-  tune.forEach((f,i)=>note(f,i*0.13,0.22,'triangle',0.24));
-  note(1047,0.13*4,0.4,'triangle',0.22);
-}
-function toggleMute(){
-  muted=!muted;
-  document.getElementById('muteBtn').textContent=muted?'🔇':'🔊';
-  if(!muted){ac();sTap();}
-}
-
-
-/* size = approximate length/height in METERS, used only for ordering */
-const THINGS = [
-  {name:"Virus",      pic:"🦠", size:0.0000001,  fact:"Way too tiny to see, even with a normal magnifying glass!"},
-  {name:"Bacteria",   pic:"🧫", size:0.000002,   fact:"100 times bigger than a virus, but still super teeny."},
-  {name:"Amoeba",     pic:"🟢", size:0.0002,     fact:"A blobby creature made of just ONE cell."},
-  {name:"Water Bear", pic:"🐻", size:0.001,      fact:"A tiny 'tardigrade' that can live almost anywhere — even space!"},
-  {name:"Ant",        pic:"🐜", size:0.004,      fact:"Can lift 50 times its own weight. Super strong!"},
-  {name:"Mouse",      pic:"🐭", size:0.09,       fact:"So light it can fall from a tree and run away just fine."},
-  {name:"Cat",        pic:"🐱", size:0.45,       fact:"About as long as your arm."},
-  {name:"Human",      pic:"🧍", size:1.7,        fact:"That's you! About 1,000 times bigger than a water bear."},
-  {name:"Horse",      pic:"🐴", size:2.5,        fact:"Tall enough to look over your head."},
-  {name:"Elephant",   pic:"🐘", size:4,          fact:"So heavy it can barely jump at all!"},
-  {name:"Giraffe",    pic:"🦒", size:5.5,        fact:"The tallest animal on land — taller than a house!"},
-  {name:"T. rex",     pic:"🦖", size:12,         fact:"A giant dino, as long as a school bus!"},
-  {name:"Whale Shark",pic:"🦈", size:18,         fact:"The biggest fish swimming in the ocean."},
-  {name:"Blue Whale", pic:"🐋", size:30,         fact:"The BIGGEST animal ever — bigger than any dinosaur!"}
-];
-
-/* ---------- screen switching ---------- */
-function show(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
-function goMenu(){show('menu');}
+(function(){for(let i=0;i<14;i++){const b=document.createElement('div');b.className='bubble';
+  const s=20+Math.random()*70;b.style.width=s+'px';b.style.height=s+'px';b.style.left=Math.random()*100+'vw';
+  b.style.animationDuration=(9+Math.random()*10)+'s';b.style.animationDelay=(-Math.random()*15)+'s';
+  document.body.appendChild(b);}})();
 
 function rand(n){return Math.floor(Math.random()*n);}
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rand(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-function confetti(){
-  const em=['🎉','⭐','🌟','✨','🎊','💛','💚'];
-  for(let i=0;i<26;i++){
-    const c=document.createElement('div');
-    c.className='confetti';c.textContent=em[rand(em.length)];
-    c.style.left=Math.random()*100+'vw';
-    c.style.animationDelay=(Math.random()*.5)+'s';
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),2700);
-  }
+let audioCtx=null, muted=false;
+function ac(){if(!audioCtx){try{audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){audioCtx=null;}}
+  if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
+function note(freq,start,dur,type='sine',vol=0.22){const c=ac();if(!c)return;
+  const o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=freq;o.connect(g);g.connect(c.destination);
+  const t=c.currentTime+start;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.start(t);o.stop(t+dur+0.02);}
+function sCorrect(){if(muted)return;note(659,0,0.16,'triangle',0.25);note(988,0.12,0.22,'triangle',0.25);}
+function sWrong(){if(muted)return;note(311,0,0.18,'sine',0.18);note(247,0.12,0.22,'sine',0.18);}
+
+let voicePref=null;
+function loadVoices(){
+  const vs=speechSynthesis.getVoices();
+  voicePref = vs.find(v=>/en(-|_)?(US|GB)/i.test(v.lang)&&/female|samantha|google|zira|karen|moira/i.test(v.name))
+           || vs.find(v=>/^en/i.test(v.lang)) || vs[0] || null;
+}
+if('speechSynthesis' in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices;}
+function speak(text){
+  if(muted||!('speechSynthesis' in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  if(voicePref)u.voice=voicePref;
+  u.rate=0.92;u.pitch=1.12;u.volume=1;
+  speechSynthesis.speak(u);
+}
+function toggleMute(){
+  muted=!muted;
+  document.getElementById('muteBtn').textContent=muted?'🔇':'🔊';
+  if(muted&&'speechSynthesis' in window)speechSynthesis.cancel();else{ac();}
 }
 
-/* ========== GAME 1: WHICH IS BIGGER ========== */
-let biggerScore=0, biggerPair=[], biggerAnswered=false;
+const BANK = [
+  {topic:"Animals",say:"Which animal is the BIGGEST?",show:"Which is the BIGGEST? 🐘",
+   choices:[{name:"Ant",pic:"🐜"},{name:"Cat",pic:"🐱"},{name:"Elephant",pic:"🐘"},{name:"Mouse",pic:"🐭"},{name:"Bird",pic:"🐦"}],
+   answer:2, learn:"The <b>elephant</b> is the biggest! It can be as tall as two grown-ups. 🐘"},
+  {topic:"Animals",say:"Which animal is the SMALLEST?",show:"Which is the SMALLEST? 🐜",
+   choices:[{name:"Horse",pic:"🐴"},{name:"Ant",pic:"🐜"},{name:"Dog",pic:"🐶"},{name:"Cow",pic:"🐮"},{name:"Pig",pic:"🐷"}],
+   answer:1, learn:"The <b>ant</b> is the smallest, but it can lift 50 times its own weight! 💪"},
+  {topic:"Animals",say:"Which one lives in the ocean?",show:"Who lives in the ocean? 🌊",
+   choices:[{name:"Whale",pic:"🐋"},{name:"Lion",pic:"🦁"},{name:"Horse",pic:"🐴"},{name:"Bear",pic:"🐻"},{name:"Rabbit",pic:"🐰"}],
+   answer:0, learn:"The <b>blue whale</b> lives in the ocean and is the biggest animal EVER! 🐋"},
+  {topic:"Animals",say:"Which animal can fly?",show:"Which one can FLY? 🦅",
+   choices:[{name:"Fish",pic:"🐟"},{name:"Eagle",pic:"🦅"},{name:"Snake",pic:"🐍"},{name:"Frog",pic:"🐸"},{name:"Turtle",pic:"🐢"}],
+   answer:1, learn:"The <b>eagle</b> can fly very high using its big strong wings! 🦅"},
 
-function startBigger(){biggerScore=0;document.getElementById('biggerScore').textContent=0;show('bigger');nextBigger();}
+  {topic:"Science",say:"Which one is so tiny you need a microscope to see it?",show:"So tiny you need a microscope? 🔬",
+   choices:[{name:"Dog",pic:"🐶"},{name:"Germ",pic:"🦠"},{name:"Tree",pic:"🌳"},{name:"Car",pic:"🚗"},{name:"House",pic:"🏠"}],
+   answer:1, learn:"A <b>germ</b> is super tiny! Millions could fit on the tip of a pin. 🦠"},
+  {topic:"Science",say:"What do plants need to grow big and strong?",show:"What helps plants grow? 🌱",
+   choices:[{name:"Candy",pic:"🍬"},{name:"Sunshine",pic:"☀️"},{name:"Rocks",pic:"🪨"},{name:"Shoes",pic:"👟"},{name:"Toys",pic:"🧸"}],
+   answer:1, learn:"Plants love <b>sunshine</b> and water to grow! That's called photosynthesis. ☀️🌱"},
+  {topic:"Science",say:"Which one is hot?",show:"Which one is HOT? 🔥",
+   choices:[{name:"Ice",pic:"🧊"},{name:"Snow",pic:"❄️"},{name:"Fire",pic:"🔥"},{name:"Water",pic:"💧"},{name:"Cloud",pic:"☁️"}],
+   answer:2, learn:"<b>Fire</b> is very hot! Ice and snow are cold. Always be careful near fire. 🔥"},
+  {topic:"Science",say:"Which one makes light in the daytime?",show:"What lights up the day? ☀️",
+   choices:[{name:"Moon",pic:"🌙"},{name:"Sun",pic:"☀️"},{name:"Star",pic:"⭐"},{name:"Lamp",pic:"💡"},{name:"Candle",pic:"🕯️"}],
+   answer:1, learn:"The <b>Sun</b> lights up our daytime. The Moon comes out at night! 🌞🌙"},
 
-function nextBigger(){
-  biggerAnswered=false;
-  document.getElementById('biggerFb').textContent='';
-  document.getElementById('biggerFb').className='feedback';
-  document.getElementById('biggerLearn').className='learn';
-  document.getElementById('biggerNext').className='next-btn';
-  // pick two different things that are not too close in size
-  let a=rand(THINGS.length), b=rand(THINGS.length);
-  while(b===a||Math.abs(a-b)<2){b=rand(THINGS.length);}
-  biggerPair=shuffle([THINGS[a],THINGS[b]]);
-  renderChoice('optA',biggerPair[0]);
-  renderChoice('optB',biggerPair[1]);
+  {topic:"Math",say:"Which group has THREE apples?",show:"Where are THREE apples? 3️⃣",
+   choices:[{name:"One",pic:"🍎"},{name:"Two",pic:"🍎🍎"},{name:"Three",pic:"🍎🍎🍎"},{name:"Four",pic:"🍎🍎🍎🍎"},{name:"Five",pic:"🍎🍎🍎🍎🍎"}],
+   answer:2, learn:"Count them: one, two, <b>three</b>! 🍎🍎🍎 Great counting!"},
+  {topic:"Math",say:"Which shape is a CIRCLE?",show:"Find the CIRCLE! ⭕",
+   choices:[{name:"Square",pic:"🟥"},{name:"Triangle",pic:"🔺"},{name:"Circle",pic:"🔵"},{name:"Star",pic:"⭐"},{name:"Heart",pic:"💛"}],
+   answer:2, learn:"A <b>circle</b> is perfectly round, like a ball or the Sun! 🔵"},
+  {topic:"Math",say:"Which one is the BIGGEST number?",show:"Which number is BIGGEST? 🔢",
+   choices:[{name:"Two",pic:"2️⃣"},{name:"Five",pic:"5️⃣"},{name:"Nine",pic:"9️⃣"},{name:"One",pic:"1️⃣"},{name:"Four",pic:"4️⃣"}],
+   answer:2, learn:"<b>9</b> is the biggest here! Numbers get bigger as you count up. 🔢"},
+  {topic:"Math",say:"Which group has MORE stars?",show:"Which has MORE? ⭐",
+   choices:[{name:"One",pic:"⭐"},{name:"Five",pic:"⭐⭐⭐⭐⭐"},{name:"Two",pic:"⭐⭐"},{name:"Three",pic:"⭐⭐⭐"},{name:"Four",pic:"⭐⭐⭐⭐"}],
+   answer:1, learn:"Five stars is the most! <b>More</b> means a bigger amount. ⭐⭐⭐⭐⭐"},
+
+  {topic:"Space",say:"Which one do we live on?",show:"Where do WE live? 🌍",
+   choices:[{name:"Moon",pic:"🌙"},{name:"Earth",pic:"🌍"},{name:"Sun",pic:"☀️"},{name:"Rocket",pic:"🚀"},{name:"Star",pic:"⭐"}],
+   answer:1, learn:"We all live on planet <b>Earth</b>! It's the only one with people and animals. 🌍"},
+  {topic:"Space",say:"What do astronauts ride to fly into space?",show:"What flies to space? 🚀",
+   choices:[{name:"Car",pic:"🚗"},{name:"Boat",pic:"⛵"},{name:"Rocket",pic:"🚀"},{name:"Bike",pic:"🚲"},{name:"Train",pic:"🚂"}],
+   answer:2, learn:"A <b>rocket</b> blasts astronauts up into space! 🚀✨"},
+  {topic:"Space",say:"Which one comes out at night?",show:"What shines at night? 🌙",
+   choices:[{name:"Sun",pic:"☀️"},{name:"Moon",pic:"🌙"},{name:"Rainbow",pic:"🌈"},{name:"Cloud",pic:"☁️"},{name:"Kite",pic:"🪁"}],
+   answer:1, learn:"The <b>Moon</b> shines at night, along with twinkly stars. 🌙⭐"},
+
+  {topic:"Sports",say:"Which ball do you kick with your feet in soccer?",show:"Which ball is for soccer? ⚽",
+   choices:[{name:"Basketball",pic:"🏀"},{name:"Soccer ball",pic:"⚽"},{name:"Tennis",pic:"🎾"},{name:"Football",pic:"🏈"},{name:"Baseball",pic:"⚾"}],
+   answer:1, learn:"In <b>soccer</b> you kick the ⚽ ball with your feet. No hands allowed! ⚽"},
+  {topic:"Sports",say:"Which sport do you play in a swimming pool?",show:"What do you do in a pool? 🏊",
+   choices:[{name:"Skiing",pic:"⛷️"},{name:"Swimming",pic:"🏊"},{name:"Cycling",pic:"🚴"},{name:"Running",pic:"🏃"},{name:"Climbing",pic:"🧗"}],
+   answer:1, learn:"<b>Swimming</b> happens in the water! It makes your whole body strong. 🏊💦"},
+  {topic:"Sports",say:"Which one do you bounce when you play basketball?",show:"Which ball bounces high? 🏀",
+   choices:[{name:"Basketball",pic:"🏀"},{name:"Egg",pic:"🥚"},{name:"Pillow",pic:"🛏️"},{name:"Balloon",pic:"🎈"},{name:"Book",pic:"📖"}],
+   answer:0, learn:"A <b>basketball</b> bounces high so you can dribble it! 🏀"},
+
+  {topic:"Tech",say:"Which one can you use to call your grandma?",show:"What do you call grandma on? 📱",
+   choices:[{name:"Phone",pic:"📱"},{name:"Spoon",pic:"🥄"},{name:"Hat",pic:"🎩"},{name:"Sock",pic:"🧦"},{name:"Cup",pic:"🥤"}],
+   answer:0, learn:"A <b>phone</b> lets you talk to people far away! 📱"},
+  {topic:"Tech",say:"Which one do you type on to use a computer?",show:"What do you type on? ⌨️",
+   choices:[{name:"Keyboard",pic:"⌨️"},{name:"Banana",pic:"🍌"},{name:"Shoe",pic:"👟"},{name:"Flower",pic:"🌸"},{name:"Ball",pic:"⚽"}],
+   answer:0, learn:"A <b>keyboard</b> has letters and numbers you press to type! ⌨️"},
+  {topic:"Tech",say:"A helpful computer brain that can answer questions is called...?",show:"A smart computer helper is... 🤖",
+   choices:[{name:"Robot AI",pic:"🤖"},{name:"Rock",pic:"🪨"},{name:"Leaf",pic:"🍃"},{name:"Chair",pic:"🪑"},{name:"Cloud",pic:"☁️"}],
+   answer:0, learn:"A robot or <b>AI</b> is a computer brain that can learn and help us! 🤖 You're talking to one right now!"}
+];
+
+let score=0, order=[], pos=0, current=null, answered=false;
+
+function goStart(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  document.getElementById('start').classList.add('active');
+  document.getElementById('quiz').classList.remove('active');
+  window.scrollTo(0,0);
 }
-function renderChoice(id,thing){
-  const el=document.getElementById(id);
-  el.className='choice';el.disabled=false;
-  el.innerHTML=`<span class="pic">${thing.pic}</span><span class="name">${thing.name}</span>`;
+function startGame(){
+  ac();
+  score=0;document.getElementById('score').textContent=0;
+  order=shuffle(BANK.map((_,i)=>i));pos=0;
+  document.getElementById('start').classList.remove('active');
+  document.getElementById('quiz').classList.add('active');
+  window.scrollTo(0,0);
+  loadQuestion();
 }
-function pickBigger(i){
-  if(biggerAnswered)return;
-  biggerAnswered=true;
-  const chosen=biggerPair[i], other=biggerPair[1-i];
-  const optA=document.getElementById('optA'), optB=document.getElementById('optB');
-  optA.disabled=true;optB.disabled=true;
-  const fb=document.getElementById('biggerFb');
-  const learn=document.getElementById('biggerLearn');
-  const bigger = biggerPair[0].size>biggerPair[1].size ? biggerPair[0]:biggerPair[1];
-  const biggerEl = (bigger===biggerPair[0])?optA:optB;
-  if(chosen===bigger){
-    biggerScore++;document.getElementById('biggerScore').textContent=biggerScore;
-    (i===0?optA:optB).classList.add('correct');
-    fb.textContent='🎉 YES! Great job!';fb.className='feedback good';
-    sCorrect();confetti();
-  }else{
-    (i===0?optA:optB).classList.add('wrong');
-    biggerEl.classList.add('correct');
-    fb.textContent='Oops! Try the other one next time 😊';fb.className='feedback oops';
-    sWrong();
-  }
-  learn.innerHTML=`A <b>${bigger.name.toLowerCase()}</b> ${bigger.pic} is the bigger one! ${bigger.fact}`;
-  learn.className='learn show';
-  document.getElementById('biggerNext').className='next-btn show';
-}
-
-/* ========== GAME 2: LINE THEM UP ========== */
-let orderTargets=[], orderPicked=[], orderDone=false;
-
-function startOrder(){document.getElementById('orderScore').textContent=0;orderScoreVal=0;show('order');nextOrder();}
-let orderScoreVal=0;
-
-function nextOrder(){
-  orderDone=false;orderPicked=[];
-  document.getElementById('orderFb').textContent='';
-  document.getElementById('orderFb').className='feedback';
-  document.getElementById('orderLearn').className='learn';
-  document.getElementById('orderNext').className='next-btn';
-  // pick 4 distinct things
-  const idx=shuffle(THINGS.map((_,i)=>i)).slice(0,4);
-  orderTargets=idx.map(i=>THINGS[i]);
-  renderOrder(shuffle(orderTargets));
-}
-function renderOrder(list){
-  const box=document.getElementById('orderList');
-  box.innerHTML='';
-  list.forEach(t=>{
+function loadQuestion(){
+  answered=false;
+  if(pos>=order.length){order=shuffle(BANK.map((_,i)=>i));pos=0;}
+  current=BANK[order[pos]];
+  document.getElementById('topicBadge').textContent=current.topic;
+  document.getElementById('qText').textContent=current.show;
+  document.getElementById('feedback').textContent='';
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('learn').className='learn';
+  document.getElementById('nextBtn').className='next-btn';
+  const box=document.getElementById('choices');box.innerHTML='';
+  const idx=shuffle(current.choices.map((_,i)=>i));
+  idx.forEach(origIndex=>{
+    const ch=current.choices[origIndex];
     const b=document.createElement('button');
-    b.className='order-item';
-    b.dataset.name=t.name;
-    b.innerHTML=`<span class="num">?</span><span class="pic">${t.pic}</span><span>${t.name}</span>`;
-    b.onclick=()=>pickOrder(b,t);
+    b.className='choice';
+    b.innerHTML='<span class="pic">'+ch.pic+'</span><span class="name">'+ch.name+'</span>';
+    b.onclick=()=>pick(b,origIndex===current.answer);
     box.appendChild(b);
   });
+  setTimeout(()=>speak(current.say),250);
 }
-function pickOrder(btn,thing){
-  if(orderDone||btn.classList.contains('locked'))return;
-  // is this the next-smallest among remaining?
-  const remaining=orderTargets.filter(t=>!orderPicked.includes(t));
-  const smallest=remaining.reduce((a,b)=>a.size<b.size?a:b);
-  if(thing===smallest){
-    orderPicked.push(thing);
-    btn.classList.add('locked');
-    btn.querySelector('.num').textContent=orderPicked.length;
-    btn.querySelector('.num').style.background='var(--grass)';
-    sTap();
-    if(orderPicked.length===orderTargets.length){
-      orderDone=true;orderScoreVal++;
-      document.getElementById('orderScore').textContent=orderScoreVal;
-      const fb=document.getElementById('orderFb');
-      fb.textContent='🏆 PERFECT! You lined them all up!';fb.className='feedback good';
-      sWin();confetti();
-      const learn=document.getElementById('orderLearn');
-      const big=orderPicked[orderPicked.length-1];
-      learn.innerHTML=`The <b>${big.name.toLowerCase()}</b> ${big.pic} was the biggest! ${big.fact}`;
-      learn.className='learn show';
-      document.getElementById('orderNext').className='next-btn show';
-    }
+function sayQuestionAgain(){if(current)speak(current.say);}
+function pick(btn,isCorrect){
+  if(answered)return;
+  answered=true;
+  document.querySelectorAll('.choice').forEach(c=>c.disabled=true);
+  const fb=document.getElementById('feedback');
+  const learn=document.getElementById('learn');
+  if(isCorrect){
+    score++;document.getElementById('score').textContent=score;
+    btn.classList.add('correct');
+    fb.textContent='🎉 YES! Great job!';fb.className='feedback good';
+    sCorrect();confetti();speak("Yes! Great job!");
   }else{
-    const fb=document.getElementById('orderFb');
-    fb.textContent='🤏 Not yet! Find a SMALLER one first.';fb.className='feedback oops';
-    sWrong();
-    btn.animate([{transform:'translateX(0)'},{transform:'translateX(-7px)'},{transform:'translateX(7px)'},{transform:'translateX(0)'}],{duration:300});
-    setTimeout(()=>{if(!orderDone){fb.textContent='';fb.className='feedback';}},1300);
+    btn.classList.add('wrong');
+    document.querySelectorAll('.choice').forEach(k=>{
+      if(k.querySelector('.name').textContent===current.choices[current.answer].name)k.classList.add('correct');
+    });
+    fb.textContent='Oops! Try again next time 😊';fb.className='feedback oops';
+    sWrong();speak("Oops! The answer was "+current.choices[current.answer].name);
   }
+  const plain=current.learn.replace(/<[^>]+>/g,'');
+  learn.innerHTML=current.learn;learn.className='learn show';
+  setTimeout(()=>{if(!muted)speak(plain);},1500);
+  document.getElementById('nextBtn').className='next-btn show';
 }
+function nextQuestion(){pos++;loadQuestion();}
 
-/* ========== GAME 3: WOW FACTS ========== */
-const FACTS = [
-  {e:"🐜", t:"An <b>ant</b> can carry <span class='fact-big'>50 times</span> its own weight! That's like YOU lifting a car. 🚗"},
-  {e:"🐘", t:"An <b>elephant</b> is so big and heavy it can <span class='fact-big'>barely jump</span> at all!"},
-  {e:"🐭", t:"A tiny <b>mouse</b> can fall from a tree and <span class='fact-big'>walk away</span> just fine. A person would get hurt!"},
-  {e:"🐋", t:"A <b>blue whale</b> is the <span class='fact-big'>biggest animal EVER</span> — even bigger than any dinosaur!"},
-  {e:"📦", t:"Make a box <span class='fact-big'>2 times</span> taller and it gets <span class='fact-big'>8 times</span> heavier. Bigger things get heavy FAST!"},
-  {e:"🦠", t:"A <b>virus</b> is so small that <span class='fact-big'>millions</span> could fit on the tip of a pin!"},
-  {e:"🧫", t:"A <b>bacteria</b> is 100 times bigger than a virus — but you still need a microscope to see it. 🔬"},
-  {e:"🐻", t:"A <b>water bear</b> is so tough it can survive in <span class='fact-big'>outer space</span>! 🚀"},
-  {e:"🦒", t:"A <b>giraffe</b> can be <span class='fact-big'>taller than a house</span> — about 5 grown-ups stacked up!"},
-  {e:"🏰", t:"A <b>giant</b> from a fairy tale couldn't really walk — their legs would be too weak for their huge weight!"},
-  {e:"📏", t:"From a <b>tiny virus</b> 🦠 to a <b>giant whale</b> 🐋, sizes jump up about <span class='fact-big'>a BILLION times</span>!"}
-];
-let factOrder=[], factPos=0;
-
-function startFacts(){
-  factOrder=shuffle(FACTS);factPos=0;
-  document.getElementById('factTotal').textContent=factOrder.length;
-  show('facts');renderFact();
-}
-function renderFact(){
-  const f=factOrder[factPos];
-  document.getElementById('factEmoji').textContent=f.e;
-  document.getElementById('factText').innerHTML=f.t;
-  document.getElementById('factNum').textContent=factPos+1;
-}
-function nextFact(){
-  factPos++;
-  if(factPos>=factOrder.length){factPos=0;factOrder=shuffle(FACTS);sWin();confetti();}
-  else{sTap();}
-  renderFact();
-}
+function confetti(){const em=['🎉','⭐','🌟','✨','🎊','💛','💚'];
+  for(let i=0;i<24;i++){const c=document.createElement('div');c.className='confetti';c.textContent=em[rand(em.length)];
+    c.style.left=Math.random()*100+'vw';c.style.animationDelay=(Math.random()*.5)+'s';
+    document.body.appendChild(c);setTimeout(()=>c.remove(),2700);}}
 </script>
 </body>
 </html>
