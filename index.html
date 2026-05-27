@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -118,9 +119,19 @@
         <span class="chip">🐾 Animals</span>
         <span class="chip">🔬 Science</span>
         <span class="chip">➕ Math</span>
+        <span class="chip">🔤 Letters</span>
+        <span class="chip">🎨 Colors</span>
         <span class="chip">🪐 Space</span>
         <span class="chip">⚽ Sports</span>
         <span class="chip">🤖 Tech</span>
+        <span class="chip">🧍 My Body</span>
+        <span class="chip">🍎 Food</span>
+        <span class="chip">🌦️ Weather</span>
+        <span class="chip">😀 Feelings</span>
+        <span class="chip">🚒 Helpers</span>
+        <span class="chip">🌳 Nature</span>
+        <span class="chip">🎵 Music</span>
+        <span class="chip">🌍 Our World</span>
       </div>
     </div>
     <p class="footer">Made with love for a curious 6-year-old 💛</p>
@@ -256,7 +267,135 @@ const BANK = [
    answer:0, learn:"A <b>keyboard</b> has letters and numbers you press to type! ⌨️"},
   {topic:"Tech",say:"A helpful computer brain that can answer questions is called...?",show:"A smart computer helper is... 🤖",
    choices:[{name:"Robot AI",pic:"🤖"},{name:"Rock",pic:"🪨"},{name:"Leaf",pic:"🍃"},{name:"Chair",pic:"🪑"},{name:"Cloud",pic:"☁️"}],
-   answer:0, learn:"A robot or <b>AI</b> is a computer brain that can learn and help us! 🤖 You're talking to one right now!"}
+   answer:0, learn:"A robot or <b>AI</b> is a computer brain that can learn and help us! 🤖 You're talking to one right now!"},
+
+  /* ---- COLORS ---- */
+  {topic:"Colors",say:"Which one is the color RED?",show:"Find the color RED! 🔴",
+   choices:[{name:"Blue",pic:"🔵"},{name:"Red",pic:"🔴"},{name:"Green",pic:"🟢"},{name:"Yellow",pic:"🟡"},{name:"Purple",pic:"🟣"}],
+   answer:1, learn:"<b>Red</b> is the color of apples, strawberries and fire trucks! 🔴"},
+  {topic:"Colors",say:"What color is the grass and the leaves?",show:"What color is grass? 🌿",
+   choices:[{name:"Pink",pic:"🩷"},{name:"Orange",pic:"🟠"},{name:"Green",pic:"🟢"},{name:"Blue",pic:"🔵"},{name:"Black",pic:"⚫"}],
+   answer:2, learn:"Grass and leaves are <b>green</b>! 🌿 Green means growing plants."},
+  {topic:"Colors",say:"What color is the sky on a sunny day?",show:"What color is the sky? ☀️",
+   choices:[{name:"Blue",pic:"🔵"},{name:"Brown",pic:"🟤"},{name:"Red",pic:"🔴"},{name:"Green",pic:"🟢"},{name:"Pink",pic:"🩷"}],
+   answer:0, learn:"The sky is <b>blue</b> on a clear sunny day! 💙"},
+
+  /* ---- SHAPES ---- */
+  {topic:"Shapes",say:"Which shape is a TRIANGLE? It has three sides.",show:"Find the TRIANGLE! 🔺",
+   choices:[{name:"Circle",pic:"🔵"},{name:"Square",pic:"🟦"},{name:"Triangle",pic:"🔺"},{name:"Heart",pic:"💛"},{name:"Star",pic:"⭐"}],
+   answer:2, learn:"A <b>triangle</b> has three sides and three corners! 🔺"},
+  {topic:"Shapes",say:"Which shape is a STAR?",show:"Find the STAR! ⭐",
+   choices:[{name:"Square",pic:"🟦"},{name:"Star",pic:"⭐"},{name:"Circle",pic:"🔵"},{name:"Diamond",pic:"🔷"},{name:"Heart",pic:"💚"}],
+   answer:1, learn:"A <b>star</b> has points, like the twinkly ones in the sky! ⭐"},
+
+  /* ---- LETTERS & SOUNDS ---- */
+  {topic:"Letters",say:"Which animal starts with the B sound? Buh... buh...",show:"Which starts with B? 🅱️",
+   choices:[{name:"Cat",pic:"🐱"},{name:"Bear",pic:"🐻"},{name:"Fish",pic:"🐟"},{name:"Dog",pic:"🐶"},{name:"Owl",pic:"🦉"}],
+   answer:1, learn:"<b>Bear</b> starts with B! Buh-buh-Bear. 🐻"},
+  {topic:"Letters",say:"Which one starts with the A sound? Ah... ah...",show:"Which starts with A? 🅰️",
+   choices:[{name:"Apple",pic:"🍎"},{name:"Sun",pic:"☀️"},{name:"Dog",pic:"🐶"},{name:"Tree",pic:"🌳"},{name:"Moon",pic:"🌙"}],
+   answer:0, learn:"<b>Apple</b> starts with A! Ah-ah-Apple. 🍎"},
+  {topic:"Letters",say:"Which one starts with the S sound? Sss... sss...",show:"Which starts with S? ✏️",
+   choices:[{name:"Cat",pic:"🐱"},{name:"Frog",pic:"🐸"},{name:"Sun",pic:"☀️"},{name:"Bird",pic:"🐦"},{name:"Hat",pic:"🎩"}],
+   answer:2, learn:"<b>Sun</b> starts with S! Sss-sss-Sun. ☀️"},
+
+  /* ---- NUMBERS ---- */
+  {topic:"Numbers",say:"What number comes AFTER five?",show:"What comes after 5? 🔢",
+   choices:[{name:"Three",pic:"3️⃣"},{name:"Six",pic:"6️⃣"},{name:"Two",pic:"2️⃣"},{name:"Nine",pic:"9️⃣"},{name:"One",pic:"1️⃣"}],
+   answer:1, learn:"After five comes <b>six</b>! 4, 5, 6... 6️⃣"},
+  {topic:"Numbers",say:"How many wheels does a bicycle have?",show:"How many wheels on a bike? 🚲",
+   choices:[{name:"One",pic:"1️⃣"},{name:"Two",pic:"2️⃣"},{name:"Three",pic:"3️⃣"},{name:"Four",pic:"4️⃣"},{name:"Five",pic:"5️⃣"}],
+   answer:1, learn:"A bicycle has <b>two</b> wheels! 'Bi' means two. 🚲"},
+
+  /* ---- THE BODY ---- */
+  {topic:"My Body",say:"What part of your body do you use to SEE?",show:"What do you SEE with? 👀",
+   choices:[{name:"Eyes",pic:"👀"},{name:"Nose",pic:"👃"},{name:"Foot",pic:"🦶"},{name:"Hand",pic:"✋"},{name:"Ear",pic:"👂"}],
+   answer:0, learn:"You see with your <b>eyes</b>! 👀 Two eyes help you see all around."},
+  {topic:"My Body",say:"What do you use to HEAR sounds?",show:"What do you HEAR with? 👂",
+   choices:[{name:"Eyes",pic:"👀"},{name:"Ears",pic:"👂"},{name:"Mouth",pic:"👄"},{name:"Hand",pic:"✋"},{name:"Hair",pic:"💇"}],
+   answer:1, learn:"You hear with your <b>ears</b>! 👂 That's how you hear this game."},
+  {topic:"My Body",say:"What do you use to SMELL a flower?",show:"What do you SMELL with? 👃",
+   choices:[{name:"Nose",pic:"👃"},{name:"Foot",pic:"🦶"},{name:"Eye",pic:"👁️"},{name:"Knee",pic:"🦵"},{name:"Ear",pic:"👂"}],
+   answer:0, learn:"You smell with your <b>nose</b>! 👃 Flowers smell sweet."},
+
+  /* ---- HEALTHY FOOD ---- */
+  {topic:"Food",say:"Which one is a healthy fruit?",show:"Which is a healthy fruit? 🍎",
+   choices:[{name:"Candy",pic:"🍬"},{name:"Cake",pic:"🍰"},{name:"Apple",pic:"🍎"},{name:"Soda",pic:"🥤"},{name:"Chips",pic:"🍟"}],
+   answer:2, learn:"An <b>apple</b> is a healthy fruit that makes you strong! 🍎 Treats are just sometimes."},
+  {topic:"Food",say:"What is the healthiest thing to drink when you are thirsty?",show:"Healthiest drink? 💧",
+   choices:[{name:"Water",pic:"💧"},{name:"Soda",pic:"🥤"},{name:"Candy",pic:"🍬"},{name:"Ice cream",pic:"🍦"},{name:"Cake",pic:"🍰"}],
+   answer:0, learn:"<b>Water</b> is the best drink for your body! 💧 Drink it every day."},
+  {topic:"Food",say:"Which one grows in a garden and is a vegetable?",show:"Which is a vegetable? 🥕",
+   choices:[{name:"Cookie",pic:"🍪"},{name:"Carrot",pic:"🥕"},{name:"Donut",pic:"🍩"},{name:"Candy",pic:"🍬"},{name:"Lollipop",pic:"🍭"}],
+   answer:1, learn:"A <b>carrot</b> is a veggie that helps you see well! 🥕"},
+
+  /* ---- WEATHER ---- */
+  {topic:"Weather",say:"What do you use when it is RAINING?",show:"What do you use in rain? 🌧️",
+   choices:[{name:"Umbrella",pic:"☂️"},{name:"Sunglasses",pic:"🕶️"},{name:"Fan",pic:"🪭"},{name:"Hat",pic:"👒"},{name:"Ball",pic:"⚽"}],
+   answer:0, learn:"An <b>umbrella</b> keeps you dry in the rain! ☂️🌧️"},
+  {topic:"Weather",say:"What falls from the sky when it is very cold in winter?",show:"What falls in winter? ❄️",
+   choices:[{name:"Sand",pic:"🏖️"},{name:"Snow",pic:"❄️"},{name:"Leaves",pic:"🍂"},{name:"Rocks",pic:"🪨"},{name:"Rain",pic:"🌧️"}],
+   answer:1, learn:"<b>Snow</b> falls when it's freezing cold! ❄️ It's fun to play in."},
+  {topic:"Weather",say:"What do you see in the sky after rain and sunshine together?",show:"What comes after rain? 🌈",
+   choices:[{name:"Rainbow",pic:"🌈"},{name:"Snow",pic:"❄️"},{name:"Moon",pic:"🌙"},{name:"Star",pic:"⭐"},{name:"Fire",pic:"🔥"}],
+   answer:0, learn:"A <b>rainbow</b> appears with rain and sun together! 🌈 It has many colors."},
+
+  /* ---- TIME / DAILY LIFE ---- */
+  {topic:"Daily Life",say:"What do you do at NIGHT when you are sleepy?",show:"What do you do at night? 😴",
+   choices:[{name:"Sleep",pic:"😴"},{name:"Swim",pic:"🏊"},{name:"Run",pic:"🏃"},{name:"Eat",pic:"🍽️"},{name:"Jump",pic:"🤸"}],
+   answer:0, learn:"At night you <b>sleep</b> to rest your body! 😴🌙"},
+  {topic:"Daily Life",say:"What do you use to brush your teeth?",show:"What brushes teeth? 🪥",
+   choices:[{name:"Spoon",pic:"🥄"},{name:"Toothbrush",pic:"🪥"},{name:"Comb",pic:"💈"},{name:"Pencil",pic:"✏️"},{name:"Fork",pic:"🍴"}],
+   answer:1, learn:"A <b>toothbrush</b> keeps your teeth clean and healthy! 🪥✨"},
+
+  /* ---- FEELINGS ---- */
+  {topic:"Feelings",say:"Which face looks HAPPY?",show:"Which face is HAPPY? 😀",
+   choices:[{name:"Sad",pic:"😢"},{name:"Happy",pic:"😀"},{name:"Angry",pic:"😠"},{name:"Sleepy",pic:"😴"},{name:"Scared",pic:"😨"}],
+   answer:1, learn:"This face is <b>happy</b>! 😀 We smile when we feel good."},
+  {topic:"Feelings",say:"Which face looks SAD?",show:"Which face is SAD? 😢",
+   choices:[{name:"Happy",pic:"😀"},{name:"Surprised",pic:"😲"},{name:"Sad",pic:"😢"},{name:"Silly",pic:"😜"},{name:"Sleepy",pic:"😴"}],
+   answer:2, learn:"This face is <b>sad</b>. 😢 It's okay to feel sad sometimes."},
+
+  /* ---- SAFETY & HELPERS ---- */
+  {topic:"Helpers",say:"Who helps put out fires?",show:"Who puts out fires? 🚒",
+   choices:[{name:"Firefighter",pic:"🧑‍🚒"},{name:"Chef",pic:"🧑‍🍳"},{name:"Farmer",pic:"🧑‍🌾"},{name:"Singer",pic:"🧑‍🎤"},{name:"Pilot",pic:"🧑‍✈️"}],
+   answer:0, learn:"A <b>firefighter</b> bravely puts out fires! 🧑‍🚒🚒"},
+  {topic:"Helpers",say:"Who helps you when you are sick?",show:"Who helps when sick? 🩺",
+   choices:[{name:"Doctor",pic:"🧑‍⚕️"},{name:"Mail carrier",pic:"📮"},{name:"Painter",pic:"🧑‍🎨"},{name:"Driver",pic:"🚕"},{name:"Baker",pic:"🥖"}],
+   answer:0, learn:"A <b>doctor</b> helps you feel better when you're sick! 🧑‍⚕️"},
+  {topic:"Helpers",say:"On a traffic light, what color means GO?",show:"What color means GO? 🚦",
+   choices:[{name:"Red",pic:"🔴"},{name:"Green",pic:"🟢"},{name:"Yellow",pic:"🟡"},{name:"Blue",pic:"🔵"},{name:"Purple",pic:"🟣"}],
+   answer:1, learn:"<b>Green</b> means GO! Red means stop. 🚦"},
+
+  /* ---- NATURE ---- */
+  {topic:"Nature",say:"Where do fish live?",show:"Where do fish live? 🐟",
+   choices:[{name:"In water",pic:"💧"},{name:"In trees",pic:"🌳"},{name:"In the sky",pic:"☁️"},{name:"Underground",pic:"🕳️"},{name:"In fire",pic:"🔥"}],
+   answer:0, learn:"Fish live in the <b>water</b>! 🐟💧 They breathe with gills."},
+  {topic:"Nature",say:"What grows on a tree?",show:"What grows on a tree? 🌳",
+   choices:[{name:"Shoes",pic:"👟"},{name:"Leaves",pic:"🍃"},{name:"Cars",pic:"🚗"},{name:"Books",pic:"📚"},{name:"Phones",pic:"📱"}],
+   answer:1, learn:"<b>Leaves</b> grow on trees, and so do fruits! 🍃🌳"},
+  {topic:"Nature",say:"Where does a bee live and make honey?",show:"Where do bees live? 🐝",
+   choices:[{name:"Beehive",pic:"🍯"},{name:"Doghouse",pic:"🏠"},{name:"Ocean",pic:"🌊"},{name:"Car",pic:"🚗"},{name:"Cave",pic:"🕳️"}],
+   answer:0, learn:"Bees live in a <b>hive</b> and make yummy honey! 🐝🍯"},
+
+  /* ---- MUSIC ---- */
+  {topic:"Music",say:"Which one do you hit to make a drum sound?",show:"Which is a drum? 🥁",
+   choices:[{name:"Drum",pic:"🥁"},{name:"Book",pic:"📖"},{name:"Cup",pic:"🥤"},{name:"Shoe",pic:"👟"},{name:"Hat",pic:"🎩"}],
+   answer:0, learn:"A <b>drum</b> goes boom-boom when you hit it! 🥁"},
+  {topic:"Music",say:"Which one has keys you press to make music?",show:"Which is a piano? 🎹",
+   choices:[{name:"Guitar",pic:"🎸"},{name:"Piano",pic:"🎹"},{name:"Drum",pic:"🥁"},{name:"Bell",pic:"🔔"},{name:"Horn",pic:"📯"}],
+   answer:1, learn:"A <b>piano</b> has black and white keys you press! 🎹"},
+
+  /* ---- GEOGRAPHY / WORLD ---- */
+  {topic:"Our World",say:"Which one is a very hot, sandy place?",show:"Which place is hot & sandy? 🏜️",
+   choices:[{name:"Desert",pic:"🏜️"},{name:"Snowy mountain",pic:"🏔️"},{name:"Ocean",pic:"🌊"},{name:"Forest",pic:"🌲"},{name:"City",pic:"🏙️"}],
+   answer:0, learn:"A <b>desert</b> is hot and full of sand! 🏜️ Camels live there."},
+  {topic:"Our World",say:"Which animal lives where it is icy and snowy?",show:"Who loves the snow? 🐧",
+   choices:[{name:"Camel",pic:"🐫"},{name:"Penguin",pic:"🐧"},{name:"Lion",pic:"🦁"},{name:"Monkey",pic:"🐒"},{name:"Parrot",pic:"🦜"}],
+   answer:1, learn:"<b>Penguins</b> love the cold, icy snow! 🐧❄️"},
+  {topic:"Our World",say:"What covers most of our planet Earth?",show:"What covers Earth most? 🌊",
+   choices:[{name:"Water",pic:"🌊"},{name:"Candy",pic:"🍬"},{name:"Sand",pic:"🏖️"},{name:"Ice cream",pic:"🍦"},{name:"Grass",pic:"🌱"}],
+   answer:0, learn:"Most of Earth is covered in <b>water</b>! 🌊 That's why it looks blue from space."}
 ];
 
 let score=0, order=[], pos=0, current=null, answered=false;
