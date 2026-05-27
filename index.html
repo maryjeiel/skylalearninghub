@@ -2,80 +2,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tiny to Titan Guessing Game</title>
+  <title>Listen and Guess: Tiny to Titan</title>
   <style>
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #fff7ad, #b7f7ff);
+      background: linear-gradient(135deg, #fff2a8, #b8f4ff);
       color: #24324a;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 18px;
     }
     .game {
       width: 100%;
-      max-width: 760px;
+      max-width: 900px;
       background: white;
-      border-radius: 28px;
-      padding: 26px;
-      box-shadow: 0 14px 35px rgba(0,0,0,0.14);
+      border-radius: 30px;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.15);
       text-align: center;
     }
-    h1 {
-      margin: 0 0 8px;
-      font-size: 34px;
-    }
-    .subtitle {
-      margin: 0 0 20px;
-      font-size: 18px;
-    }
-    .score-row {
+    h1 { margin: 0 0 8px; font-size: 34px; }
+    .subtitle { margin: 0 0 18px; font-size: 18px; }
+    .top-row {
       display: flex;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 18px;
-      font-size: 18px;
-      font-weight: bold;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
     }
     .pill {
       background: #f2f5ff;
       padding: 10px 14px;
       border-radius: 999px;
-    }
-    .card {
-      background: #fff9e8;
-      border: 3px solid #ffe28a;
-      border-radius: 24px;
-      padding: 24px;
-      min-height: 230px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 18px;
-    }
-    .emoji {
-      font-size: 52px;
-    }
-    .question {
-      font-size: 28px;
       font-weight: bold;
-      line-height: 1.25;
+      font-size: 17px;
     }
-    .answers {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 18px;
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
     }
     button {
       border: 0;
       border-radius: 20px;
-      padding: 18px;
-      font-size: 20px;
+      padding: 15px 18px;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
       background: #dce9ff;
@@ -83,151 +60,218 @@
       transition: transform 0.12s, background 0.12s;
     }
     button:hover { transform: scale(1.03); }
+    .listen-card {
+      background: #fff9e8;
+      border: 3px solid #ffe28a;
+      border-radius: 26px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+    .big-icon { font-size: 60px; margin-bottom: 8px; }
+    .instruction { font-size: 28px; font-weight: bold; line-height: 1.25; }
+    .hidden-question {
+      font-size: 16px;
+      color: #6b7280;
+      margin-top: 10px;
+    }
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .choice {
+      min-height: 185px;
+      background: #f5fbff;
+      border: 4px solid transparent;
+      border-radius: 28px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .choice-emoji { font-size: 76px; }
+    .choice-label { font-size: 22px; }
+    .feedback {
+      margin-top: 18px;
+      font-size: 24px;
+      font-weight: bold;
+      min-height: 34px;
+    }
+    .fact {
+      margin: 8px auto 0;
+      max-width: 720px;
+      font-size: 19px;
+      line-height: 1.4;
+      color: #4b5870;
+      min-height: 54px;
+    }
     .next {
       margin-top: 18px;
       width: 100%;
       background: #8ff0b0;
       display: none;
     }
-    .feedback {
-      margin-top: 18px;
-      font-size: 22px;
-      font-weight: bold;
-      min-height: 32px;
-    }
-    .fact {
-      margin-top: 8px;
-      font-size: 18px;
-      line-height: 1.35;
-      color: #4b5870;
-      min-height: 48px;
-    }
-    .tiny-note {
+    .edit-note {
       margin-top: 20px;
       font-size: 14px;
       color: #6b7280;
     }
-    @media (max-width: 560px) {
+    @media (max-width: 760px) {
+      .choices { grid-template-columns: 1fr; }
       h1 { font-size: 28px; }
-      .question { font-size: 23px; }
-      .answers { grid-template-columns: 1fr; }
-      button { font-size: 18px; }
+      .instruction { font-size: 23px; }
+      .choice { min-height: 150px; }
+      .choice-emoji { font-size: 64px; }
     }
   </style>
 </head>
 <body>
   <main class="game">
-    <h1>🔬 Tiny to Titan 🐋</h1>
-    <p class="subtitle">Guess, learn, and grow your brain!</p>
+    <h1>🎧 Listen and Guess 🔬</h1>
+    <p class="subtitle">Hear the question. Choose the picture. Learn something cool.</p>
 
-    <div class="score-row">
+    <div class="top-row">
       <div class="pill">⭐ Score: <span id="score">0</span></div>
       <div class="pill">Question: <span id="number">1</span>/<span id="total">10</span></div>
     </div>
 
-    <section class="card">
-      <div class="emoji" id="emoji">🧠</div>
-      <div class="question" id="question">Loading...</div>
+    <div class="controls">
+      <button id="startSoundBtn">▶️ Start sound</button>
+      <button id="repeatBtn">🎙️ Repeat question</button>
+      <button id="soundBtn">🔊 Sound: On</button>
+    </div>
+
+    <section class="listen-card">
+      <div class="big-icon">👂</div>
+      <div class="instruction">Listen to the question, then choose a picture.</div>
+      <div class="hidden-question" id="questionText">Press “Start sound” first.</div>
     </section>
 
-    <div class="answers" id="answers"></div>
+    <div class="choices" id="choices"></div>
 
     <div class="feedback" id="feedback"></div>
     <div class="fact" id="fact"></div>
 
     <button class="next" id="nextBtn">Next question ➜</button>
 
-    <p class="tiny-note">Best played with an adult nearby so she can ask “why?” after each answer.</p>
+    <p class="edit-note">Offline friendly: this uses emoji pictures and browser voice, so you can edit it in VS Code and run it without internet.</p>
   </main>
 
   <script>
-    const allQuestions = [
+    // HOW TO ADD A NEW QUESTION:
+    // Copy one question block below, paste it inside gameQuestions, then edit:
+    // question, choices, correct, and fact.
+    // For picture choices, use emojis so it works offline.
+
+    const gameQuestions = [
       {
-        emoji: "🦠",
-        question: "Which one is smaller?",
-        answers: ["Virus", "Bacteria"],
-        correct: "Virus",
-        fact: "A virus can be about 100 nanometers. Bacteria are much bigger, often 1 to 10 micrometers."
-      },
-      {
-        emoji: "🐜",
-        question: "Which one is bigger?",
-        answers: ["Ant", "Tardigrade"],
-        correct: "Ant",
-        fact: "A tardigrade is tiny, around 0.1 to 1.5 millimeters. Many ants are 1 to 5 millimeters."
-      },
-      {
-        emoji: "🐋",
         question: "What is the largest animal ever known?",
-        answers: ["Blue whale", "Elephant"],
+        choices: [
+          { name: "Elephant", picture: "🐘" },
+          { name: "Blue whale", picture: "🐋" },
+          { name: "Hippo", picture: "🦛" }
+        ],
         correct: "Blue whale",
-        fact: "A blue whale can grow up to about 30 meters long. That is longer than a basketball court!"
+        fact: "The blue whale is the largest animal ever known. It can grow up to about 30 meters long."
       },
       {
-        emoji: "🦒",
+        question: "Which one is smaller, a virus or a bacterium?",
+        choices: [
+          { name: "Virus", picture: "🦠" },
+          { name: "Bacterium", picture: "🧫" },
+          { name: "Ant", picture: "🐜" }
+        ],
+        correct: "Virus",
+        fact: "A virus is much smaller than a bacterium. Some viruses are about 100 nanometers."
+      },
+      {
         question: "Which animal is taller?",
-        answers: ["Giraffe", "Horse"],
+        choices: [
+          { name: "Horse", picture: "🐎" },
+          { name: "Cat", picture: "🐈" },
+          { name: "Giraffe", picture: "🦒" }
+        ],
         correct: "Giraffe",
-        fact: "A giraffe can be up to 5.5 meters tall. Horses are much shorter."
+        fact: "A giraffe can be up to about 5.5 meters tall. That is taller than most animals."
       },
       {
-        emoji: "🦖",
-        question: "T. rex was about 12 meters long. True or false?",
-        answers: ["True", "False"],
-        correct: "True",
-        fact: "T. rex was huge, around 12 meters long. That is just for fun, because it is extinct now."
-      },
-      {
-        emoji: "📦",
-        question: "A cube that is 1 foot wide has how many cubic inches?",
-        answers: ["12", "1,728"],
-        correct: "1,728",
-        fact: "One foot is 12 inches. A cube is 12 × 12 × 12, so it becomes 1,728 cubic inches."
-      },
-      {
-        emoji: "📏",
-        question: "If you double a cube’s side, what happens to the volume?",
-        answers: ["It gets 2 times bigger", "It gets 8 times bigger"],
-        correct: "It gets 8 times bigger",
-        fact: "Volume grows by length × width × height. Double means 2 × 2 × 2 = 8 times bigger."
-      },
-      {
-        emoji: "🧊",
-        question: "If you double a cube’s side, what happens to the surface area?",
-        answers: ["It gets 4 times bigger", "It gets 8 times bigger"],
-        correct: "It gets 4 times bigger",
-        fact: "Surface area grows like a square. Double means 2 × 2 = 4 times bigger."
-      },
-      {
-        emoji: "🐭",
-        question: "Who can fall from a tree more safely?",
-        answers: ["Mouse", "Human"],
-        correct: "Mouse",
-        fact: "Small animals are light for their size. That is one reason a mouse can survive falls better than a human."
-      },
-      {
-        emoji: "🐘",
-        question: "Why can ants carry so much but elephants cannot jump well?",
-        answers: ["Small bodies scale better", "Ants are magic"],
-        correct: "Small bodies scale better",
-        fact: "This is the square-cube law. Bigger bodies get heavy faster than their bones get strong."
-      },
-      {
-        emoji: "👣",
-        question: "Could a 60-foot fairy-tale giant really stand like a normal human?",
-        answers: ["Probably no", "Easy yes"],
-        correct: "Probably no",
-        fact: "If a human became huge, weight would grow much faster than bone strength. The legs would have a big problem."
-      },
-      {
-        emoji: "🐟",
-        question: "Which is the biggest fish alive?",
-        answers: ["Whale shark", "Blue whale"],
+        question: "Which one is the biggest fish alive?",
+        choices: [
+          { name: "Whale shark", picture: "🦈" },
+          { name: "Blue whale", picture: "🐋" },
+          { name: "Goldfish", picture: "🐟" }
+        ],
         correct: "Whale shark",
-        fact: "A whale shark is the biggest fish alive. A blue whale is bigger, but it is a mammal, not a fish."
+        fact: "The whale shark is the biggest fish alive. The blue whale is bigger, but it is a mammal, not a fish."
+      },
+      {
+        question: "Who can carry much more than its own body weight?",
+        choices: [
+          { name: "Ant", picture: "🐜" },
+          { name: "Elephant", picture: "🐘" },
+          { name: "Human", picture: "🧍" }
+        ],
+        correct: "Ant",
+        fact: "Ants are tiny and very strong for their size. Small bodies can be amazing because of how size works."
+      },
+      {
+        question: "If you double the side of a cube, what happens to its volume?",
+        choices: [
+          { name: "2 times bigger", picture: "2️⃣" },
+          { name: "4 times bigger", picture: "4️⃣" },
+          { name: "8 times bigger", picture: "8️⃣" }
+        ],
+        correct: "8 times bigger",
+        fact: "Volume grows in three directions: length, width, and height. So 2 times 2 times 2 equals 8."
+      },
+      {
+        question: "If you double the side of a cube, what happens to its surface area?",
+        choices: [
+          { name: "4 times bigger", picture: "4️⃣" },
+          { name: "8 times bigger", picture: "8️⃣" },
+          { name: "100 times bigger", picture: "💯" }
+        ],
+        correct: "4 times bigger",
+        fact: "Surface area grows like a square. Double means 2 times 2, which equals 4."
+      },
+      {
+        question: "Which animal can fall from a tree more safely?",
+        choices: [
+          { name: "Mouse", picture: "🐭" },
+          { name: "Human", picture: "🧍" },
+          { name: "Horse", picture: "🐎" }
+        ],
+        correct: "Mouse",
+        fact: "A mouse is very small and light, so a fall is usually less dangerous for it than for a human."
+      },
+      {
+        question: "Could a 60 foot fairy tale giant stand like a normal human?",
+        choices: [
+          { name: "Probably no", picture: "❌" },
+          { name: "Easy yes", picture: "✅" },
+          { name: "Only at night", picture: "🌙" }
+        ],
+        correct: "Probably no",
+        fact: "If a human became a giant, weight would grow faster than bone strength. The legs would have a big problem."
+      },
+      {
+        question: "Which one is bigger?",
+        choices: [
+          { name: "Tardigrade", picture: "🐻‍❄️" },
+          { name: "Ant", picture: "🐜" },
+          { name: "Bacteria", picture: "🧫" }
+        ],
+        correct: "Ant",
+        fact: "Tardigrades are tiny water bears. Many ants are bigger than tardigrades."
       }
     ];
 
+    let soundOn = true;
+    let soundStarted = false;
+    let selectedVoice = null;
     let questions = [];
     let currentIndex = 0;
     let score = 0;
@@ -236,19 +280,62 @@
     const scoreEl = document.getElementById("score");
     const numberEl = document.getElementById("number");
     const totalEl = document.getElementById("total");
-    const emojiEl = document.getElementById("emoji");
-    const questionEl = document.getElementById("question");
-    const answersEl = document.getElementById("answers");
+    const questionTextEl = document.getElementById("questionText");
+    const choicesEl = document.getElementById("choices");
     const feedbackEl = document.getElementById("feedback");
     const factEl = document.getElementById("fact");
     const nextBtn = document.getElementById("nextBtn");
+    const repeatBtn = document.getElementById("repeatBtn");
+    const soundBtn = document.getElementById("soundBtn");
+    const startSoundBtn = document.getElementById("startSoundBtn");
 
     function shuffle(array) {
       return [...array].sort(() => Math.random() - 0.5);
     }
 
+    function pickVoice() {
+      if (!("speechSynthesis" in window)) return;
+      const voices = speechSynthesis.getVoices();
+      selectedVoice = voices.find(v => v.lang.startsWith("en") && /female|samantha|karen|moira|zira/i.test(v.name))
+        || voices.find(v => v.lang.startsWith("en"))
+        || voices[0];
+    }
+
+    if ("speechSynthesis" in window) {
+      speechSynthesis.onvoiceschanged = pickVoice;
+      pickVoice();
+    }
+
+    function speak(text) {
+      if (!soundOn || !soundStarted || !("speechSynthesis" in window)) return;
+      speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.82;
+      utterance.pitch = 1.25;
+      utterance.volume = 1;
+      if (selectedVoice) utterance.voice = selectedVoice;
+      speechSynthesis.speak(utterance);
+    }
+
+    function playTone(type) {
+      if (!soundOn || !soundStarted) return;
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const audioCtx = new AudioContext();
+      const oscillator = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      oscillator.connect(gain);
+      gain.connect(audioCtx.destination);
+      oscillator.type = "sine";
+      oscillator.frequency.value = type === "correct" ? 720 : 190;
+      gain.gain.setValueAtTime(0.14, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.35);
+    }
+
     function startGame() {
-      questions = shuffle(allQuestions).slice(0, 10);
+      questions = shuffle(gameQuestions).slice(0, 10);
       currentIndex = 0;
       score = 0;
       totalEl.textContent = questions.length;
@@ -260,33 +347,43 @@
       answered = false;
       const q = questions[currentIndex];
       numberEl.textContent = currentIndex + 1;
-      emojiEl.textContent = q.emoji;
-      questionEl.textContent = q.question;
+      questionTextEl.textContent = "Question is in audio. Press repeat if you want to hear it again.";
       feedbackEl.textContent = "";
       factEl.textContent = "";
       nextBtn.style.display = "none";
-      answersEl.innerHTML = "";
+      choicesEl.innerHTML = "";
 
-      shuffle(q.answers).forEach(answer => {
+      shuffle(q.choices).forEach(choice => {
         const btn = document.createElement("button");
-        btn.textContent = answer;
-        btn.onclick = () => chooseAnswer(answer, btn);
-        answersEl.appendChild(btn);
+        btn.className = "choice";
+        btn.innerHTML = `<div class="choice-emoji">${choice.picture}</div><div class="choice-label">${choice.name}</div>`;
+        btn.onclick = () => chooseAnswer(choice.name);
+        choicesEl.appendChild(btn);
       });
+
+      speakQuestion();
     }
 
-    function chooseAnswer(answer, button) {
+    function speakQuestion() {
+      const q = questions[currentIndex];
+      const choiceNames = q.choices.map(c => c.name).join(", ");
+      speak(q.question + " Choose from: " + choiceNames + ".");
+    }
+
+    function chooseAnswer(answer) {
       if (answered) return;
       answered = true;
-
       const q = questions[currentIndex];
-      const buttons = answersEl.querySelectorAll("button");
+      const buttons = choicesEl.querySelectorAll("button");
 
       buttons.forEach(btn => {
-        if (btn.textContent === q.correct) {
-          btn.style.background = "#8ff0b0";
+        const label = btn.querySelector(".choice-label").textContent;
+        if (label === q.correct) {
+          btn.style.borderColor = "#5dde8b";
+          btn.style.background = "#dfffe9";
         } else {
-          btn.style.background = "#ffd1d1";
+          btn.style.borderColor = "#ffb3b3";
+          btn.style.background = "#fff0f0";
         }
       });
 
@@ -294,13 +391,34 @@
         score++;
         scoreEl.textContent = score;
         feedbackEl.textContent = "Correct! 🎉";
+        playTone("correct");
+        speak("Correct! " + q.fact);
       } else {
-        feedbackEl.textContent = "Oops! Good try 🌟";
+        feedbackEl.textContent = "Good try 🌟 The answer is " + q.correct + ".";
+        playTone("wrong");
+        speak("Good try. The answer is " + q.correct + ". " + q.fact);
       }
 
       factEl.textContent = q.fact;
       nextBtn.style.display = "block";
     }
+
+    startSoundBtn.onclick = () => {
+      soundStarted = true;
+      startSoundBtn.textContent = "✅ Sound started";
+      speakQuestion();
+    };
+
+    repeatBtn.onclick = () => {
+      soundStarted = true;
+      speakQuestion();
+    };
+
+    soundBtn.onclick = () => {
+      soundOn = !soundOn;
+      soundBtn.textContent = soundOn ? "🔊 Sound: On" : "🔇 Sound: Off";
+      if (!soundOn && "speechSynthesis" in window) speechSynthesis.cancel();
+    };
 
     nextBtn.onclick = () => {
       currentIndex++;
@@ -312,11 +430,11 @@
     };
 
     function showEndScreen() {
-      emojiEl.textContent = "🏆";
-      questionEl.textContent = `You got ${score} out of ${questions.length}!`;
-      answersEl.innerHTML = "";
-      feedbackEl.textContent = score >= 8 ? "Amazing scientist!" : "Great learning! Play again?";
-      factEl.textContent = "Every guess teaches your brain something new.";
+      questionTextEl.textContent = "Game finished!";
+      choicesEl.innerHTML = "";
+      feedbackEl.textContent = `You got ${score} out of ${questions.length}! 🏆`;
+      factEl.textContent = score >= 8 ? "Amazing scientist!" : "Great learning. Try again and beat your score.";
+      speak("Game finished. You got " + score + " out of " + questions.length + ". Great job!");
       nextBtn.textContent = "Play again 🔁";
       nextBtn.style.display = "block";
       nextBtn.onclick = () => {
