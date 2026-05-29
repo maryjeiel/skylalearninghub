@@ -1,472 +1,322 @@
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Listen & Guess! — A Learning Adventure</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --sky:#7ec8e3; --sky2:#b8e6f0; --sun:#ffd23f; --coral:#ff6b6b;
-    --grass:#6bcf7f; --grape:#9b5de5; --ink:#28384d; --cream:#fff9ec;
-    --shadow:rgba(40,56,77,.18);
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{height:100%;}
-  body{
-    font-family:'Fredoka',sans-serif;color:var(--ink);
-    background:linear-gradient(180deg,var(--sky) 0%,var(--sky2) 55%,#d7f2dd 100%);
-    min-height:100vh;overflow-x:hidden;position:relative;
-  }
-  .bubble{position:fixed;border-radius:50%;background:rgba(255,255,255,.35);pointer-events:none;animation:rise linear infinite;z-index:0;}
-  @keyframes rise{from{transform:translateY(110vh) scale(.6);opacity:0;}10%{opacity:.7;}90%{opacity:.7;}to{transform:translateY(-15vh) scale(1.1);opacity:0;}}
-  .wrap{position:relative;z-index:2;max-width:820px;margin:0 auto;padding:20px 18px 60px;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Learning Game</title>
+  <style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #ffefba, #ffffff, #d4fc79);
+  color: #1d1d1f;
+  min-height: 100vh;
+}
+.app { width: min(1100px, 94vw); margin: 0 auto; padding: 24px 0; }
+header {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  background: white; border-radius: 28px; padding: 20px 24px; box-shadow: 0 12px 30px rgba(0,0,0,.12);
+}
+h1 { margin: 0; font-size: clamp(30px, 5vw, 56px); color: #472183; }
+p { font-size: 20px; line-height: 1.35; }
+.score-box { background: #fff3a3; border: 4px solid #ffcf33; border-radius: 22px; padding: 14px 22px; text-align: center; min-width: 110px; }
+.score-box span { display:block; font-weight: 700; }
+.score-box strong { font-size: 38px; color: #9b5de5; }
+.hero { text-align: center; margin: 26px 0; background: rgba(255,255,255,.85); border-radius: 28px; padding: 20px; }
+.hero h2 { margin: 0; font-size: clamp(28px, 4vw, 48px); color: #ff5c8a; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(220px, 1fr)); gap: 20px; }
+.card {
+  border: 0; border-radius: 30px; padding: 30px 24px; text-align: left; cursor: pointer;
+  box-shadow: 0 14px 28px rgba(0,0,0,.16); transition: transform .15s, filter .15s;
+  color: #111; min-height: 220px;
+}
+.card:hover, .choice:hover, .small-btn:hover { transform: translateY(-4px); filter: brightness(1.03); }
+.card span { font-size: 64px; display: block; }
+.card h3 { margin: 8px 0; font-size: 36px; }
+.card p { margin: 0; font-weight: 700; }
+.math { background: #7bdff2; }
+.reading { background: #f2b5d4; }
+.science { background: #b2f7ef; }
+.worksheet { background: #ffd166; }
+.lesson-card { background: white; border-radius: 28px; padding: 24px; margin-top: 22px; box-shadow: 0 12px 28px rgba(0,0,0,.12); }
+.top-row { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap: wrap; }
+.back, .small-btn {
+  border: 0; background: #472183; color: white; border-radius: 18px; padding: 14px 20px; font-size: 18px; font-weight: 800; cursor: pointer;
+}
+.topic-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; margin-top:18px; }
+.topic { border:0; border-radius:22px; padding:22px; background:#fff3a3; font-size:24px; font-weight:900; cursor:pointer; box-shadow:0 8px 18px rgba(0,0,0,.12); }
+.question-box { background:#ffffff; border-radius:30px; padding:26px; margin-top:22px; box-shadow:0 12px 28px rgba(0,0,0,.12); }
+.progress { height: 18px; background:#ddd; border-radius: 20px; overflow:hidden; margin: 16px 0; }
+.progress div { height:100%; background:#06d6a0; width:0%; transition: width .3s; }
+.question { font-size: clamp(28px, 4vw, 48px); font-weight: 900; text-align: center; margin: 22px 0; color:#2d00f7; }
+.choices { display:grid; grid-template-columns: repeat(2, minmax(180px,1fr)); gap:16px; }
+.choice { border: 4px solid #222; background:#fff; border-radius:24px; padding:22px; font-size:30px; font-weight:900; cursor:pointer; min-height:100px; }
+.choice.correct { background:#b8f7c1; }
+.choice.wrong { background:#ffb3b3; }
+.message { text-align:center; font-size:28px; font-weight:900; min-height:40px; }
+.mascot { text-align:center; font-size:80px; animation: bounce 1.8s infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.worksheet-area { background:white; border-radius:28px; padding:24px; margin-top:22px; }
+.print-sheet { background:white; padding:20px; }
+.print-sheet h2 { font-size:32px; }
+.line { border-bottom:2px solid #222; height:44px; margin:10px 0; font-size:24px; }
+@media (max-width: 700px) { header, .grid, .choices { grid-template-columns:1fr; display:grid; } .card { min-height: 180px; } }
+@media print { body { background:white; } header, .hero, .grid, .top-row, .small-btn, .back { display:none !important; } .worksheet-area { box-shadow:none; } }
 
-  h1{font-family:'Baloo 2',cursive;font-weight:800;text-align:center;font-size:clamp(2rem,7vw,3.4rem);
-     color:#fff;line-height:1.05;margin-top:6px;text-shadow:0 4px 0 var(--coral),0 8px 14px var(--shadow);}
-  h1 .y{color:var(--sun);text-shadow:0 4px 0 #e0962f,0 8px 14px var(--shadow);}
-  .tagline{text-align:center;font-size:1.15rem;color:var(--ink);opacity:.82;margin:8px 0 26px;font-weight:500;}
-
-  .mute{position:fixed;top:14px;right:14px;z-index:20;border:none;cursor:pointer;background:#fff;
-    border-radius:50%;width:52px;height:52px;font-size:1.5rem;box-shadow:0 5px 0 var(--shadow),0 8px 14px rgba(40,56,77,.14);transition:transform .1s;}
-  .mute:active{transform:translateY(3px);box-shadow:0 2px 0 var(--shadow);}
-
-  .screen{display:none;animation:pop .35s cubic-bezier(.2,1.3,.5,1);}
-  .screen.active{display:block;}
-  @keyframes pop{from{transform:scale(.9);opacity:0;}to{transform:scale(1);opacity:1;}}
-
-  .play-wrap{text-align:center;margin-top:18px;}
-  .big-play{
-    border:none;cursor:pointer;font-family:'Baloo 2',cursive;font-weight:800;color:#fff;
-    background:var(--coral);border-radius:40px;padding:34px 54px;font-size:2.2rem;
-    box-shadow:0 12px 0 #d14d4d,0 20px 34px rgba(40,56,77,.2);transition:transform .12s,box-shadow .12s;
-    display:inline-flex;align-items:center;gap:16px;animation:beat 1.6s ease-in-out infinite;
-  }
-  .big-play:hover{transform:translateY(-4px);}
-  .big-play:active{transform:translateY(6px);box-shadow:0 6px 0 #d14d4d;}
-  @keyframes beat{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
-  .big-play .pe{font-size:2.6rem;}
-  .play-hint{margin-top:22px;font-size:1.1rem;opacity:.75;font-weight:500;}
-  .topics{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px;}
-  .chip{background:var(--cream);border-radius:20px;padding:10px 18px;font-family:'Baloo 2',cursive;font-weight:700;
-    font-size:1rem;box-shadow:0 4px 0 var(--shadow);}
-
-  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px;}
-  .back{border:none;cursor:pointer;background:#fff;border-radius:18px;padding:10px 18px;font-family:'Baloo 2',cursive;
-    font-weight:700;font-size:1rem;color:var(--ink);box-shadow:0 5px 0 var(--shadow);transition:transform .1s;}
-  .back:active{transform:translateY(3px);box-shadow:0 2px 0 var(--shadow);}
-  .score{background:var(--sun);border-radius:18px;padding:10px 20px;font-family:'Baloo 2',cursive;font-weight:800;
-    font-size:1.1rem;box-shadow:0 5px 0 #e0962f;color:var(--ink);}
-
-  .card{background:var(--cream);border-radius:30px;padding:24px 20px 28px;box-shadow:0 12px 30px rgba(40,56,77,.16);text-align:center;}
-  .topic-badge{display:inline-block;background:var(--grape);color:#fff;font-family:'Baloo 2',cursive;font-weight:700;
-    font-size:.95rem;padding:6px 16px;border-radius:16px;margin-bottom:14px;box-shadow:0 3px 0 #7a45c4;}
-
-  .speak-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:6px;flex-wrap:wrap;}
-  .say-again{border:none;cursor:pointer;background:var(--grape);color:#fff;border-radius:50%;width:70px;height:70px;
-    font-size:2rem;box-shadow:0 6px 0 #7a45c4;transition:transform .1s;flex-shrink:0;animation:bob 2.4s ease-in-out infinite;}
-  .say-again:active{transform:translateY(4px);box-shadow:0 2px 0 #7a45c4;}
-  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
-  .q{font-family:'Baloo 2',cursive;font-weight:700;font-size:clamp(1.3rem,4.5vw,1.9rem);line-height:1.2;}
-  .q-sub{font-size:1rem;opacity:.6;font-weight:500;margin-top:2px;margin-bottom:18px;}
-
-  .choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:6px;}
-  .choice{border:none;cursor:pointer;background:#fff;border-radius:22px;padding:18px 10px;
-    box-shadow:0 6px 0 #d6cdb6,0 10px 18px rgba(40,56,77,.1);transition:transform .12s,box-shadow .12s;
-    display:flex;flex-direction:column;align-items:center;gap:8px;}
-  .choice:hover{transform:translateY(-4px);}
-  .choice:active{transform:translateY(3px);box-shadow:0 3px 0 #d6cdb6;}
-  .choice .pic{font-size:3rem;filter:drop-shadow(0 3px 4px rgba(0,0,0,.12));}
-  .choice .name{font-family:'Baloo 2',cursive;font-weight:700;font-size:1.05rem;}
-  .choice.correct{background:#d4f7d9;box-shadow:0 6px 0 #7ad08a;animation:wiggle .5s;}
-  .choice.wrong{background:#ffe0e0;box-shadow:0 6px 0 #f0a3a3;animation:shake .4s;}
-  .choice:disabled{cursor:default;}
-  @keyframes wiggle{0%,100%{transform:rotate(0);}25%{transform:rotate(-4deg) scale(1.05);}75%{transform:rotate(4deg) scale(1.05);}}
-  @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-6px);}80%{transform:translateX(6px);}}
-
-  .feedback{min-height:40px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.4rem;margin-top:20px;}
-  .feedback.good{color:var(--grass);}
-  .feedback.oops{color:var(--coral);}
-  .learn{background:#fff7d6;border-radius:18px;padding:14px 16px;margin-top:12px;font-size:1.05rem;font-weight:500;
-    line-height:1.45;display:none;border:3px dashed var(--sun);}
-  .learn.show{display:block;animation:pop .3s;}
-  .learn b{color:var(--grape);}
-  .next-btn{border:none;cursor:pointer;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.3rem;color:#fff;
-    background:var(--grass);border-radius:22px;padding:16px 40px;margin-top:18px;box-shadow:0 6px 0 #4ca85f;
-    transition:transform .1s;display:none;}
-  .next-btn.show{display:inline-block;animation:pop .3s;}
-  .next-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #4ca85f;}
-
-  .footer{text-align:center;margin-top:30px;font-size:.95rem;color:var(--ink);opacity:.55;font-weight:500;}
-  .confetti{position:fixed;top:-20px;font-size:1.5rem;z-index:50;pointer-events:none;animation:fall 2.2s ease-in forwards;}
-  @keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0;}}
 </style>
 </head>
 <body>
-
-<button class="mute" id="muteBtn" onclick="toggleMute()" title="Sound on/off">🔊</button>
-
-<div class="wrap">
-  <div id="start" class="screen active">
-    <h1>Listen &amp; <span class="y">Guess!</span></h1>
-    <p class="tagline">🎧 I'll ask you a question out loud. You tap the answer! 🎉</p>
-    <div class="play-wrap">
-      <button class="big-play" onclick="startGame()"><span class="pe">▶️</span> PLAY</button>
-      <p class="play-hint">Put the sound up and tap PLAY! 🔊</p>
-      <div class="topics">
-        <span class="chip">🐾 Animals</span>
-        <span class="chip">🔬 Science</span>
-        <span class="chip">➕ Math</span>
-        <span class="chip">🔤 Letters</span>
-        <span class="chip">🎨 Colors</span>
-        <span class="chip">🪐 Space</span>
-        <span class="chip">⚽ Sports</span>
-        <span class="chip">🤖 Tech</span>
-        <span class="chip">🧍 My Body</span>
-        <span class="chip">🍎 Food</span>
-        <span class="chip">🌦️ Weather</span>
-        <span class="chip">😀 Feelings</span>
-        <span class="chip">🚒 Helpers</span>
-        <span class="chip">🌳 Nature</span>
-        <span class="chip">🎵 Music</span>
-        <span class="chip">🌍 Our World</span>
+  <div class="app">
+    <header>
+      <div>
+        <h1>Happy Learning 🌈</h1>
+        <p>Math, Reading, and printable practice for Grade 1 learners.</p>
       </div>
-    </div>
-    <p class="footer">Made with love for a curious 6-year-old 💛</p>
+      <div class="score-box">
+        <span>⭐ Stars</span>
+        <strong id="stars">0</strong>
+      </div>
+    </header>
+
+    <main id="screen"></main>
   </div>
 
-  <div id="quiz" class="screen">
-    <div class="topbar">
-      <button class="back" onclick="goStart()">⬅ Home</button>
-      <div class="score">⭐ <span id="score">0</span></div>
-    </div>
-    <div class="card">
-      <div class="topic-badge" id="topicBadge">Animals</div>
-      <div class="speak-row">
-        <button class="say-again" onclick="sayQuestionAgain()" title="Say it again">🔊</button>
-        <div>
-          <div class="q" id="qText"></div>
-          <div class="q-sub">👂 Tap the speaker to hear it again</div>
-        </div>
-      </div>
-      <div class="choices" id="choices"></div>
-      <div class="feedback" id="feedback"></div>
-      <div class="learn" id="learn"></div>
-      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next ➡</button>
-    </div>
-  </div>
-</div>
+  <template id="home-template">
+    <section class="hero">
+      <h2>Hello, little learner! 👋</h2>
+      <p>Choose a subject and start playing.</p>
+    </section>
 
-<script>
-(function(){for(let i=0;i<14;i++){const b=document.createElement('div');b.className='bubble';
-  const s=20+Math.random()*70;b.style.width=s+'px';b.style.height=s+'px';b.style.left=Math.random()*100+'vw';
-  b.style.animationDuration=(9+Math.random()*10)+'s';b.style.animationDelay=(-Math.random()*15)+'s';
-  document.body.appendChild(b);}})();
+    <section class="grid subjects">
+      <button class="card math" data-subject="math">
+        <span>🧮</span>
+        <h3>Math</h3>
+        <p>Numbers, addition, subtraction, shapes, time.</p>
+      </button>
+      <button class="card reading" data-subject="reading">
+        <span>📖</span>
+        <h3>Reading</h3>
+        <p>Letters, sounds, sight words, short sentences.</p>
+      </button>
+      <button class="card science" data-subject="science">
+        <span>🌎</span>
+        <h3>Science</h3>
+        <p>Animals, plants, body parts, weather.</p>
+      </button>
+      <button class="card worksheet" id="worksheetBtn">
+        <span>🖨️</span>
+        <h3>Worksheets</h3>
+        <p>Print simple practice sheets.</p>
+      </button>
+    </section>
+  </template>
 
-function rand(n){return Math.floor(Math.random()*n);}
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rand(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
-
-let audioCtx=null, muted=false;
-function ac(){if(!audioCtx){try{audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){audioCtx=null;}}
-  if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
-function note(freq,start,dur,type='sine',vol=0.22){const c=ac();if(!c)return;
-  const o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=freq;o.connect(g);g.connect(c.destination);
-  const t=c.currentTime+start;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+0.02);
-  g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.start(t);o.stop(t+dur+0.02);}
-function sCorrect(){if(muted)return;note(659,0,0.16,'triangle',0.25);note(988,0.12,0.22,'triangle',0.25);}
-function sWrong(){if(muted)return;note(311,0,0.18,'sine',0.18);note(247,0.12,0.22,'sine',0.18);}
-
-let voicePref=null;
-function loadVoices(){
-  const vs=speechSynthesis.getVoices();
-  voicePref = vs.find(v=>/en(-|_)?(US|GB)/i.test(v.lang)&&/female|samantha|google|zira|karen|moira/i.test(v.name))
-           || vs.find(v=>/^en/i.test(v.lang)) || vs[0] || null;
-}
-if('speechSynthesis' in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices;}
-function speak(text){
-  if(muted||!('speechSynthesis' in window))return;
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  if(voicePref)u.voice=voicePref;
-  u.rate=0.92;u.pitch=1.12;u.volume=1;
-  speechSynthesis.speak(u);
-}
-function toggleMute(){
-  muted=!muted;
-  document.getElementById('muteBtn').textContent=muted?'🔇':'🔊';
-  if(muted&&'speechSynthesis' in window)speechSynthesis.cancel();else{ac();}
-}
-
-const BANK = [
-  {topic:"Animals",say:"Which animal is the BIGGEST?",show:"Which is the BIGGEST? 🐘",
-   choices:[{name:"Ant",pic:"🐜"},{name:"Cat",pic:"🐱"},{name:"Elephant",pic:"🐘"},{name:"Mouse",pic:"🐭"},{name:"Bird",pic:"🐦"}],
-   answer:2, learn:"The <b>elephant</b> is the biggest! It can be as tall as two grown-ups. 🐘"},
-  {topic:"Animals",say:"Which animal is the SMALLEST?",show:"Which is the SMALLEST? 🐜",
-   choices:[{name:"Horse",pic:"🐴"},{name:"Ant",pic:"🐜"},{name:"Dog",pic:"🐶"},{name:"Cow",pic:"🐮"},{name:"Pig",pic:"🐷"}],
-   answer:1, learn:"The <b>ant</b> is the smallest, but it can lift 50 times its own weight! 💪"},
-  {topic:"Animals",say:"Which one lives in the ocean?",show:"Who lives in the ocean? 🌊",
-   choices:[{name:"Whale",pic:"🐋"},{name:"Lion",pic:"🦁"},{name:"Horse",pic:"🐴"},{name:"Bear",pic:"🐻"},{name:"Rabbit",pic:"🐰"}],
-   answer:0, learn:"The <b>blue whale</b> lives in the ocean and is the biggest animal EVER! 🐋"},
-  {topic:"Animals",say:"Which animal can fly?",show:"Which one can FLY? 🦅",
-   choices:[{name:"Fish",pic:"🐟"},{name:"Eagle",pic:"🦅"},{name:"Snake",pic:"🐍"},{name:"Frog",pic:"🐸"},{name:"Turtle",pic:"🐢"}],
-   answer:1, learn:"The <b>eagle</b> can fly very high using its big strong wings! 🦅"},
-
-  {topic:"Science",say:"Which one is so tiny you need a microscope to see it?",show:"So tiny you need a microscope? 🔬",
-   choices:[{name:"Dog",pic:"🐶"},{name:"Germ",pic:"🦠"},{name:"Tree",pic:"🌳"},{name:"Car",pic:"🚗"},{name:"House",pic:"🏠"}],
-   answer:1, learn:"A <b>germ</b> is super tiny! Millions could fit on the tip of a pin. 🦠"},
-  {topic:"Science",say:"What do plants need to grow big and strong?",show:"What helps plants grow? 🌱",
-   choices:[{name:"Candy",pic:"🍬"},{name:"Sunshine",pic:"☀️"},{name:"Rocks",pic:"🪨"},{name:"Shoes",pic:"👟"},{name:"Toys",pic:"🧸"}],
-   answer:1, learn:"Plants love <b>sunshine</b> and water to grow! That's called photosynthesis. ☀️🌱"},
-  {topic:"Science",say:"Which one is hot?",show:"Which one is HOT? 🔥",
-   choices:[{name:"Ice",pic:"🧊"},{name:"Snow",pic:"❄️"},{name:"Fire",pic:"🔥"},{name:"Water",pic:"💧"},{name:"Cloud",pic:"☁️"}],
-   answer:2, learn:"<b>Fire</b> is very hot! Ice and snow are cold. Always be careful near fire. 🔥"},
-  {topic:"Science",say:"Which one makes light in the daytime?",show:"What lights up the day? ☀️",
-   choices:[{name:"Moon",pic:"🌙"},{name:"Sun",pic:"☀️"},{name:"Star",pic:"⭐"},{name:"Lamp",pic:"💡"},{name:"Candle",pic:"🕯️"}],
-   answer:1, learn:"The <b>Sun</b> lights up our daytime. The Moon comes out at night! 🌞🌙"},
-
-  {topic:"Math",say:"Which group has THREE apples?",show:"Where are THREE apples? 3️⃣",
-   choices:[{name:"One",pic:"🍎"},{name:"Two",pic:"🍎🍎"},{name:"Three",pic:"🍎🍎🍎"},{name:"Four",pic:"🍎🍎🍎🍎"},{name:"Five",pic:"🍎🍎🍎🍎🍎"}],
-   answer:2, learn:"Count them: one, two, <b>three</b>! 🍎🍎🍎 Great counting!"},
-  {topic:"Math",say:"Which shape is a CIRCLE?",show:"Find the CIRCLE! ⭕",
-   choices:[{name:"Square",pic:"🟥"},{name:"Triangle",pic:"🔺"},{name:"Circle",pic:"🔵"},{name:"Star",pic:"⭐"},{name:"Heart",pic:"💛"}],
-   answer:2, learn:"A <b>circle</b> is perfectly round, like a ball or the Sun! 🔵"},
-  {topic:"Math",say:"Which one is the BIGGEST number?",show:"Which number is BIGGEST? 🔢",
-   choices:[{name:"Two",pic:"2️⃣"},{name:"Five",pic:"5️⃣"},{name:"Nine",pic:"9️⃣"},{name:"One",pic:"1️⃣"},{name:"Four",pic:"4️⃣"}],
-   answer:2, learn:"<b>9</b> is the biggest here! Numbers get bigger as you count up. 🔢"},
-  {topic:"Math",say:"Which group has MORE stars?",show:"Which has MORE? ⭐",
-   choices:[{name:"One",pic:"⭐"},{name:"Five",pic:"⭐⭐⭐⭐⭐"},{name:"Two",pic:"⭐⭐"},{name:"Three",pic:"⭐⭐⭐"},{name:"Four",pic:"⭐⭐⭐⭐"}],
-   answer:1, learn:"Five stars is the most! <b>More</b> means a bigger amount. ⭐⭐⭐⭐⭐"},
-
-  {topic:"Space",say:"Which one do we live on?",show:"Where do WE live? 🌍",
-   choices:[{name:"Moon",pic:"🌙"},{name:"Earth",pic:"🌍"},{name:"Sun",pic:"☀️"},{name:"Rocket",pic:"🚀"},{name:"Star",pic:"⭐"}],
-   answer:1, learn:"We all live on planet <b>Earth</b>! It's the only one with people and animals. 🌍"},
-  {topic:"Space",say:"What do astronauts ride to fly into space?",show:"What flies to space? 🚀",
-   choices:[{name:"Car",pic:"🚗"},{name:"Boat",pic:"⛵"},{name:"Rocket",pic:"🚀"},{name:"Bike",pic:"🚲"},{name:"Train",pic:"🚂"}],
-   answer:2, learn:"A <b>rocket</b> blasts astronauts up into space! 🚀✨"},
-  {topic:"Space",say:"Which one comes out at night?",show:"What shines at night? 🌙",
-   choices:[{name:"Sun",pic:"☀️"},{name:"Moon",pic:"🌙"},{name:"Rainbow",pic:"🌈"},{name:"Cloud",pic:"☁️"},{name:"Kite",pic:"🪁"}],
-   answer:1, learn:"The <b>Moon</b> shines at night, along with twinkly stars. 🌙⭐"},
-
-  {topic:"Sports",say:"Which ball do you kick with your feet in soccer?",show:"Which ball is for soccer? ⚽",
-   choices:[{name:"Basketball",pic:"🏀"},{name:"Soccer ball",pic:"⚽"},{name:"Tennis",pic:"🎾"},{name:"Football",pic:"🏈"},{name:"Baseball",pic:"⚾"}],
-   answer:1, learn:"In <b>soccer</b> you kick the ⚽ ball with your feet. No hands allowed! ⚽"},
-  {topic:"Sports",say:"Which sport do you play in a swimming pool?",show:"What do you do in a pool? 🏊",
-   choices:[{name:"Skiing",pic:"⛷️"},{name:"Swimming",pic:"🏊"},{name:"Cycling",pic:"🚴"},{name:"Running",pic:"🏃"},{name:"Climbing",pic:"🧗"}],
-   answer:1, learn:"<b>Swimming</b> happens in the water! It makes your whole body strong. 🏊💦"},
-  {topic:"Sports",say:"Which one do you bounce when you play basketball?",show:"Which ball bounces high? 🏀",
-   choices:[{name:"Basketball",pic:"🏀"},{name:"Egg",pic:"🥚"},{name:"Pillow",pic:"🛏️"},{name:"Balloon",pic:"🎈"},{name:"Book",pic:"📖"}],
-   answer:0, learn:"A <b>basketball</b> bounces high so you can dribble it! 🏀"},
-
-  {topic:"Tech",say:"Which one can you use to call your grandma?",show:"What do you call grandma on? 📱",
-   choices:[{name:"Phone",pic:"📱"},{name:"Spoon",pic:"🥄"},{name:"Hat",pic:"🎩"},{name:"Sock",pic:"🧦"},{name:"Cup",pic:"🥤"}],
-   answer:0, learn:"A <b>phone</b> lets you talk to people far away! 📱"},
-  {topic:"Tech",say:"Which one do you type on to use a computer?",show:"What do you type on? ⌨️",
-   choices:[{name:"Keyboard",pic:"⌨️"},{name:"Banana",pic:"🍌"},{name:"Shoe",pic:"👟"},{name:"Flower",pic:"🌸"},{name:"Ball",pic:"⚽"}],
-   answer:0, learn:"A <b>keyboard</b> has letters and numbers you press to type! ⌨️"},
-  {topic:"Tech",say:"A helpful computer brain that can answer questions is called...?",show:"A smart computer helper is... 🤖",
-   choices:[{name:"Robot AI",pic:"🤖"},{name:"Rock",pic:"🪨"},{name:"Leaf",pic:"🍃"},{name:"Chair",pic:"🪑"},{name:"Cloud",pic:"☁️"}],
-   answer:0, learn:"A robot or <b>AI</b> is a computer brain that can learn and help us! 🤖 You're talking to one right now!"},
-
-  /* ---- COLORS ---- */
-  {topic:"Colors",say:"Which one is the color RED?",show:"Find the color RED! 🔴",
-   choices:[{name:"Blue",pic:"🔵"},{name:"Red",pic:"🔴"},{name:"Green",pic:"🟢"},{name:"Yellow",pic:"🟡"},{name:"Purple",pic:"🟣"}],
-   answer:1, learn:"<b>Red</b> is the color of apples, strawberries and fire trucks! 🔴"},
-  {topic:"Colors",say:"What color is the grass and the leaves?",show:"What color is grass? 🌿",
-   choices:[{name:"Pink",pic:"🩷"},{name:"Orange",pic:"🟠"},{name:"Green",pic:"🟢"},{name:"Blue",pic:"🔵"},{name:"Black",pic:"⚫"}],
-   answer:2, learn:"Grass and leaves are <b>green</b>! 🌿 Green means growing plants."},
-  {topic:"Colors",say:"What color is the sky on a sunny day?",show:"What color is the sky? ☀️",
-   choices:[{name:"Blue",pic:"🔵"},{name:"Brown",pic:"🟤"},{name:"Red",pic:"🔴"},{name:"Green",pic:"🟢"},{name:"Pink",pic:"🩷"}],
-   answer:0, learn:"The sky is <b>blue</b> on a clear sunny day! 💙"},
-
-  /* ---- SHAPES ---- */
-  {topic:"Shapes",say:"Which shape is a TRIANGLE? It has three sides.",show:"Find the TRIANGLE! 🔺",
-   choices:[{name:"Circle",pic:"🔵"},{name:"Square",pic:"🟦"},{name:"Triangle",pic:"🔺"},{name:"Heart",pic:"💛"},{name:"Star",pic:"⭐"}],
-   answer:2, learn:"A <b>triangle</b> has three sides and three corners! 🔺"},
-  {topic:"Shapes",say:"Which shape is a STAR?",show:"Find the STAR! ⭐",
-   choices:[{name:"Square",pic:"🟦"},{name:"Star",pic:"⭐"},{name:"Circle",pic:"🔵"},{name:"Diamond",pic:"🔷"},{name:"Heart",pic:"💚"}],
-   answer:1, learn:"A <b>star</b> has points, like the twinkly ones in the sky! ⭐"},
-
-  /* ---- LETTERS & SOUNDS ---- */
-  {topic:"Letters",say:"Which animal starts with the B sound? Buh... buh...",show:"Which starts with B? 🅱️",
-   choices:[{name:"Cat",pic:"🐱"},{name:"Bear",pic:"🐻"},{name:"Fish",pic:"🐟"},{name:"Dog",pic:"🐶"},{name:"Owl",pic:"🦉"}],
-   answer:1, learn:"<b>Bear</b> starts with B! Buh-buh-Bear. 🐻"},
-  {topic:"Letters",say:"Which one starts with the A sound? Ah... ah...",show:"Which starts with A? 🅰️",
-   choices:[{name:"Apple",pic:"🍎"},{name:"Sun",pic:"☀️"},{name:"Dog",pic:"🐶"},{name:"Tree",pic:"🌳"},{name:"Moon",pic:"🌙"}],
-   answer:0, learn:"<b>Apple</b> starts with A! Ah-ah-Apple. 🍎"},
-  {topic:"Letters",say:"Which one starts with the S sound? Sss... sss...",show:"Which starts with S? ✏️",
-   choices:[{name:"Cat",pic:"🐱"},{name:"Frog",pic:"🐸"},{name:"Sun",pic:"☀️"},{name:"Bird",pic:"🐦"},{name:"Hat",pic:"🎩"}],
-   answer:2, learn:"<b>Sun</b> starts with S! Sss-sss-Sun. ☀️"},
-
-  /* ---- NUMBERS ---- */
-  {topic:"Numbers",say:"What number comes AFTER five?",show:"What comes after 5? 🔢",
-   choices:[{name:"Three",pic:"3️⃣"},{name:"Six",pic:"6️⃣"},{name:"Two",pic:"2️⃣"},{name:"Nine",pic:"9️⃣"},{name:"One",pic:"1️⃣"}],
-   answer:1, learn:"After five comes <b>six</b>! 4, 5, 6... 6️⃣"},
-  {topic:"Numbers",say:"How many wheels does a bicycle have?",show:"How many wheels on a bike? 🚲",
-   choices:[{name:"One",pic:"1️⃣"},{name:"Two",pic:"2️⃣"},{name:"Three",pic:"3️⃣"},{name:"Four",pic:"4️⃣"},{name:"Five",pic:"5️⃣"}],
-   answer:1, learn:"A bicycle has <b>two</b> wheels! 'Bi' means two. 🚲"},
-
-  /* ---- THE BODY ---- */
-  {topic:"My Body",say:"What part of your body do you use to SEE?",show:"What do you SEE with? 👀",
-   choices:[{name:"Eyes",pic:"👀"},{name:"Nose",pic:"👃"},{name:"Foot",pic:"🦶"},{name:"Hand",pic:"✋"},{name:"Ear",pic:"👂"}],
-   answer:0, learn:"You see with your <b>eyes</b>! 👀 Two eyes help you see all around."},
-  {topic:"My Body",say:"What do you use to HEAR sounds?",show:"What do you HEAR with? 👂",
-   choices:[{name:"Eyes",pic:"👀"},{name:"Ears",pic:"👂"},{name:"Mouth",pic:"👄"},{name:"Hand",pic:"✋"},{name:"Hair",pic:"💇"}],
-   answer:1, learn:"You hear with your <b>ears</b>! 👂 That's how you hear this game."},
-  {topic:"My Body",say:"What do you use to SMELL a flower?",show:"What do you SMELL with? 👃",
-   choices:[{name:"Nose",pic:"👃"},{name:"Foot",pic:"🦶"},{name:"Eye",pic:"👁️"},{name:"Knee",pic:"🦵"},{name:"Ear",pic:"👂"}],
-   answer:0, learn:"You smell with your <b>nose</b>! 👃 Flowers smell sweet."},
-
-  /* ---- HEALTHY FOOD ---- */
-  {topic:"Food",say:"Which one is a healthy fruit?",show:"Which is a healthy fruit? 🍎",
-   choices:[{name:"Candy",pic:"🍬"},{name:"Cake",pic:"🍰"},{name:"Apple",pic:"🍎"},{name:"Soda",pic:"🥤"},{name:"Chips",pic:"🍟"}],
-   answer:2, learn:"An <b>apple</b> is a healthy fruit that makes you strong! 🍎 Treats are just sometimes."},
-  {topic:"Food",say:"What is the healthiest thing to drink when you are thirsty?",show:"Healthiest drink? 💧",
-   choices:[{name:"Water",pic:"💧"},{name:"Soda",pic:"🥤"},{name:"Candy",pic:"🍬"},{name:"Ice cream",pic:"🍦"},{name:"Cake",pic:"🍰"}],
-   answer:0, learn:"<b>Water</b> is the best drink for your body! 💧 Drink it every day."},
-  {topic:"Food",say:"Which one grows in a garden and is a vegetable?",show:"Which is a vegetable? 🥕",
-   choices:[{name:"Cookie",pic:"🍪"},{name:"Carrot",pic:"🥕"},{name:"Donut",pic:"🍩"},{name:"Candy",pic:"🍬"},{name:"Lollipop",pic:"🍭"}],
-   answer:1, learn:"A <b>carrot</b> is a veggie that helps you see well! 🥕"},
-
-  /* ---- WEATHER ---- */
-  {topic:"Weather",say:"What do you use when it is RAINING?",show:"What do you use in rain? 🌧️",
-   choices:[{name:"Umbrella",pic:"☂️"},{name:"Sunglasses",pic:"🕶️"},{name:"Fan",pic:"🪭"},{name:"Hat",pic:"👒"},{name:"Ball",pic:"⚽"}],
-   answer:0, learn:"An <b>umbrella</b> keeps you dry in the rain! ☂️🌧️"},
-  {topic:"Weather",say:"What falls from the sky when it is very cold in winter?",show:"What falls in winter? ❄️",
-   choices:[{name:"Sand",pic:"🏖️"},{name:"Snow",pic:"❄️"},{name:"Leaves",pic:"🍂"},{name:"Rocks",pic:"🪨"},{name:"Rain",pic:"🌧️"}],
-   answer:1, learn:"<b>Snow</b> falls when it's freezing cold! ❄️ It's fun to play in."},
-  {topic:"Weather",say:"What do you see in the sky after rain and sunshine together?",show:"What comes after rain? 🌈",
-   choices:[{name:"Rainbow",pic:"🌈"},{name:"Snow",pic:"❄️"},{name:"Moon",pic:"🌙"},{name:"Star",pic:"⭐"},{name:"Fire",pic:"🔥"}],
-   answer:0, learn:"A <b>rainbow</b> appears with rain and sun together! 🌈 It has many colors."},
-
-  /* ---- TIME / DAILY LIFE ---- */
-  {topic:"Daily Life",say:"What do you do at NIGHT when you are sleepy?",show:"What do you do at night? 😴",
-   choices:[{name:"Sleep",pic:"😴"},{name:"Swim",pic:"🏊"},{name:"Run",pic:"🏃"},{name:"Eat",pic:"🍽️"},{name:"Jump",pic:"🤸"}],
-   answer:0, learn:"At night you <b>sleep</b> to rest your body! 😴🌙"},
-  {topic:"Daily Life",say:"What do you use to brush your teeth?",show:"What brushes teeth? 🪥",
-   choices:[{name:"Spoon",pic:"🥄"},{name:"Toothbrush",pic:"🪥"},{name:"Comb",pic:"💈"},{name:"Pencil",pic:"✏️"},{name:"Fork",pic:"🍴"}],
-   answer:1, learn:"A <b>toothbrush</b> keeps your teeth clean and healthy! 🪥✨"},
-
-  /* ---- FEELINGS ---- */
-  {topic:"Feelings",say:"Which face looks HAPPY?",show:"Which face is HAPPY? 😀",
-   choices:[{name:"Sad",pic:"😢"},{name:"Happy",pic:"😀"},{name:"Angry",pic:"😠"},{name:"Sleepy",pic:"😴"},{name:"Scared",pic:"😨"}],
-   answer:1, learn:"This face is <b>happy</b>! 😀 We smile when we feel good."},
-  {topic:"Feelings",say:"Which face looks SAD?",show:"Which face is SAD? 😢",
-   choices:[{name:"Happy",pic:"😀"},{name:"Surprised",pic:"😲"},{name:"Sad",pic:"😢"},{name:"Silly",pic:"😜"},{name:"Sleepy",pic:"😴"}],
-   answer:2, learn:"This face is <b>sad</b>. 😢 It's okay to feel sad sometimes."},
-
-  /* ---- SAFETY & HELPERS ---- */
-  {topic:"Helpers",say:"Who helps put out fires?",show:"Who puts out fires? 🚒",
-   choices:[{name:"Firefighter",pic:"🧑‍🚒"},{name:"Chef",pic:"🧑‍🍳"},{name:"Farmer",pic:"🧑‍🌾"},{name:"Singer",pic:"🧑‍🎤"},{name:"Pilot",pic:"🧑‍✈️"}],
-   answer:0, learn:"A <b>firefighter</b> bravely puts out fires! 🧑‍🚒🚒"},
-  {topic:"Helpers",say:"Who helps you when you are sick?",show:"Who helps when sick? 🩺",
-   choices:[{name:"Doctor",pic:"🧑‍⚕️"},{name:"Mail carrier",pic:"📮"},{name:"Painter",pic:"🧑‍🎨"},{name:"Driver",pic:"🚕"},{name:"Baker",pic:"🥖"}],
-   answer:0, learn:"A <b>doctor</b> helps you feel better when you're sick! 🧑‍⚕️"},
-  {topic:"Helpers",say:"On a traffic light, what color means GO?",show:"What color means GO? 🚦",
-   choices:[{name:"Red",pic:"🔴"},{name:"Green",pic:"🟢"},{name:"Yellow",pic:"🟡"},{name:"Blue",pic:"🔵"},{name:"Purple",pic:"🟣"}],
-   answer:1, learn:"<b>Green</b> means GO! Red means stop. 🚦"},
-
-  /* ---- NATURE ---- */
-  {topic:"Nature",say:"Where do fish live?",show:"Where do fish live? 🐟",
-   choices:[{name:"In water",pic:"💧"},{name:"In trees",pic:"🌳"},{name:"In the sky",pic:"☁️"},{name:"Underground",pic:"🕳️"},{name:"In fire",pic:"🔥"}],
-   answer:0, learn:"Fish live in the <b>water</b>! 🐟💧 They breathe with gills."},
-  {topic:"Nature",say:"What grows on a tree?",show:"What grows on a tree? 🌳",
-   choices:[{name:"Shoes",pic:"👟"},{name:"Leaves",pic:"🍃"},{name:"Cars",pic:"🚗"},{name:"Books",pic:"📚"},{name:"Phones",pic:"📱"}],
-   answer:1, learn:"<b>Leaves</b> grow on trees, and so do fruits! 🍃🌳"},
-  {topic:"Nature",say:"Where does a bee live and make honey?",show:"Where do bees live? 🐝",
-   choices:[{name:"Beehive",pic:"🍯"},{name:"Doghouse",pic:"🏠"},{name:"Ocean",pic:"🌊"},{name:"Car",pic:"🚗"},{name:"Cave",pic:"🕳️"}],
-   answer:0, learn:"Bees live in a <b>hive</b> and make yummy honey! 🐝🍯"},
-
-  /* ---- MUSIC ---- */
-  {topic:"Music",say:"Which one do you hit to make a drum sound?",show:"Which is a drum? 🥁",
-   choices:[{name:"Drum",pic:"🥁"},{name:"Book",pic:"📖"},{name:"Cup",pic:"🥤"},{name:"Shoe",pic:"👟"},{name:"Hat",pic:"🎩"}],
-   answer:0, learn:"A <b>drum</b> goes boom-boom when you hit it! 🥁"},
-  {topic:"Music",say:"Which one has keys you press to make music?",show:"Which is a piano? 🎹",
-   choices:[{name:"Guitar",pic:"🎸"},{name:"Piano",pic:"🎹"},{name:"Drum",pic:"🥁"},{name:"Bell",pic:"🔔"},{name:"Horn",pic:"📯"}],
-   answer:1, learn:"A <b>piano</b> has black and white keys you press! 🎹"},
-
-  /* ---- GEOGRAPHY / WORLD ---- */
-  {topic:"Our World",say:"Which one is a very hot, sandy place?",show:"Which place is hot & sandy? 🏜️",
-   choices:[{name:"Desert",pic:"🏜️"},{name:"Snowy mountain",pic:"🏔️"},{name:"Ocean",pic:"🌊"},{name:"Forest",pic:"🌲"},{name:"City",pic:"🏙️"}],
-   answer:0, learn:"A <b>desert</b> is hot and full of sand! 🏜️ Camels live there."},
-  {topic:"Our World",say:"Which animal lives where it is icy and snowy?",show:"Who loves the snow? 🐧",
-   choices:[{name:"Camel",pic:"🐫"},{name:"Penguin",pic:"🐧"},{name:"Lion",pic:"🦁"},{name:"Monkey",pic:"🐒"},{name:"Parrot",pic:"🦜"}],
-   answer:1, learn:"<b>Penguins</b> love the cold, icy snow! 🐧❄️"},
-  {topic:"Our World",say:"What covers most of our planet Earth?",show:"What covers Earth most? 🌊",
-   choices:[{name:"Water",pic:"🌊"},{name:"Candy",pic:"🍬"},{name:"Sand",pic:"🏖️"},{name:"Ice cream",pic:"🍦"},{name:"Grass",pic:"🌱"}],
-   answer:0, learn:"Most of Earth is covered in <b>water</b>! 🌊 That's why it looks blue from space."}
-];
-
-let score=0, order=[], pos=0, current=null, answered=false;
-
-function goStart(){
-  if('speechSynthesis' in window)speechSynthesis.cancel();
-  document.getElementById('start').classList.add('active');
-  document.getElementById('quiz').classList.remove('active');
-  window.scrollTo(0,0);
-}
-function startGame(){
-  ac();
-  score=0;document.getElementById('score').textContent=0;
-  order=shuffle(BANK.map((_,i)=>i));pos=0;
-  document.getElementById('start').classList.remove('active');
-  document.getElementById('quiz').classList.add('active');
-  window.scrollTo(0,0);
-  loadQuestion();
-}
-function loadQuestion(){
-  answered=false;
-  if(pos>=order.length){order=shuffle(BANK.map((_,i)=>i));pos=0;}
-  current=BANK[order[pos]];
-  document.getElementById('topicBadge').textContent=current.topic;
-  document.getElementById('qText').textContent=current.show;
-  document.getElementById('feedback').textContent='';
-  document.getElementById('feedback').className='feedback';
-  document.getElementById('learn').className='learn';
-  document.getElementById('nextBtn').className='next-btn';
-  const box=document.getElementById('choices');box.innerHTML='';
-  const idx=shuffle(current.choices.map((_,i)=>i));
-  idx.forEach(origIndex=>{
-    const ch=current.choices[origIndex];
-    const b=document.createElement('button');
-    b.className='choice';
-    b.innerHTML='<span class="pic">'+ch.pic+'</span><span class="name">'+ch.name+'</span>';
-    b.onclick=()=>pick(b,origIndex===current.answer);
-    box.appendChild(b);
-  });
-  setTimeout(()=>speak(current.say),250);
-}
-function sayQuestionAgain(){if(current)speak(current.say);}
-function pick(btn,isCorrect){
-  if(answered)return;
-  answered=true;
-  document.querySelectorAll('.choice').forEach(c=>c.disabled=true);
-  const fb=document.getElementById('feedback');
-  const learn=document.getElementById('learn');
-  if(isCorrect){
-    score++;document.getElementById('score').textContent=score;
-    btn.classList.add('correct');
-    fb.textContent='🎉 YES! Great job!';fb.className='feedback good';
-    sCorrect();confetti();speak("Yes! Great job!");
-  }else{
-    btn.classList.add('wrong');
-    document.querySelectorAll('.choice').forEach(k=>{
-      if(k.querySelector('.name').textContent===current.choices[current.answer].name)k.classList.add('correct');
-    });
-    fb.textContent='Oops! Try again next time 😊';fb.className='feedback oops';
-    sWrong();speak("Oops! The answer was "+current.choices[current.answer].name);
+  <script>
+const QUESTION_BANK = {
+  math: {
+    title: "Math 🧮",
+    topics: {
+      counting: { name: "Counting 1 to 20", questions: [
+        q("What number comes after 1?", ["2", "3", "5", "0"], "2"),
+        q("What number comes after 4?", ["3", "5", "8", "1"], "5"),
+        q("What number comes before 10?", ["8", "9", "11", "7"], "9"),
+        q("Count: 🍎🍎🍎", ["2", "3", "4", "5"], "3"),
+        q("Count: 🐶🐶🐶🐶🐶", ["4", "5", "6", "3"], "5"),
+        q("Which is bigger?", ["6", "2", "1", "0"], "6"),
+        q("Which is smaller?", ["9", "7", "3", "8"], "3"),
+        q("What number comes after 12?", ["11", "13", "15", "10"], "13"),
+        q("What number comes before 18?", ["16", "17", "19", "20"], "17"),
+        q("Count: ⭐⭐⭐⭐⭐⭐⭐", ["5", "6", "7", "8"], "7"),
+        q("Which number is missing? 1, 2, __, 4", ["3", "5", "6", "0"], "3"),
+        q("Which number is missing? 8, 9, __, 11", ["7", "10", "12", "6"], "10")
+      ]},
+      addition: { name: "Addition", questions: [
+        q("1 + 1 = ?", ["1", "2", "3", "4"], "2"), q("2 + 3 = ?", ["4", "5", "6", "7"], "5"),
+        q("4 + 2 = ?", ["5", "6", "7", "8"], "6"), q("5 + 5 = ?", ["9", "10", "11", "12"], "10"),
+        q("3 + 4 = ?", ["6", "7", "8", "9"], "7"), q("6 + 1 = ?", ["5", "6", "7", "8"], "7"),
+        q("🍌🍌 + 🍌 = ?", ["2", "3", "4", "5"], "3"), q("🐱🐱🐱 + 🐱🐱 = ?", ["4", "5", "6", "7"], "5"),
+        q("7 + 2 = ?", ["8", "9", "10", "11"], "9"), q("8 + 1 = ?", ["7", "8", "9", "10"], "9"),
+        q("9 + 1 = ?", ["9", "10", "11", "12"], "10"), q("10 + 2 = ?", ["11", "12", "13", "14"], "12")
+      ]},
+      subtraction: { name: "Subtraction", questions: [
+        q("2 - 1 = ?", ["0", "1", "2", "3"], "1"), q("5 - 2 = ?", ["2", "3", "4", "5"], "3"),
+        q("6 - 3 = ?", ["2", "3", "4", "5"], "3"), q("10 - 5 = ?", ["4", "5", "6", "7"], "5"),
+        q("8 - 1 = ?", ["6", "7", "8", "9"], "7"), q("9 - 4 = ?", ["4", "5", "6", "7"], "5"),
+        q("🍎🍎🍎 take away 🍎 = ?", ["1", "2", "3", "4"], "2"), q("7 - 2 = ?", ["4", "5", "6", "7"], "5"),
+        q("4 - 4 = ?", ["0", "1", "2", "4"], "0"), q("12 - 2 = ?", ["9", "10", "11", "12"], "10")
+      ]},
+      shapes: { name: "Shapes", questions: [
+        q("Which shape is round?", ["Circle", "Square", "Triangle", "Rectangle"], "Circle"),
+        q("How many sides does a triangle have?", ["2", "3", "4", "5"], "3"),
+        q("How many sides does a square have?", ["3", "4", "5", "6"], "4"),
+        q("Which shape looks like a door?", ["Circle", "Triangle", "Rectangle", "Star"], "Rectangle"),
+        q("Which shape has no corners?", ["Circle", "Square", "Triangle", "Diamond"], "Circle"),
+        q("Which shape has 4 equal sides?", ["Square", "Circle", "Triangle", "Oval"], "Square")
+      ]}
+    }
+  },
+  reading: {
+    title: "Reading 📖",
+    topics: {
+      alphabet: { name: "Alphabet", questions: [
+        q("What letter starts Apple?", ["A", "B", "C", "D"], "A"), q("What letter starts Ball?", ["A", "B", "C", "D"], "B"),
+        q("What letter starts Cat?", ["C", "D", "E", "F"], "C"), q("What letter starts Dog?", ["B", "C", "D", "E"], "D"),
+        q("Which is lowercase A?", ["a", "b", "c", "d"], "a"), q("Which is uppercase m?", ["M", "N", "W", "H"], "M"),
+        q("What comes after A?", ["B", "C", "D", "Z"], "B"), q("What comes after C?", ["A", "B", "D", "E"], "D")
+      ]},
+      sounds: { name: "Beginning Sounds", questions: [
+        q("Sun starts with what sound?", ["s", "m", "t", "p"], "s"), q("Fish starts with what sound?", ["f", "b", "d", "r"], "f"),
+        q("Map starts with what sound?", ["n", "m", "s", "c"], "m"), q("Pig starts with what sound?", ["p", "g", "t", "l"], "p"),
+        q("Red starts with what sound?", ["r", "w", "y", "e"], "r"), q("Hat starts with what sound?", ["h", "a", "t", "s"], "h")
+      ]},
+      sight: { name: "Sight Words", questions: [
+        q("Find the word: the", ["the", "and", "cat", "run"], "the"), q("Find the word: and", ["an", "and", "end", "ant"], "and"),
+        q("Find the word: is", ["in", "it", "is", "if"], "is"), q("Find the word: you", ["yes", "you", "your", "yam"], "you"),
+        q("Find the word: like", ["look", "lake", "like", "line"], "like"), q("Find the word: can", ["cat", "can", "car", "cap"], "can")
+      ]},
+      sentences: { name: "Short Sentences", questions: [
+        q("I see a cat. What animal?", ["cat", "dog", "fish", "bird"], "cat"),
+        q("The sun is hot. What is hot?", ["moon", "sun", "rain", "snow"], "sun"),
+        q("A bird can fly. Who can fly?", ["bird", "fish", "pig", "cow"], "bird"),
+        q("The dog can run. What can the dog do?", ["jump", "sleep", "run", "swim"], "run"),
+        q("I like red. What color?", ["blue", "red", "green", "pink"], "red")
+      ]}
+    }
+  },
+  science: {
+    title: "Science 🌎",
+    topics: {
+      animals: { name: "Animals", questions: [
+        q("Which animal says meow?", ["Dog", "Cat", "Cow", "Duck"], "Cat"), q("Which animal is the biggest?", ["Whale", "Rabbit", "Cat", "Dog"], "Whale"),
+        q("Which animal can fly?", ["Bird", "Fish", "Cow", "Horse"], "Bird"), q("Which animal lives in water?", ["Fish", "Lion", "Bear", "Chicken"], "Fish"),
+        q("Which animal gives us milk?", ["Cow", "Snake", "Frog", "Bird"], "Cow")
+      ]},
+      weather: { name: "Weather", questions: [
+        q("What do we use when it rains?", ["Umbrella", "Sunglasses", "Fan", "Pillow"], "Umbrella"),
+        q("What shines in the day?", ["Sun", "Moon", "Stars", "Cloud"], "Sun"),
+        q("What is white and fluffy in the sky?", ["Cloud", "Rock", "Tree", "Fish"], "Cloud"),
+        q("When it is cold, we wear a...", ["jacket", "swimsuit", "shorts", "slippers"], "jacket")
+      ]}
+    }
   }
-  const plain=current.learn.replace(/<[^>]+>/g,'');
-  learn.innerHTML=current.learn;learn.className='learn show';
-  setTimeout(()=>{if(!muted)speak(plain);},1500);
-  document.getElementById('nextBtn').className='next-btn show';
-}
-function nextQuestion(){pos++;loadQuestion();}
+};
+function q(question, choices, answer) { return { question, choices, answer }; }
 
-function confetti(){const em=['🎉','⭐','🌟','✨','🎊','💛','💚'];
-  for(let i=0;i<24;i++){const c=document.createElement('div');c.className='confetti';c.textContent=em[rand(em.length)];
-    c.style.left=Math.random()*100+'vw';c.style.animationDelay=(Math.random()*.5)+'s';
-    document.body.appendChild(c);setTimeout(()=>c.remove(),2700);}}
+</script>
+  <script>
+const screen = document.getElementById('screen');
+const starsEl = document.getElementById('stars');
+let stars = Number(localStorage.getItem('happyStars') || 0);
+let current = { subject: null, topic: null, index: 0, score: 0, questions: [] };
+starsEl.textContent = stars;
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text.replace(/[🍎🐶⭐🍌🐱]/g, ''));
+  utter.rate = 0.82;
+  utter.pitch = 1.2;
+  window.speechSynthesis.speak(utter);
+}
+function saveStars(n) { stars += n; localStorage.setItem('happyStars', stars); starsEl.textContent = stars; }
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+function showHome() {
+  screen.innerHTML = document.getElementById('home-template').innerHTML;
+  document.querySelectorAll('[data-subject]').forEach(btn => btn.onclick = () => showSubject(btn.dataset.subject));
+  document.getElementById('worksheetBtn').onclick = showWorksheets;
+}
+function showSubject(subject) {
+  const data = QUESTION_BANK[subject];
+  screen.innerHTML = `
+    <section class="lesson-card">
+      <div class="top-row"><button class="back">← Home</button><h2>${data.title}</h2></div>
+      <p>Pick a topic. The computer will read the question out loud.</p>
+      <div class="topic-grid">
+        ${Object.entries(data.topics).map(([key,t]) => `<button class="topic" data-topic="${key}">${t.name}</button>`).join('')}
+      </div>
+    </section>`;
+  document.querySelector('.back').onclick = showHome;
+  document.querySelectorAll('.topic').forEach(btn => btn.onclick = () => startLesson(subject, btn.dataset.topic));
+}
+function startLesson(subject, topic) {
+  const topicData = QUESTION_BANK[subject].topics[topic];
+  current = { subject, topic, index: 0, score: 0, questions: shuffle(topicData.questions) };
+  showQuestion();
+}
+function showQuestion() {
+  const total = current.questions.length;
+  if (current.index >= total) return finishLesson();
+  const item = current.questions[current.index];
+  const progress = Math.round((current.index / total) * 100);
+  screen.innerHTML = `
+    <section class="question-box">
+      <div class="top-row">
+        <button class="back">← Topics</button>
+        <button class="small-btn" id="repeatBtn">🔊 Repeat</button>
+      </div>
+      <div class="progress"><div style="width:${progress}%"></div></div>
+      <div class="mascot">🦊</div>
+      <div class="question">${item.question}</div>
+      <div class="choices">
+        ${shuffle(item.choices).map(choice => `<button class="choice">${choice}</button>`).join('')}
+      </div>
+      <p class="message" id="message"></p>
+    </section>`;
+  document.querySelector('.back').onclick = () => showSubject(current.subject);
+  document.getElementById('repeatBtn').onclick = () => speak(item.question);
+  document.querySelectorAll('.choice').forEach(btn => btn.onclick = () => answer(btn, item.answer));
+  speak(item.question);
+}
+function answer(btn, correct) {
+  document.querySelectorAll('.choice').forEach(b => b.disabled = true);
+  const msg = document.getElementById('message');
+  if (btn.textContent === correct) {
+    btn.classList.add('correct');
+    msg.textContent = 'Great job! ⭐';
+    current.score++;
+    saveStars(1);
+    speak('Great job!');
+  } else {
+    btn.classList.add('wrong');
+    msg.textContent = `Good try! The answer is ${correct}.`;
+    speak(`Good try. The answer is ${correct}.`);
+    [...document.querySelectorAll('.choice')].find(b => b.textContent === correct)?.classList.add('correct');
+  }
+  setTimeout(() => { current.index++; showQuestion(); }, 1600);
+}
+function finishLesson() {
+  const total = current.questions.length;
+  screen.innerHTML = `
+    <section class="lesson-card" style="text-align:center">
+      <div class="mascot">🎉</div>
+      <h2>Lesson Finished!</h2>
+      <p>You got <strong>${current.score}</strong> out of <strong>${total}</strong>.</p>
+      <button class="small-btn" id="again">Play Again</button>
+      <button class="small-btn" id="topics">Choose Topic</button>
+      <button class="small-btn" id="home">Home</button>
+    </section>`;
+  speak(`Lesson finished. You got ${current.score} out of ${total}.`);
+  document.getElementById('again').onclick = () => startLesson(current.subject, current.topic);
+  document.getElementById('topics').onclick = () => showSubject(current.subject);
+  document.getElementById('home').onclick = showHome;
+}
+function showWorksheets() {
+  screen.innerHTML = `
+    <section class="worksheet-area">
+      <div class="top-row"><button class="back">← Home</button><button class="small-btn" onclick="window.print()">🖨️ Print</button></div>
+      <div class="print-sheet">
+        <h2>Math Practice</h2>
+        ${['1 + 1 = ____','2 + 3 = ____','5 - 2 = ____','10 - 4 = ____','Count: ⭐⭐⭐⭐⭐ = ____'].map(x => `<div class="line">${x}</div>`).join('')}
+        <h2>Reading Practice</h2>
+        ${['Trace: A A A A','Trace: B B B B','Circle the word: cat','Write a word that starts with S: ______','Read: I see a dog.'].map(x => `<div class="line">${x}</div>`).join('')}
+        <h2>Drawing</h2>
+        <div class="line">Draw a happy sun:</div><div style="height:180px;border:3px dashed #222;border-radius:20px"></div>
+      </div>
+    </section>`;
+  document.querySelector('.back').onclick = showHome;
+}
+showHome();
+
 </script>
 </body>
 </html>
