@@ -1,323 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Learning Game</title>
-  <style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(135deg, #ffefba, #ffffff, #d4fc79);
-  color: #1d1d1f;
-  min-height: 100vh;
-}
-.app { width: min(1100px, 94vw); margin: 0 auto; padding: 24px 0; }
-header {
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  background: white; border-radius: 28px; padding: 20px 24px; box-shadow: 0 12px 30px rgba(0,0,0,.12);
-}
-h1 { margin: 0; font-size: clamp(30px, 5vw, 56px); color: #472183; }
-p { font-size: 20px; line-height: 1.35; }
-.score-box { background: #fff3a3; border: 4px solid #ffcf33; border-radius: 22px; padding: 14px 22px; text-align: center; min-width: 110px; }
-.score-box span { display:block; font-weight: 700; }
-.score-box strong { font-size: 38px; color: #9b5de5; }
-.hero { text-align: center; margin: 26px 0; background: rgba(255,255,255,.85); border-radius: 28px; padding: 20px; }
-.hero h2 { margin: 0; font-size: clamp(28px, 4vw, 48px); color: #ff5c8a; }
-.grid { display: grid; grid-template-columns: repeat(2, minmax(220px, 1fr)); gap: 20px; }
-.card {
-  border: 0; border-radius: 30px; padding: 30px 24px; text-align: left; cursor: pointer;
-  box-shadow: 0 14px 28px rgba(0,0,0,.16); transition: transform .15s, filter .15s;
-  color: #111; min-height: 220px;
-}
-.card:hover, .choice:hover, .small-btn:hover { transform: translateY(-4px); filter: brightness(1.03); }
-.card span { font-size: 64px; display: block; }
-.card h3 { margin: 8px 0; font-size: 36px; }
-.card p { margin: 0; font-weight: 700; }
-.math { background: #7bdff2; }
-.reading { background: #f2b5d4; }
-.science { background: #b2f7ef; }
-.worksheet { background: #ffd166; }
-.lesson-card { background: white; border-radius: 28px; padding: 24px; margin-top: 22px; box-shadow: 0 12px 28px rgba(0,0,0,.12); }
-.top-row { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap: wrap; }
-.back, .small-btn {
-  border: 0; background: #472183; color: white; border-radius: 18px; padding: 14px 20px; font-size: 18px; font-weight: 800; cursor: pointer;
-}
-.topic-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; margin-top:18px; }
-.topic { border:0; border-radius:22px; padding:22px; background:#fff3a3; font-size:24px; font-weight:900; cursor:pointer; box-shadow:0 8px 18px rgba(0,0,0,.12); }
-.question-box { background:#ffffff; border-radius:30px; padding:26px; margin-top:22px; box-shadow:0 12px 28px rgba(0,0,0,.12); }
-.progress { height: 18px; background:#ddd; border-radius: 20px; overflow:hidden; margin: 16px 0; }
-.progress div { height:100%; background:#06d6a0; width:0%; transition: width .3s; }
-.question { font-size: clamp(28px, 4vw, 48px); font-weight: 900; text-align: center; margin: 22px 0; color:#2d00f7; }
-.choices { display:grid; grid-template-columns: repeat(2, minmax(180px,1fr)); gap:16px; }
-.choice { border: 4px solid #222; background:#fff; border-radius:24px; padding:22px; font-size:30px; font-weight:900; cursor:pointer; min-height:100px; }
-.choice.correct { background:#b8f7c1; }
-.choice.wrong { background:#ffb3b3; }
-.message { text-align:center; font-size:28px; font-weight:900; min-height:40px; }
-.mascot { text-align:center; font-size:80px; animation: bounce 1.8s infinite; }
-@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-.worksheet-area { background:white; border-radius:28px; padding:24px; margin-top:22px; }
-.print-sheet { background:white; padding:20px; }
-.print-sheet h2 { font-size:32px; }
-.line { border-bottom:2px solid #222; height:44px; margin:10px 0; font-size:24px; }
-@media (max-width: 700px) { header, .grid, .choices { grid-template-columns:1fr; display:grid; } .card { min-height: 180px; } }
-@media print { body { background:white; } header, .hero, .grid, .top-row, .small-btn, .back { display:none !important; } .worksheet-area { box-shadow:none; } }
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hello, Aenielle Skyla! Learning Adventure</title>
+<style>
+  :root{--bg1:#fff7ef;--bg2:#eef8ff;--card:#ffffff;--ink:#24324a;--muted:#65718a;--shadow:0 10px 30px rgba(36,50,74,.12);--radius:24px}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(135deg,var(--bg1),var(--bg2));min-height:100vh}
+  .wrap{max-width:1300px;margin:0 auto;padding:20px}
+  .hero{background:linear-gradient(135deg,#fff,#fff3e8);border-radius:32px;padding:24px;box-shadow:var(--shadow);display:grid;grid-template-columns:1.4fr .9fr;gap:20px;align-items:center}
+  .hero h1{font-size:clamp(30px,5vw,54px);margin:0 0 10px}
+  .hero p{font-size:18px;line-height:1.5;color:var(--muted);margin:0 0 18px}
+  .hero-visual{background:linear-gradient(135deg,#ffd9c7,#dff4ff);border-radius:28px;min-height:230px;display:flex;align-items:center;justify-content:center;font-size:78px;text-align:center;padding:18px}
+  .stats,.toolbar,.chips{display:flex;flex-wrap:wrap;gap:12px}
+  .stats{margin-top:16px}
+  .pill,.chip{background:#fff;border-radius:999px;box-shadow:var(--shadow);font-weight:700}
+  .pill{padding:10px 14px;display:flex;gap:8px;align-items:center}
+  .chip{padding:6px 10px;font-size:13px}
+  .toolbar{margin:18px 0 24px}
+  button{border:none;border-radius:18px;padding:14px 18px;font-size:16px;font-weight:700;cursor:pointer;color:var(--ink);background:#fff;box-shadow:var(--shadow)}
+  button.primary{background:linear-gradient(135deg,#ffb18f,#ffd166)}
+  button.secondary{background:linear-gradient(135deg,#bce8ff,#d7f2ff)}
+  button.success{background:linear-gradient(135deg,#b8f0ab,#dbf8d2)}
+  button.purple{background:linear-gradient(135deg,#dfd2ff,#efe8ff)}
+  button.small{padding:10px 12px;font-size:14px;border-radius:14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+  .subject-card{min-height:210px;display:flex;flex-direction:column;justify-content:space-between}
+  .subject-emoji{font-size:44px}
+  .subject-title{font-size:24px;font-weight:800;margin:8px 0}
+  .subject-desc{color:var(--muted);line-height:1.45;min-height:56px}
+  .topic-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+  .topic{border-radius:20px;padding:16px;background:linear-gradient(135deg,#ffffff,#f8fbff);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px}
+  .topic h4{margin:0;font-size:18px}
+  .muted{color:var(--muted)}
+  .section-title{display:flex;align-items:center;justify-content:space-between;margin:28px 0 14px}
+  .section-title h2{margin:0;font-size:30px}
+  .day-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .day-card{background:#fff;border-radius:22px;padding:14px;box-shadow:var(--shadow);cursor:pointer;border:3px solid transparent}
+  .day-card.done{border-color:#98e788}
+  .day-card.active{border-color:#ffd166}
+  .day-card h4{margin:0 0 6px;font-size:18px}
+  .day-card p{margin:0;color:var(--muted);font-size:14px}
+  .lesson-box{background:linear-gradient(135deg,#fff,#fef7ed);border-radius:28px;padding:22px;box-shadow:var(--shadow)}
+  .question{font-size:32px;font-weight:800;line-height:1.3;margin:10px 0 18px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+  .answer{background:#fff;border-radius:20px;padding:16px;box-shadow:var(--shadow);font-size:20px;font-weight:700;text-align:center;cursor:pointer}
+  .feedback{font-size:24px;font-weight:800;min-height:34px;margin-top:14px}
+  .progress{height:18px;background:#edf2ff;border-radius:999px;overflow:hidden;margin:16px 0}
+  .bar{height:100%;background:linear-gradient(90deg,#8ad17d,#ffd166);width:0%;transition:width .3s ease}
+  .worksheet{padding:24px;background:#fff;border-radius:24px;box-shadow:var(--shadow)}
+  .printable{background:#fff;border:2px dashed #cfd8ea;border-radius:18px;padding:16px;line-height:1.9}
+  .footer-space{height:50px}.hidden{display:none}
+  @media (max-width:900px){.hero{grid-template-columns:1fr}.hero-visual{min-height:160px;font-size:58px}.question{font-size:26px}}
+  @media print{body{background:#fff}.hero,.toolbar,.grid,.day-grid,#lessonArea,.section-title button{display:none !important}#worksheetArea{display:block !important}.wrap{max-width:100%;padding:0}.worksheet{box-shadow:none}}
 </style>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <div>
-        <h1>Happy Learning 🌈</h1>
-        <p>Math, Reading, and printable practice for Grade 1 learners.</p>
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <h1>Hello, Aenielle Skyla! 🌈</h1>
+      <p>Welcome to your colorful 30-day learning adventure. Pick a subject, play fun lessons, listen to questions, earn stars, and print worksheets anytime.</p>
+      <div class="stats">
+        <div class="pill">⭐ <span id="starCount">0</span> stars</div>
+        <div class="pill">✅ <span id="doneCount">0</span> days done</div>
+        <div class="pill">📚 10 subjects</div>
+        <div class="pill">🧠 40+ topics</div>
       </div>
-      <div class="score-box">
-        <span>⭐ Stars</span>
-        <strong id="stars">0</strong>
+      <div class="toolbar">
+        <button class="primary" onclick="scrollToId('subjectsSection')">Start Learning</button>
+        <button class="secondary" onclick="scrollToId('daysSection')">30-Day Plan</button>
+        <button class="success" onclick="showRandomLesson()">Surprise Game</button>
+        <button class="purple" onclick="speakGreeting()">Hear My Name</button>
       </div>
-    </header>
+    </div>
+    <div class="hero-visual">🦋📚🧮🌟</div>
+  </section>
 
-    <main id="screen"></main>
-  </div>
+  <div class="section-title"><h2>Subjects</h2><button class="small" onclick="scrollToId('subjectsSection')">Show Subjects</button></div>
+  <section id="subjectsSection" class="grid"></section>
 
-  <template id="home-template">
-    <section class="hero">
-      <h2>Hello, little learner! 👋</h2>
-      <p>Choose a subject and start playing.</p>
-    </section>
+  <div class="section-title"><h2>30-Day Learning Plan</h2><button class="small" onclick="resetProgress()">Reset Progress</button></div>
+  <section id="daysSection" class="day-grid"></section>
 
-    <section class="grid subjects">
-      <button class="card math" data-subject="math">
-        <span>🧮</span>
-        <h3>Math</h3>
-        <p>Numbers, addition, subtraction, shapes, time.</p>
-      </button>
-      <button class="card reading" data-subject="reading">
-        <span>📖</span>
-        <h3>Reading</h3>
-        <p>Letters, sounds, sight words, short sentences.</p>
-      </button>
-      <button class="card science" data-subject="science">
-        <span>🌎</span>
-        <h3>Science</h3>
-        <p>Animals, plants, body parts, weather.</p>
-      </button>
-      <button class="card worksheet" id="worksheetBtn">
-        <span>🖨️</span>
-        <h3>Worksheets</h3>
-        <p>Print simple practice sheets.</p>
-      </button>
-    </section>
-  </template>
+  <div class="section-title"><h2 id="topicHeader">Topics</h2><button class="small" onclick="printWorksheet()">Print Worksheet</button></div>
+  <section id="topicsSection" class="topic-list"></section>
 
-  <script>
-const QUESTION_BANK = {
-  math: {
-    title: "Math 🧮",
-    topics: {
-      counting: { name: "Counting 1 to 20", questions: [
-        q("What number comes after 1?", ["2", "3", "5", "0"], "2"),
-        q("What number comes after 4?", ["3", "5", "8", "1"], "5"),
-        q("What number comes before 10?", ["8", "9", "11", "7"], "9"),
-        q("Count: 🍎🍎🍎", ["2", "3", "4", "5"], "3"),
-        q("Count: 🐶🐶🐶🐶🐶", ["4", "5", "6", "3"], "5"),
-        q("Which is bigger?", ["6", "2", "1", "0"], "6"),
-        q("Which is smaller?", ["9", "7", "3", "8"], "3"),
-        q("What number comes after 12?", ["11", "13", "15", "10"], "13"),
-        q("What number comes before 18?", ["16", "17", "19", "20"], "17"),
-        q("Count: ⭐⭐⭐⭐⭐⭐⭐", ["5", "6", "7", "8"], "7"),
-        q("Which number is missing? 1, 2, __, 4", ["3", "5", "6", "0"], "3"),
-        q("Which number is missing? 8, 9, __, 11", ["7", "10", "12", "6"], "10")
-      ]},
-      addition: { name: "Addition", questions: [
-        q("1 + 1 = ?", ["1", "2", "3", "4"], "2"), q("2 + 3 = ?", ["4", "5", "6", "7"], "5"),
-        q("4 + 2 = ?", ["5", "6", "7", "8"], "6"), q("5 + 5 = ?", ["9", "10", "11", "12"], "10"),
-        q("3 + 4 = ?", ["6", "7", "8", "9"], "7"), q("6 + 1 = ?", ["5", "6", "7", "8"], "7"),
-        q("🍌🍌 + 🍌 = ?", ["2", "3", "4", "5"], "3"), q("🐱🐱🐱 + 🐱🐱 = ?", ["4", "5", "6", "7"], "5"),
-        q("7 + 2 = ?", ["8", "9", "10", "11"], "9"), q("8 + 1 = ?", ["7", "8", "9", "10"], "9"),
-        q("9 + 1 = ?", ["9", "10", "11", "12"], "10"), q("10 + 2 = ?", ["11", "12", "13", "14"], "12")
-      ]},
-      subtraction: { name: "Subtraction", questions: [
-        q("2 - 1 = ?", ["0", "1", "2", "3"], "1"), q("5 - 2 = ?", ["2", "3", "4", "5"], "3"),
-        q("6 - 3 = ?", ["2", "3", "4", "5"], "3"), q("10 - 5 = ?", ["4", "5", "6", "7"], "5"),
-        q("8 - 1 = ?", ["6", "7", "8", "9"], "7"), q("9 - 4 = ?", ["4", "5", "6", "7"], "5"),
-        q("🍎🍎🍎 take away 🍎 = ?", ["1", "2", "3", "4"], "2"), q("7 - 2 = ?", ["4", "5", "6", "7"], "5"),
-        q("4 - 4 = ?", ["0", "1", "2", "4"], "0"), q("12 - 2 = ?", ["9", "10", "11", "12"], "10")
-      ]},
-      shapes: { name: "Shapes", questions: [
-        q("Which shape is round?", ["Circle", "Square", "Triangle", "Rectangle"], "Circle"),
-        q("How many sides does a triangle have?", ["2", "3", "4", "5"], "3"),
-        q("How many sides does a square have?", ["3", "4", "5", "6"], "4"),
-        q("Which shape looks like a door?", ["Circle", "Triangle", "Rectangle", "Star"], "Rectangle"),
-        q("Which shape has no corners?", ["Circle", "Square", "Triangle", "Diamond"], "Circle"),
-        q("Which shape has 4 equal sides?", ["Square", "Circle", "Triangle", "Oval"], "Square")
-      ]}
-    }
-  },
-  reading: {
-    title: "Reading 📖",
-    topics: {
-      alphabet: { name: "Alphabet", questions: [
-        q("What letter starts Apple?", ["A", "B", "C", "D"], "A"), q("What letter starts Ball?", ["A", "B", "C", "D"], "B"),
-        q("What letter starts Cat?", ["C", "D", "E", "F"], "C"), q("What letter starts Dog?", ["B", "C", "D", "E"], "D"),
-        q("Which is lowercase A?", ["a", "b", "c", "d"], "a"), q("Which is uppercase m?", ["M", "N", "W", "H"], "M"),
-        q("What comes after A?", ["B", "C", "D", "Z"], "B"), q("What comes after C?", ["A", "B", "D", "E"], "D")
-      ]},
-      sounds: { name: "Beginning Sounds", questions: [
-        q("Sun starts with what sound?", ["s", "m", "t", "p"], "s"), q("Fish starts with what sound?", ["f", "b", "d", "r"], "f"),
-        q("Map starts with what sound?", ["n", "m", "s", "c"], "m"), q("Pig starts with what sound?", ["p", "g", "t", "l"], "p"),
-        q("Red starts with what sound?", ["r", "w", "y", "e"], "r"), q("Hat starts with what sound?", ["h", "a", "t", "s"], "h")
-      ]},
-      sight: { name: "Sight Words", questions: [
-        q("Find the word: the", ["the", "and", "cat", "run"], "the"), q("Find the word: and", ["an", "and", "end", "ant"], "and"),
-        q("Find the word: is", ["in", "it", "is", "if"], "is"), q("Find the word: you", ["yes", "you", "your", "yam"], "you"),
-        q("Find the word: like", ["look", "lake", "like", "line"], "like"), q("Find the word: can", ["cat", "can", "car", "cap"], "can")
-      ]},
-      sentences: { name: "Short Sentences", questions: [
-        q("I see a cat. What animal?", ["cat", "dog", "fish", "bird"], "cat"),
-        q("The sun is hot. What is hot?", ["moon", "sun", "rain", "snow"], "sun"),
-        q("A bird can fly. Who can fly?", ["bird", "fish", "pig", "cow"], "bird"),
-        q("The dog can run. What can the dog do?", ["jump", "sleep", "run", "swim"], "run"),
-        q("I like red. What color?", ["blue", "red", "green", "pink"], "red")
-      ]}
-    }
-  },
-  science: {
-    title: "Science 🌎",
-    topics: {
-      animals: { name: "Animals", questions: [
-        q("Which animal says meow?", ["Dog", "Cat", "Cow", "Duck"], "Cat"), q("Which animal is the biggest?", ["Whale", "Rabbit", "Cat", "Dog"], "Whale"),
-        q("Which animal can fly?", ["Bird", "Fish", "Cow", "Horse"], "Bird"), q("Which animal lives in water?", ["Fish", "Lion", "Bear", "Chicken"], "Fish"),
-        q("Which animal gives us milk?", ["Cow", "Snake", "Frog", "Bird"], "Cow")
-      ]},
-      weather: { name: "Weather", questions: [
-        q("What do we use when it rains?", ["Umbrella", "Sunglasses", "Fan", "Pillow"], "Umbrella"),
-        q("What shines in the day?", ["Sun", "Moon", "Stars", "Cloud"], "Sun"),
-        q("What is white and fluffy in the sky?", ["Cloud", "Rock", "Tree", "Fish"], "Cloud"),
-        q("When it is cold, we wear a...", ["jacket", "swimsuit", "shorts", "slippers"], "jacket")
-      ]}
-    }
-  }
+  <div class="section-title"><h2>Lesson Time</h2><button class="small" onclick="readQuestion()">Read Question</button></div>
+  <section id="lessonArea" class="lesson-box hidden">
+    <div class="muted" id="lessonMeta">Pick a topic to begin.</div>
+    <div class="progress"><div class="bar" id="lessonBar"></div></div>
+    <div class="question" id="questionText"></div>
+    <div class="answers" id="answersBox"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="toolbar">
+      <button class="primary" onclick="nextQuestion()">Next Question</button>
+      <button class="secondary" onclick="readQuestion()">Read Again</button>
+      <button class="success" onclick="showRandomLesson()">New Random Topic</button>
+    </div>
+  </section>
+
+  <section id="worksheetArea" class="worksheet hidden">
+    <h3 id="worksheetTitle">Printable Worksheet</h3>
+    <div class="printable" id="worksheetContent"></div>
+  </section>
+  <div class="footer-space"></div>
+</div>
+
+<script>
+const subjects = [
+  {id:'math', emoji:'🧮', title:'Math', desc:'Numbers, addition, subtraction, shapes, time, money, and more.', topics:['Counting','Addition','Subtraction','Shapes','Patterns','Time','Money','Word Problems']},
+  {id:'reading', emoji:'📖', title:'Reading', desc:'Letters, phonics, sight words, stories, and reading practice.', topics:['Alphabet','Beginning Sounds','Ending Sounds','Rhyming','Sight Words','Short Stories']},
+  {id:'writing', emoji:'✍️', title:'Writing', desc:'Tracing, sentence building, punctuation, and simple writing prompts.', topics:['Letter Tracing','Word Building','Sentence Building','Punctuation','Capital Letters']},
+  {id:'spelling', emoji:'🔤', title:'Spelling', desc:'Easy spelling games with sounds, matching, and missing letters.', topics:['CVC Words','Missing Letters','Animal Words','Color Words','Family Words']},
+  {id:'science', emoji:'🔬', title:'Science', desc:'Animals, plants, weather, body parts, earth, and the sky.', topics:['Animals','Plants','Weather','Body Parts','Five Senses','Solar System']},
+  {id:'logic', emoji:'🧠', title:'Logic', desc:'Patterns, sorting, memory, odd-one-out, and matching skills.', topics:['Odd One Out','Sorting','Memory Match','What Comes Next','Compare Sizes']},
+  {id:'art', emoji:'🎨', title:'Art', desc:'Colors, drawing prompts, shape art, and creative choices.', topics:['Colors','Shape Art','Draw This','Color Match']},
+  {id:'music', emoji:'🎵', title:'Music', desc:'Rhythm, instrument names, loud and soft, and sound matching.', topics:['Instruments','Loud or Soft','Fast or Slow','Sound Match']},
+  {id:'social', emoji:'🤝', title:'Good Manners', desc:'Kindness, feelings, safety, and daily habits for kids.', topics:['Feelings','Kind Words','Safety','Healthy Habits']},
+  {id:'geography', emoji:'🌍', title:'World Around Me', desc:'Land, water, home, community helpers, and places around us.', topics:['Land and Water','My Home','Helpers','Places','Directions']}
+];
+const monthPlan = Array.from({length:30}, (_,i)=> {
+  const s = subjects[i % subjects.length];
+  return {day:i+1, subject:s.title, emoji:s.emoji, topic:s.topics[i % s.topics.length]};
+});
+let state = {
+  currentSubject: subjects[0],
+  currentTopic: subjects[0].topics[0],
+  questionIndex: 0,
+  totalInLesson: 12,
+  stars: Number(localStorage.getItem('aenielle_stars') || 0),
+  completedDays: JSON.parse(localStorage.getItem('aenielle_days') || '[]'),
+  activeDay: 1
 };
-function q(question, choices, answer) { return { question, choices, answer }; }
-
-</script>
-  <script>
-const screen = document.getElementById('screen');
-const starsEl = document.getElementById('stars');
-let stars = Number(localStorage.getItem('happyStars') || 0);
-let current = { subject: null, topic: null, index: 0, score: 0, questions: [] };
-starsEl.textContent = stars;
-
-function speak(text) {
-  if (!('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text.replace(/[🍎🐶⭐🍌🐱]/g, ''));
-  utter.rate = 0.82;
-  utter.pitch = 1.2;
-  window.speechSynthesis.speak(utter);
-}
-function saveStars(n) { stars += n; localStorage.setItem('happyStars', stars); starsEl.textContent = stars; }
-function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
-function showHome() {
-  screen.innerHTML = document.getElementById('home-template').innerHTML;
-  document.querySelectorAll('[data-subject]').forEach(btn => btn.onclick = () => showSubject(btn.dataset.subject));
-  document.getElementById('worksheetBtn').onclick = showWorksheets;
-}
-function showSubject(subject) {
-  const data = QUESTION_BANK[subject];
-  screen.innerHTML = `
-    <section class="lesson-card">
-      <div class="top-row"><button class="back">← Home</button><h2>${data.title}</h2></div>
-      <p>Pick a topic. The computer will read the question out loud.</p>
-      <div class="topic-grid">
-        ${Object.entries(data.topics).map(([key,t]) => `<button class="topic" data-topic="${key}">${t.name}</button>`).join('')}
+function saveState(){localStorage.setItem('aenielle_stars', state.stars);localStorage.setItem('aenielle_days', JSON.stringify(state.completedDays));}
+function scrollToId(id){window.scrollTo({top: document.getElementById(id).offsetTop - 20, behavior:'smooth'});}
+function renderSubjects(){
+  document.getElementById('subjectsSection').innerHTML = subjects.map(s=>`
+    <div class="card subject-card">
+      <div>
+        <div class="subject-emoji">${s.emoji}</div>
+        <div class="subject-title">${s.title}</div>
+        <div class="subject-desc">${s.desc}</div>
+        <div class="chips">${s.topics.slice(0,4).map(t=>`<span class="chip">${t}</span>`).join('')}</div>
       </div>
-    </section>`;
-  document.querySelector('.back').onclick = showHome;
-  document.querySelectorAll('.topic').forEach(btn => btn.onclick = () => startLesson(subject, btn.dataset.topic));
+      <button class="primary" onclick="openSubject('${s.id}')">Open ${s.title}</button>
+    </div>`).join('');
 }
-function startLesson(subject, topic) {
-  const topicData = QUESTION_BANK[subject].topics[topic];
-  current = { subject, topic, index: 0, score: 0, questions: shuffle(topicData.questions) };
-  showQuestion();
+function renderDays(){
+  document.getElementById('daysSection').innerHTML = monthPlan.map(d=>{
+    const done = state.completedDays.includes(d.day) ? 'done':'';
+    const active = state.activeDay === d.day ? 'active':'';
+    return `<div class="day-card ${done} ${active}" onclick="openDay(${d.day})"><h4>${d.emoji} Day ${d.day}</h4><p>${d.subject}</p><p>${d.topic}</p></div>`;
+  }).join('');
+  document.getElementById('doneCount').textContent = state.completedDays.length;
 }
-function showQuestion() {
-  const total = current.questions.length;
-  if (current.index >= total) return finishLesson();
-  const item = current.questions[current.index];
-  const progress = Math.round((current.index / total) * 100);
-  screen.innerHTML = `
-    <section class="question-box">
-      <div class="top-row">
-        <button class="back">← Topics</button>
-        <button class="small-btn" id="repeatBtn">🔊 Repeat</button>
-      </div>
-      <div class="progress"><div style="width:${progress}%"></div></div>
-      <div class="mascot">🦊</div>
-      <div class="question">${item.question}</div>
-      <div class="choices">
-        ${shuffle(item.choices).map(choice => `<button class="choice">${choice}</button>`).join('')}
-      </div>
-      <p class="message" id="message"></p>
-    </section>`;
-  document.querySelector('.back').onclick = () => showSubject(current.subject);
-  document.getElementById('repeatBtn').onclick = () => speak(item.question);
-  document.querySelectorAll('.choice').forEach(btn => btn.onclick = () => answer(btn, item.answer));
-  speak(item.question);
+function renderTopics(subject){
+  document.getElementById('topicHeader').textContent = subject.title + ' Topics';
+  document.getElementById('topicsSection').innerHTML = subject.topics.map(t=>`
+    <div class="topic">
+      <h4>${t}</h4>
+      <div class="muted">Play a fresh activity with many possible questions.</div>
+      <button class="secondary" onclick="startLesson('${subject.id}','${t}')">Play ${t}</button>
+      <button class="small" onclick="buildWorksheet('${subject.id}','${t}')">Worksheet</button>
+    </div>`).join('');
 }
-function answer(btn, correct) {
-  document.querySelectorAll('.choice').forEach(b => b.disabled = true);
-  const msg = document.getElementById('message');
-  if (btn.textContent === correct) {
-    btn.classList.add('correct');
-    msg.textContent = 'Great job! ⭐';
-    current.score++;
-    saveStars(1);
-    speak('Great job!');
+function openSubject(id){state.currentSubject = subjects.find(s=>s.id===id);renderTopics(state.currentSubject);scrollToId('topicsSection');}
+function openDay(day){
+  state.activeDay = day;
+  const d = monthPlan.find(x=>x.day===day);
+  const subject = subjects.find(s=>s.title===d.subject);
+  state.currentSubject = subject;
+  renderTopics(subject);
+  renderDays();
+  startLesson(subject.id, d.topic, day);
+}
+function randomInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function shuffle(arr){ return [...arr].sort(()=>Math.random()-0.5); }
+function mcq(question, options, answer){ return {question, options: shuffle(options), answer}; }
+function choose(list){ const item = list[randomInt(0, list.length-1)]; return {question:item[0], options: shuffle(item[1]), answer:item[2]}; }
+function makeQuestion(subjectId, topic){
+  const banks = {
+    math: {
+      Counting: ()=>{const n=randomInt(1,99); return mcq(`What number comes after ${n}?`, [String(n+1),String(n-1),String(n+2),String(n+3)], String(n+1));},
+      Addition: ()=>{const a=randomInt(1,20), b=randomInt(1,20), ans=a+b; return mcq(`What is ${a} + ${b}?`, [String(ans),String(ans+1),String(ans-1),String(ans+2)], String(ans));},
+      Subtraction: ()=>{const a=randomInt(6,20), b=randomInt(1,5), ans=a-b; return mcq(`What is ${a} - ${b}?`, [String(ans),String(ans+1),String(ans-1),String(ans+2)], String(ans));},
+      Shapes: ()=>choose([['Which shape has 3 sides?',['Triangle','Circle','Square','Oval'],'Triangle'],['Which shape is round?',['Circle','Rectangle','Triangle','Square'],'Circle'],['Which shape has 4 equal sides?',['Square','Triangle','Oval','Circle'],'Square']]),
+      Patterns: ()=>choose([['What comes next? Red, Blue, Red, Blue, ...',['Red','Blue','Green','Yellow'],'Red'],['What comes next? 2, 4, 6, 8, ...',['10','9','12','7'],'10'],['What comes next? ⭐ 🌙 ⭐ 🌙 ...',['⭐','🌙','☁️','☀️'],'⭐']]),
+      Time: ()=>choose([['Which one happens in the morning?',['Breakfast','Dinner','Sleeping','Bath at night'],'Breakfast'],['Which hand tells the hour?',['Short hand','Long hand','Blue hand','Tiny dot'],'Short hand'],['How many hours are in one day?',['24','10','7','12'],'24']]),
+      Money: ()=>choose([['Which one is money?',['Coin','Stone','Leaf','Spoon'],'Coin'],['Two coins are how many items?',['2','1','3','4'],'2'],['What do we use money for?',['To buy things','To sleep','To jump','To sing'],'To buy things']]),
+      'Word Problems': ()=>{const a=randomInt(1,8), b=randomInt(1,8), ans=a+b; return mcq(`Mia has ${a} apples. She gets ${b} more. How many apples does she have now?`, [String(ans),String(ans+1),String(ans-1),String(ans+2)], String(ans));}
+    },
+    reading: {
+      Alphabet: ()=>{const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'; const i=randomInt(0,24); return mcq(`Which letter comes after ${letters[i]}?`, [letters[i+1],letters[i],letters[i+2]||'Z',letters[Math.max(0,i-1)]], letters[i+1]);},
+      'Beginning Sounds': ()=>choose([['Which word starts with /b/?',['ball','sun','cat','pig'],'ball'],['Which word starts with /m/?',['moon','dog','fish','hat'],'moon'],['Which word starts with /t/?',['top','leg','van','pen'],'top']]),
+      'Ending Sounds': ()=>choose([['Which word ends with /g/?',['pig','sun','hat','bed'],'pig'],['Which word ends with /t/?',['cat','jam','log','bee'],'cat'],['Which word ends with /n/?',['sun','cup','dog','fish'],'sun']]),
+      Rhyming: ()=>choose([['Which word rhymes with cat?',['hat','dog','sun','pen'],'hat'],['Which word rhymes with bee?',['tree','cup','bag','top'],'tree'],['Which word rhymes with log?',['frog','leaf','car','bed'],'frog']]),
+      'Sight Words': ()=>choose([['Pick the sight word "the".',['the','tho','tha','thi'],'the'],['Pick the sight word "and".',['and','end','ant','add'],'and'],['Pick the sight word "was".',['was','saw','wax','has'],'was']]),
+      'Short Stories': ()=>choose([['Sam has a red ball. What color is Sam’s ball?',['Red','Blue','Green','Yellow'],'Red'],['Lia sees a dog. What animal does Lia see?',['Dog','Cat','Fish','Bird'],'Dog'],['Ben eats a banana. What does Ben eat?',['Banana','Apple','Cake','Rice'],'Banana']])
+    },
+    writing: {
+      'Letter Tracing': ()=>choose([['Which one is a letter?',['A','1','?','7'],'A'],['Which letter can you trace?',['B','%','3','!'],'B'],['Pick the letter C.',['C','G','O','Q'],'C']]),
+      'Word Building': ()=>choose([['Which letters make "cat"?',['c a t','t a p','b e d','s u n'],'c a t'],['Which letters make "sun"?',['s u n','s i t','c u p','b o x'],'s u n'],['Which letters make "dog"?',['d o g','d i g','l o g','f o x'],'d o g']]),
+      'Sentence Building': ()=>choose([['Which is a full sentence?',['I like cats.','cat blue','run fast dog','apple the'],'I like cats.'],['Which sentence starts with a capital letter?',['She is happy.','she is happy.','happy she is.','is she happy'],'She is happy.'],['Which sentence ends with a period?',['We play.','we play','Play we','ball'],'We play.']]),
+      Punctuation: ()=>choose([['What goes at the end of a sentence?',['.','A','7','/'],'.'],['Which one is a question mark?',['?','!','.',','],'?'],['Which one is an exclamation mark?',['!','?','.',':'],'!']]),
+      'Capital Letters': ()=>choose([['Which word starts with a capital letter?',['Apple','apple','aPPle','applE'],'Apple'],['Which is correct?',['My name is Ana.','my name is Ana.','my Name is ana.','My name is ana'],'My name is Ana.'],['Which letter is uppercase?',['B','b','p','d'],'B']])
+    },
+    spelling: {
+      'CVC Words': ()=>choose([['Which is a CVC word?',['cat','tree','plane','green'],'cat'],['Which is a CVC word?',['dog','train','apple','light'],'dog'],['Which is a CVC word?',['sun','bread','cloud','chair'],'sun']]),
+      'Missing Letters': ()=>choose([['Fill in: c _ t',['a','o','u','e'],'a'],['Fill in: d _ g',['o','a','u','e'],'o'],['Fill in: s _ n',['u','a','o','e'],'u']]),
+      'Animal Words': ()=>choose([['Which word is an animal?',['tiger','table','spoon','window'],'tiger'],['Which word is an animal?',['rabbit','pencil','bed','book'],'rabbit'],['Which word is an animal?',['zebra','chair','plate','shoe'],'zebra']]),
+      'Color Words': ()=>choose([['Which word is a color?',['blue','chair','bread','apple'],'blue'],['Which word is a color?',['green','table','spoon','cloud'],'green'],['Which word is a color?',['yellow','window','pillow','paper'],'yellow']]),
+      'Family Words': ()=>choose([['Who is part of a family?',['mother','robot','tree','car'],'mother'],['Who is part of a family?',['brother','apple','cup','book'],'brother'],['Who is part of a family?',['sister','lamp','door','sock'],'sister']])
+    },
+    science: {
+      Animals: ()=>choose([['Which one is a mammal?',['Dog','Fish','Lizard','Snake'],'Dog'],['Which animal can fly?',['Bird','Cow','Dog','Cat'],'Bird'],['Which animal lives in water?',['Fish','Lion','Horse','Ant'],'Fish']]),
+      Plants: ()=>choose([['What helps a plant grow?',['Water','Toy','Spoon','Pillow'],'Water'],['Which part is green on many plants?',['Leaf','Wheel','Box','Clock'],'Leaf'],['Plants grow from a...',['Seed','Shoe','Cloud','Chair'],'Seed']]),
+      Weather: ()=>choose([['What falls from clouds?',['Rain','Shoes','Apples','Books'],'Rain'],['What gives us light in the day?',['Sun','Moon','Bed','Tree'],'Sun'],['Which weather can be very windy?',['Storm','Soup','Toy','Song'],'Storm']]),
+      'Body Parts': ()=>choose([['What do you use to see?',['Eyes','Toes','Knees','Elbows'],'Eyes'],['What do you use to hear?',['Ears','Hands','Feet','Teeth'],'Ears'],['What do you use to walk?',['Legs','Hair','Nose','Tongue'],'Legs']]),
+      'Five Senses': ()=>choose([['Which sense uses the nose?',['Smell','Taste','Touch','See'],'Smell'],['Which sense uses the tongue?',['Taste','Hear','See','Smell'],'Taste'],['Which sense uses the skin?',['Touch','Hear','See','Taste'],'Touch']]),
+      'Solar System': ()=>choose([['What do we live on?',['Earth','Mars','Sun','Moon'],'Earth'],['What shines in the sky during the day?',['Sun','Star fish','Rock','Cloud'],'Sun'],['What goes around Earth?',['Moon','Bus','Chair','Tree'],'Moon']])
+    },
+    logic: {
+      'Odd One Out': ()=>choose([['Which one does not belong?',['Banana','Apple','Car','Orange'],'Car'],['Which one does not belong?',['Dog','Cat','Fish','Chair'],'Chair'],['Which one does not belong?',['Circle','Square','Triangle','Cookie'],'Cookie']]),
+      Sorting: ()=>choose([['Which one belongs with fruits?',['Apple','Shoe','Book','Pencil'],'Apple'],['Which one belongs with school items?',['Book','Banana','Pillow','Fish'],'Book'],['Which one belongs with animals?',['Lion','Cup','Door','Clock'],'Lion']]),
+      'Memory Match': ()=>choose([['Which matches day and night?',['Sun and Moon','Cup and Spoon','Hat and Shoe','Pen and Box'],'Sun and Moon'],['Which matches foot and shoe?',['Foot and Shoe','Fish and Tree','Book and Spoon','Bag and Plate'],'Foot and Shoe'],['Which matches bird and nest?',['Bird and Nest','Dog and Cloud','Leaf and Chair','Moon and Bed'],'Bird and Nest']]),
+      'What Comes Next': ()=>choose([['What comes next? 1, 2, 3, ...',['4','5','2','6'],'4'],['What comes next? A, B, C, ...',['D','E','F','G'],'D'],['What comes next? Small, Medium, ...',['Large','Tiny','Blue','Round'],'Large']]),
+      'Compare Sizes': ()=>choose([['Which is bigger?',['Elephant','Ant','Bee','Mouse'],'Elephant'],['Which is smaller?',['Ant','Dog','Cow','Horse'],'Ant'],['Which is taller?',['Giraffe','Cat','Duck','Rat'],'Giraffe']])
+    },
+    art: {
+      Colors: ()=>choose([['Which one is the color red?',['Red','Blue','Green','Black'],'Red'],['Which color is the sun often drawn as?',['Yellow','Purple','Brown','Gray'],'Yellow'],['What color are many leaves?',['Green','Pink','Black','Silver'],'Green']]),
+      'Shape Art': ()=>choose([['Which shape can make a house roof?',['Triangle','Circle','Oval','Star'],'Triangle'],['Which shape can make wheels?',['Circle','Square','Rectangle','Triangle'],'Circle'],['Which shape can make a window?',['Square','Oval','Star','Heart'],'Square']]),
+      'Draw This': ()=>choose([['What would you draw in the sky?',['Cloud','Shoe','Chair','Fork'],'Cloud'],['What would you draw in the ocean?',['Fish','Bed','Clock','Bag'],'Fish'],['What would you draw in a garden?',['Flower','Laptop','Plate','Socks'],'Flower']]),
+      'Color Match': ()=>choose([['What color matches grass?',['Green','Purple','Gray','Pink'],'Green'],['What color matches the sky?',['Blue','Brown','Orange','Black'],'Blue'],['What color matches a banana?',['Yellow','Red','Gray','Purple'],'Yellow']])
+    },
+    music: {
+      Instruments: ()=>choose([['Which one is an instrument?',['Drum','Chair','Apple','Sock'],'Drum'],['Which one can you strum?',['Guitar','Book','Ball','Cup'],'Guitar'],['Which one has piano keys?',['Piano','Window','Truck','Table'],'Piano']]),
+      'Loud or Soft': ()=>choose([['A whisper is...',['Soft','Loud','Fast','Round'],'Soft'],['A lion roar is...',['Loud','Soft','Tiny','Slow'],'Loud'],['Clapping very hard is...',['Loud','Soft','Wet','Cold'],'Loud']]),
+      'Fast or Slow': ()=>choose([['A lullaby is usually...',['Slow','Fast','Heavy','Long'],'Slow'],['Running music can be...',['Fast','Slow','Tiny','Square'],'Fast'],['A turtle beat may feel...',['Slow','Fast','Red','Tall'],'Slow']]),
+      'Sound Match': ()=>choose([['Which animal says moo?',['Cow','Dog','Cat','Duck'],'Cow'],['Which animal says quack?',['Duck','Sheep','Horse','Bee'],'Duck'],['Which animal says meow?',['Cat','Cow','Pig','Lion'],'Cat']])
+    },
+    social: {
+      Feelings: ()=>choose([['When you smile, you may feel...',['Happy','Sleepy','Broken','Square'],'Happy'],['When you lose a toy, you may feel...',['Sad','Round','Purple','Tall'],'Sad'],['When something is scary, you may feel...',['Afraid','Hungry only','Long','Bouncy'],'Afraid']]),
+      'Kind Words': ()=>choose([['Which is a kind word?',['Please','Go away!','Mine only!','No!'],'Please'],['What do you say when someone helps you?',['Thank you','Bye tree','Jump now','Nothing'],'Thank you'],['What do you say when you bump someone?',['Sorry','Ha ha','Move!','Later'],'Sorry']]),
+      Safety: ()=>choose([['What do you do before crossing the road?',['Look both ways','Run fast','Close eyes','Jump'],'Look both ways'],['What should you wear on a bike?',['Helmet','Pillow','Slippers only','Blanket'],'Helmet'],['Who can help in an emergency?',['A trusted adult','A toy','A shoe','A cloud'],'A trusted adult']]),
+      'Healthy Habits': ()=>choose([['What helps keep teeth clean?',['Brushing teeth','Eating candy','Skipping water','No sleep'],'Brushing teeth'],['What helps your body grow strong?',['Healthy food','Only soda','No sleep','No water'],'Healthy food'],['What should you do at night?',['Sleep','Jump all night','Skip rest','Run outside'],'Sleep']])
+    },
+    geography: {
+      'Land and Water': ()=>choose([['Which one is water?',['River','Road','House','Tree'],'River'],['Which one is land?',['Mountain','Fish','Boat','Rain'],'Mountain'],['Where does a boat go?',['Water','Road','Bed','Roof'],'Water']]),
+      'My Home': ()=>choose([['Where do you sleep?',['Bedroom','Kitchen sink','Garden only','Driveway'],'Bedroom'],['Where do you cook food?',['Kitchen','Bathroom','Roof','Closet'],'Kitchen'],['Where do you wash your hands?',['Bathroom','Bed','Garage','Tree'],'Bathroom']]),
+      Helpers: ()=>choose([['Who helps put out fires?',['Firefighter','Chef','Pilot','Painter'],'Firefighter'],['Who helps when you are sick?',['Doctor','Singer','Driver','Tailor'],'Doctor'],['Who teaches in school?',['Teacher','Fish','Farmer','Cloud'],'Teacher']]),
+      Places: ()=>choose([['Where do you borrow books?',['Library','Zoo cage','Kitchen','Bus stop'],'Library'],['Where do you buy food?',['Market','Bedroom','Garage','Playground'],'Market'],['Where do animals live for people to visit?',['Zoo','Bakery','Classroom','Office'],'Zoo']]),
+      Directions: ()=>choose([['Which way is up?',['↑','↓','←','→'],'↑'],['Which way is left?',['←','→','↑','↓'],'←'],['Which way is right?',['→','←','↑','↓'],'→']])
+    }
+  };
+  return banks[subjectId][topic]();
+}
+let currentQ = null;
+function startLesson(subjectId, topic, fromDay=null){
+  state.currentSubject = subjects.find(s=>s.id===subjectId);
+  state.currentTopic = topic;
+  state.questionIndex = 0;
+  document.getElementById('lessonArea').classList.remove('hidden');
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('lessonMeta').textContent = `${state.currentSubject.emoji} ${state.currentSubject.title} • ${topic} • 12 questions`;
+  nextQuestion(false);
+  if(fromDay) state.activeDay = fromDay;
+  renderDays();
+  scrollToId('lessonArea');
+}
+function nextQuestion(increment=true){
+  if(increment) state.questionIndex++;
+  if(state.questionIndex >= state.totalInLesson){ finishLesson(); return; }
+  currentQ = makeQuestion(state.currentSubject.id, state.currentTopic);
+  document.getElementById('questionText').textContent = currentQ.question;
+  document.getElementById('answersBox').innerHTML = currentQ.options.map(opt=>`<div class="answer" onclick="checkAnswer(this, '${String(opt).replace(/'/g, "\'")}')">${opt}</div>`).join('');
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('lessonBar').style.width = `${(state.questionIndex/state.totalInLesson)*100}%`;
+  readQuestion();
+}
+function checkAnswer(el, choice){
+  const correct = String(choice) === String(currentQ.answer);
+  document.querySelectorAll('.answer').forEach(a=>a.style.pointerEvents='none');
+  if(correct){
+    el.style.outline='4px solid #7ed957';
+    state.stars += 1;
+    document.getElementById('feedback').textContent = 'Great job! ⭐';
   } else {
-    btn.classList.add('wrong');
-    msg.textContent = `Good try! The answer is ${correct}.`;
-    speak(`Good try. The answer is ${correct}.`);
-    [...document.querySelectorAll('.choice')].find(b => b.textContent === correct)?.classList.add('correct');
+    el.style.outline='4px solid #ff7b7b';
+    const good = [...document.querySelectorAll('.answer')].find(a=>a.textContent===String(currentQ.answer));
+    if(good) good.style.outline='4px solid #7ed957';
+    document.getElementById('feedback').textContent = `Nice try! The answer is ${currentQ.answer}.`;
   }
-  setTimeout(() => { current.index++; showQuestion(); }, 1600);
+  document.getElementById('starCount').textContent = state.stars;
+  saveState();
 }
-function finishLesson() {
-  const total = current.questions.length;
-  screen.innerHTML = `
-    <section class="lesson-card" style="text-align:center">
-      <div class="mascot">🎉</div>
-      <h2>Lesson Finished!</h2>
-      <p>You got <strong>${current.score}</strong> out of <strong>${total}</strong>.</p>
-      <button class="small-btn" id="again">Play Again</button>
-      <button class="small-btn" id="topics">Choose Topic</button>
-      <button class="small-btn" id="home">Home</button>
-    </section>`;
-  speak(`Lesson finished. You got ${current.score} out of ${total}.`);
-  document.getElementById('again').onclick = () => startLesson(current.subject, current.topic);
-  document.getElementById('topics').onclick = () => showSubject(current.subject);
-  document.getElementById('home').onclick = showHome;
+function finishLesson(){
+  document.getElementById('questionText').textContent = `Awesome work, Aenielle Skyla! You finished ${state.currentTopic}.`;
+  document.getElementById('answersBox').innerHTML = '';
+  document.getElementById('feedback').textContent = 'You earned more stars and completed a lesson! 🎉';
+  document.getElementById('lessonBar').style.width = '100%';
+  if(!state.completedDays.includes(state.activeDay)){ state.completedDays.push(state.activeDay); state.completedDays.sort((a,b)=>a-b); }
+  saveState(); renderDays();
 }
-function showWorksheets() {
-  screen.innerHTML = `
-    <section class="worksheet-area">
-      <div class="top-row"><button class="back">← Home</button><button class="small-btn" onclick="window.print()">🖨️ Print</button></div>
-      <div class="print-sheet">
-        <h2>Math Practice</h2>
-        ${['1 + 1 = ____','2 + 3 = ____','5 - 2 = ____','10 - 4 = ____','Count: ⭐⭐⭐⭐⭐ = ____'].map(x => `<div class="line">${x}</div>`).join('')}
-        <h2>Reading Practice</h2>
-        ${['Trace: A A A A','Trace: B B B B','Circle the word: cat','Write a word that starts with S: ______','Read: I see a dog.'].map(x => `<div class="line">${x}</div>`).join('')}
-        <h2>Drawing</h2>
-        <div class="line">Draw a happy sun:</div><div style="height:180px;border:3px dashed #222;border-radius:20px"></div>
-      </div>
-    </section>`;
-  document.querySelector('.back').onclick = showHome;
+function readQuestion(){
+  if(!('speechSynthesis' in window)) return;
+  const text = document.getElementById('questionText').textContent || 'Hello, Aenielle Skyla!';
+  speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 0.92;
+  speechSynthesis.speak(utter);
 }
-showHome();
-
+function speakGreeting(){
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance('Hello, Aenielle Skyla! Welcome to your learning adventure!');
+  utter.rate = 0.9;
+  speechSynthesis.speak(utter);
+}
+function showRandomLesson(){
+  const subject = subjects[randomInt(0, subjects.length-1)];
+  const topic = subject.topics[randomInt(0, subject.topics.length-1)];
+  openSubject(subject.id); startLesson(subject.id, topic);
+}
+function buildWorksheet(subjectId=null, topic=null){
+  const sid = subjectId || state.currentSubject.id;
+  const top = topic || state.currentTopic;
+  const lines = [];
+  for(let i=1;i<=15;i++){ const q = makeQuestion(sid, top); lines.push(`<div>${i}. ${q.question} ________________________</div>`); }
+  document.getElementById('worksheetTitle').textContent = `${top} Worksheet for Aenielle Skyla`;
+  document.getElementById('worksheetContent').innerHTML = lines.join('');
+  document.getElementById('worksheetArea').classList.remove('hidden');
+  scrollToId('worksheetArea');
+}
+function printWorksheet(){ buildWorksheet(); setTimeout(()=>window.print(), 150); }
+function resetProgress(){
+  if(!confirm('Reset stars and completed days?')) return;
+  state.stars = 0; state.completedDays = []; saveState();
+  document.getElementById('starCount').textContent = '0'; renderDays();
+}
+document.getElementById('starCount').textContent = state.stars;
+renderSubjects(); renderDays(); renderTopics(subjects[0]);
 </script>
 </body>
 </html>
