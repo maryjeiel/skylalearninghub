@@ -6,204 +6,101 @@
 <title>Hello, Aenielle Skyla! Learning Adventure</title>
 <style>
   :root{
-    --bg:#f6f8ff;
-    --card:#ffffff;
-    --ink:#26324a;
-    --muted:#6c7892;
-    --pink:#ffd7e8;
-    --peach:#ffe0c2;
-    --yellow:#ffe68f;
-    --blue:#cfe9ff;
-    --green:#d8f7c8;
-    --purple:#e4dcff;
-    --shadow:0 14px 34px rgba(38,50,74,.12);
+    --ink:#24324a; --muted:#6f7b94; --shadow:0 14px 34px rgba(36,50,74,.12);
     --radius:26px;
   }
   *{box-sizing:border-box}
   body{
     margin:0;
     font-family:Arial,Helvetica,sans-serif;
-    background:
-      radial-gradient(circle at top left, #fff2d8, transparent 24%),
-      radial-gradient(circle at top right, #e8f6ff, transparent 22%),
-      linear-gradient(180deg,#fefcff,#f3f7ff);
     color:var(--ink);
+    background:
+      radial-gradient(circle at top left,#fff0d6,transparent 24%),
+      radial-gradient(circle at top right,#e8f6ff,transparent 22%),
+      linear-gradient(180deg,#fffdfc,#f4f7ff);
     min-height:100vh;
   }
-  .app{
-    max-width:1200px;
-    margin:0 auto;
-    padding:18px;
-  }
+  .app{max-width:1200px;margin:0 auto;padding:18px}
   .screen{display:none}
   .screen.active{display:block}
-  .topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    margin-bottom:16px;
-  }
-  .brand{
-    display:flex;
-    align-items:center;
-    gap:14px;
-  }
-  .brand-bubble{
-    width:62px;height:62px;border-radius:20px;
-    background:linear-gradient(135deg,var(--yellow),var(--peach));
-    display:flex;align-items:center;justify-content:center;
-    font-size:30px;box-shadow:var(--shadow);
+  .topbar,.row,.stats,.chips{display:flex;flex-wrap:wrap;gap:12px}
+  .topbar{align-items:center;justify-content:space-between;margin-bottom:16px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .bubble{
+    width:62px;height:62px;border-radius:20px;background:linear-gradient(135deg,#ffe08f,#ffbf9b);
+    display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:var(--shadow)
   }
   .hero{
-    background:linear-gradient(135deg,#ffffff,#fff5ea);
-    border-radius:34px;
-    padding:22px;
-    box-shadow:var(--shadow);
-    display:grid;
-    grid-template-columns:1.3fr .9fr;
-    gap:18px;
-    align-items:center;
+    background:linear-gradient(135deg,#fff,#fff5e9);
+    border-radius:34px;padding:22px;box-shadow:var(--shadow);
+    display:grid;grid-template-columns:1.2fr .9fr;gap:18px;align-items:center;
   }
   .hero h1{margin:0 0 8px;font-size:clamp(28px,4vw,48px)}
   .hero p{margin:0;color:var(--muted);font-size:18px;line-height:1.5}
   .hero-art{
-    min-height:210px;border-radius:28px;
-    background:linear-gradient(135deg,#ffd9ee,#dff2ff);
-    display:flex;align-items:center;justify-content:center;
-    font-size:74px;
+    min-height:210px;border-radius:28px;background:linear-gradient(135deg,#ffd9ee,#dff2ff);
+    display:flex;align-items:center;justify-content:center;font-size:74px
   }
-  .stats,.row,.chips,.day-row{display:flex;flex-wrap:wrap;gap:12px}
   .stats{margin-top:16px}
-  .pill{
-    padding:10px 14px;background:#fff;border-radius:999px;
-    box-shadow:var(--shadow);font-weight:700
+  .pill,.chip{
+    background:#fff;border-radius:999px;padding:10px 14px;box-shadow:var(--shadow);font-weight:700
   }
+  .chip{padding:7px 10px;font-size:13px}
   button{
-    border:none;border-radius:18px;padding:14px 18px;
-    font-size:16px;font-weight:700;cursor:pointer;
-    color:var(--ink);box-shadow:var(--shadow);
-    background:#fff;
+    border:none;border-radius:18px;padding:14px 18px;font-size:16px;font-weight:800;cursor:pointer;
+    color:var(--ink);background:#fff;box-shadow:var(--shadow)
   }
-  button.primary{background:linear-gradient(135deg,#ffbd95,#ffe08f)}
-  button.secondary{background:linear-gradient(135deg,#ccecff,#e4f4ff)}
-  button.green{background:linear-gradient(135deg,#c8efb2,#e4f9d8)}
-  button.purple{background:linear-gradient(135deg,#e1d7ff,#f1ebff)}
+  button.primary{background:linear-gradient(135deg,#ffbf9b,#ffe08f)}
+  button.secondary{background:linear-gradient(135deg,#cdeaff,#e8f5ff)}
+  button.green{background:linear-gradient(135deg,#ccefb6,#e6fada)}
+  button.purple{background:linear-gradient(135deg,#e3daff,#f2edff)}
   button.small{padding:10px 12px;font-size:14px;border-radius:14px}
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:16px;
-    margin-top:18px;
-  }
-  .card{
-    background:var(--card);
-    border-radius:var(--radius);
-    padding:18px;
-    box-shadow:var(--shadow);
-  }
-  .subject-card{
-    min-height:220px;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    background:linear-gradient(180deg,#ffffff,#fbfdff);
-  }
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
+  .card{background:#fff;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+  .subject-card{min-height:220px;display:flex;flex-direction:column;justify-content:space-between}
   .subject-icon{font-size:44px}
-  .subject-title{font-size:24px;font-weight:800;margin:8px 0}
+  .subject-title{font-size:24px;font-weight:900;margin:8px 0}
   .subject-desc{color:var(--muted);line-height:1.45;min-height:60px}
-  .chip{
-    background:#f4f7ff;
-    border-radius:999px;
-    padding:7px 10px;
-    font-size:13px;
-    font-weight:700;
+  .subject-layout{display:grid;grid-template-columns:300px 1fr;gap:16px}
+  .subject-head{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .badge{
+    width:70px;height:70px;border-radius:22px;background:linear-gradient(135deg,#d8ecff,#e9e1ff);
+    display:flex;align-items:center;justify-content:center;font-size:34px
   }
-  .layout{
-    display:grid;
-    grid-template-columns:320px 1fr;
-    gap:16px;
-    align-items:start;
+  .subtopic-list{display:grid;gap:10px}
+  .subtopic-btn{
+    background:linear-gradient(135deg,#fff,#f7fbff);
+    border-radius:20px;padding:14px;box-shadow:var(--shadow);cursor:pointer;font-weight:800
   }
-  .panel{
-    background:#fff;
-    border-radius:28px;
-    padding:18px;
-    box-shadow:var(--shadow);
-  }
-  .panel h2,.panel h3{margin:0 0 10px}
-  .subject-head{
-    display:flex;align-items:center;gap:14px;margin-bottom:10px;
-  }
-  .subject-badge{
-    width:68px;height:68px;border-radius:22px;background:linear-gradient(135deg,var(--blue),var(--purple));
-    display:flex;align-items:center;justify-content:center;font-size:34px;
-  }
-  .day-card{
-    padding:14px;border-radius:20px;background:#f8fbff;
-    cursor:pointer;border:3px solid transparent;margin-bottom:10px;
-  }
-  .day-card.active{border-color:#ffd565;background:#fffaf0}
-  .day-card.done{border-color:#95e37f}
-  .day-card h4{margin:0 0 4px}
-  .day-card p{margin:0;color:var(--muted);font-size:14px}
-  .topic-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-    gap:12px;
-    margin-top:10px;
-  }
-  .topic-btn{
-    padding:14px;border-radius:18px;background:linear-gradient(135deg,#ffffff,#f7fbff);
-    box-shadow:var(--shadow);font-weight:700;cursor:pointer;text-align:left;
-  }
-  .lesson{
-    background:linear-gradient(135deg,#fff,#fff7ef);
-    border-radius:28px;padding:20px;box-shadow:var(--shadow);
-    min-height:520px;
+  .subtopic-btn.active{outline:4px solid #ffd565;background:#fffaf0}
+  .lesson-card{
+    background:linear-gradient(135deg,#fff,#fff7ef);border-radius:28px;padding:20px;box-shadow:var(--shadow);min-height:560px
   }
   .lesson-meta{color:var(--muted);font-weight:700}
-  .progress{
-    margin:14px 0;height:18px;border-radius:999px;background:#edf2ff;overflow:hidden;
-  }
-  .bar{
-    height:100%;width:0%;
-    background:linear-gradient(90deg,#9be17c,#ffd565);
-    transition:width .25s ease;
-  }
-  .question{
-    font-size:34px;font-weight:800;line-height:1.3;margin:16px 0 18px;
-  }
-  .answers{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:12px;
-  }
+  .progress{margin:14px 0;height:18px;border-radius:999px;background:#edf2ff;overflow:hidden}
+  .bar{height:100%;width:0%;background:linear-gradient(90deg,#9be17c,#ffd565);transition:width .25s ease}
+  .question{font-size:34px;font-weight:900;line-height:1.3;margin:16px 0 18px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
   .answer{
-    background:#fff;border-radius:22px;padding:16px;box-shadow:var(--shadow);
-    font-size:22px;font-weight:800;text-align:center;cursor:pointer;
-    transition:transform .12s ease, opacity .12s ease;
+    background:#fff;border-radius:22px;padding:16px;box-shadow:var(--shadow);font-size:22px;font-weight:800;text-align:center;cursor:pointer;
+    transition:transform .12s ease, opacity .12s ease
   }
   .answer:hover{transform:translateY(-2px)}
-  .feedback{
-    min-height:34px;margin-top:14px;font-size:24px;font-weight:800;
-  }
-  .worksheet{
-    background:#fff;border-radius:24px;padding:18px;box-shadow:var(--shadow);
-    margin-top:16px;
-  }
-  .printable{
-    border:2px dashed #d8deef;border-radius:18px;padding:14px;line-height:1.9;background:#fff;
-  }
+  .feedback{min-height:34px;margin-top:14px;font-size:24px;font-weight:900}
+  .worksheet{background:#fff;border-radius:24px;padding:18px;box-shadow:var(--shadow);margin-top:16px}
+  .printable{border:2px dashed #d8deef;border-radius:18px;padding:14px;line-height:1.9;background:#fff}
   .hidden{display:none}
   @media (max-width:980px){
-    .hero,.layout{grid-template-columns:1fr}
+    .hero,.subject-layout{grid-template-columns:1fr}
     .hero-art{min-height:150px;font-size:58px}
     .question{font-size:28px}
   }
+  @media (max-width:640px){
+    .answers{grid-template-columns:1fr}
+  }
   @media print{
     body{background:#fff}
-    .topbar,.hero,.layout>.panel:first-child,.row,#subjectTopics,#lessonCard .row{display:none !important}
+    .topbar,.hero,.subject-layout>.card:first-child,.row{display:none !important}
     #worksheetBox{display:block !important}
   }
 </style>
@@ -214,27 +111,26 @@
   <section id="homeScreen" class="screen active">
     <div class="topbar">
       <div class="brand">
-        <div class="brand-bubble">🌈</div>
+        <div class="bubble">🌈</div>
         <div>
           <div style="font-size:28px;font-weight:900">Hello, Aenielle Skyla!</div>
-          <div style="color:var(--muted);font-weight:700">Tap a subject to start playing</div>
+          <div style="color:var(--muted);font-weight:700">Pick a subject, then pick a subtopic</div>
         </div>
       </div>
       <div class="row">
         <div class="pill">⭐ <span id="starCountHome">0</span></div>
-        <div class="pill">✅ <span id="doneCountHome">0</span></div>
       </div>
     </div>
 
     <div class="hero">
       <div>
         <h1>Your Learning App 📚</h1>
-        <p>Every subject has its own Day 1, Day 2, Day 3, and more. Tap any subject, choose a day, answer questions, hear fun praise, and move straight to the next one.</p>
+        <p>Now it is simple: subject first, then subtopic, then lots of questions right inside the subject screen.</p>
         <div class="stats">
-          <div class="pill">10 Subjects</div>
-          <div class="pill">Each subject has days</div>
-          <div class="pill">Auto next question</div>
-          <div class="pill">Voice praise</div>
+          <div class="pill">Math → Addition</div>
+          <div class="pill">Reading → Rhyming</div>
+          <div class="pill">Science → Animals</div>
+          <div class="pill">No day system</div>
         </div>
         <div class="row" style="margin-top:16px">
           <button class="primary" onclick="openSubject('math')">Start with Math</button>
@@ -255,43 +151,34 @@
       </div>
       <div class="row">
         <div class="pill">⭐ <span id="starCountSubject">0</span></div>
-        <div class="pill">✅ <span id="doneCountSubject">0</span></div>
       </div>
     </div>
 
-    <div class="layout">
-      <div class="panel">
+    <div class="subject-layout">
+      <div class="card">
         <div class="subject-head">
-          <div class="subject-badge" id="subjectBadge">🧮</div>
+          <div class="badge" id="subjectBadge">🧮</div>
           <div>
-            <h2 id="subjectTitle">Math</h2>
-            <div class="muted" id="subjectDesc">Pick a day and a topic.</div>
+            <div id="subjectTitle" style="font-size:30px;font-weight:900">Math</div>
+            <div id="subjectDesc" style="color:var(--muted);font-weight:700">Choose a subtopic</div>
           </div>
         </div>
-        <h3>Days</h3>
-        <div id="subjectDays"></div>
+        <div style="font-size:21px;font-weight:900;margin-bottom:12px">Subtopics</div>
+        <div class="subtopic-list" id="subtopicList"></div>
       </div>
 
       <div>
-        <div class="panel" id="subjectTopics">
-          <div class="row" style="justify-content:space-between;align-items:center">
-            <h3 id="topicsHeading">Topics</h3>
-            <button class="small purple" onclick="printWorksheet()">Print Worksheet</button>
-          </div>
-          <div class="topic-grid" id="topicGrid"></div>
-        </div>
-
-        <div class="lesson" id="lessonCard">
-          <div class="lesson-meta" id="lessonMeta">Choose a topic to begin.</div>
+        <div class="lesson-card">
+          <div class="lesson-meta" id="lessonMeta">Pick a subtopic to begin.</div>
           <div class="progress"><div class="bar" id="lessonBar"></div></div>
-          <div class="question" id="questionText">Pick a topic on the left or above.</div>
+          <div class="question" id="questionText">Questions will appear here inside the subject.</div>
           <div class="answers" id="answersBox"></div>
           <div class="feedback" id="feedback"></div>
           <div class="row" style="margin-top:14px">
             <button class="primary" onclick="skipQuestion()">Skip</button>
             <button class="secondary" onclick="readQuestion()">Read Question</button>
             <button class="green" onclick="playPraiseSample()">Praise Sound</button>
-            <button class="purple" onclick="playRandomTopic()">Random Topic</button>
+            <button class="purple" onclick="printWorksheet()">Print Worksheet</button>
           </div>
         </div>
 
@@ -319,49 +206,30 @@ const subjects = [
   {id:'geography', emoji:'🌍', title:'World Around Me', desc:'Land, water, home, community helpers, and places around us.', topics:['Land and Water','My Home','Helpers','Places','Directions']}
 ];
 
-const subjectDaysMap = {};
-subjects.forEach(s=>{
-  subjectDaysMap[s.id] = Array.from({length:12}, (_,i)=>({
-    day:i+1,
-    label:`Day ${i+1}`,
-    topic:s.topics[i % s.topics.length]
-  }));
-});
-
 let state = {
-  stars:Number(localStorage.getItem('skyla_stars') || 0),
-  completed:JSON.parse(localStorage.getItem('skyla_completed') || '{}'),
+  stars:Number(localStorage.getItem('skyla_stars_simple') || 0),
   currentSubject:'math',
-  currentDay:1,
   currentTopic:'Counting',
   questionIndex:0,
-  totalQuestions:15
+  totalQuestions:20
 };
 
 let currentQ = null;
 
 function saveState(){
-  localStorage.setItem('skyla_stars', state.stars);
-  localStorage.setItem('skyla_completed', JSON.stringify(state.completed));
-}
-function completedCount(){
-  let total = 0;
-  Object.values(state.completed).forEach(arr=> total += arr.length);
-  return total;
-}
-function updateCounters(){
-  document.getElementById('starCountHome').textContent = state.stars;
-  document.getElementById('starCountSubject').textContent = state.stars;
-  document.getElementById('doneCountHome').textContent = completedCount();
-  document.getElementById('doneCountSubject').textContent = completedCount();
+  localStorage.setItem('skyla_stars_simple', state.stars);
 }
 function switchScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-function goHome(){
-  switchScreen('homeScreen');
+function updateCounters(){
+  document.getElementById('starCountHome').textContent = state.stars;
+  document.getElementById('starCountSubject').textContent = state.stars;
 }
+function goHome(){ switchScreen('homeScreen'); }
+function getSubject(){ return subjects.find(s=>s.id===state.currentSubject); }
+
 function speak(text, rate=0.95){
   if(!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
@@ -369,9 +237,7 @@ function speak(text, rate=0.95){
   u.rate = rate;
   speechSynthesis.speak(u);
 }
-function speakGreeting(){
-  speak("Hello, Aenielle Skyla! Welcome to your learning app!", 0.92);
-}
+function speakGreeting(){ speak("Hello, Aenielle Skyla! Welcome to your learning app!", 0.92); }
 function praiseText(){
   const list = [
     "Skyla, you're awesome!",
@@ -383,16 +249,10 @@ function praiseText(){
   ];
   return list[Math.floor(Math.random()*list.length)];
 }
-function playPraiseSample(){
-  speak(praiseText(), 1.0);
-}
-function showRandomSubject(){
-  const subject = subjects[Math.floor(Math.random()*subjects.length)];
-  openSubject(subject.id);
-}
+function playPraiseSample(){ speak(praiseText(), 1.0); }
+
 function renderHomeSubjects(){
-  const grid = document.getElementById('subjectGrid');
-  grid.innerHTML = subjects.map(s=>`
+  document.getElementById('subjectGrid').innerHTML = subjects.map(s=>`
     <div class="card subject-card">
       <div>
         <div class="subject-icon">${s.emoji}</div>
@@ -405,58 +265,41 @@ function renderHomeSubjects(){
   `).join('');
 }
 
-function openSubject(id){
-  state.currentSubject = id;
-  state.currentDay = 1;
-  const subject = subjects.find(s=>s.id===id);
-  state.currentTopic = subjectDaysMap[id][0].topic;
-  document.getElementById('subjectBadge').textContent = subject.emoji;
-  document.getElementById('subjectTitle').textContent = subject.title;
-  document.getElementById('subjectDesc').textContent = subject.desc;
-  document.getElementById('topicsHeading').textContent = subject.title + ' Topics';
-  renderSubjectDays();
-  renderSubjectTopics();
-  resetLessonCard();
-  updateCounters();
-  switchScreen('subjectScreen');
+function showRandomSubject(){
+  const subject = subjects[Math.floor(Math.random()*subjects.length)];
+  openSubject(subject.id);
 }
 
-function renderSubjectDays(){
-  const days = subjectDaysMap[state.currentSubject];
-  const completed = state.completed[state.currentSubject] || [];
-  document.getElementById('subjectDays').innerHTML = days.map(d=>{
-    const active = d.day === state.currentDay ? 'active' : '';
-    const done = completed.includes(d.day) ? 'done' : '';
-    return `<div class="day-card ${active} ${done}" onclick="selectDay(${d.day})">
-      <h4>${d.label}</h4>
-      <p>${d.topic}</p>
-    </div>`;
-  }).join('');
-}
-function selectDay(day){
-  state.currentDay = day;
-  const d = subjectDaysMap[state.currentSubject].find(x=>x.day===day);
-  state.currentTopic = d.topic;
-  renderSubjectDays();
-  renderSubjectTopics();
+function openSubject(id){
+  state.currentSubject = id;
+  state.currentTopic = getSubjectById(id).topics[0];
+  document.getElementById('subjectBadge').textContent = getSubjectById(id).emoji;
+  document.getElementById('subjectTitle').textContent = getSubjectById(id).title;
+  document.getElementById('subjectDesc').textContent = getSubjectById(id).desc;
+  renderSubtopics();
+  resetLesson();
+  switchScreen('subjectScreen');
   startLesson(state.currentTopic);
 }
-function renderSubjectTopics(){
-  const subject = subjects.find(s=>s.id===state.currentSubject);
-  const dayTopic = subjectDaysMap[state.currentSubject].find(x=>x.day===state.currentDay).topic;
-  document.getElementById('topicGrid').innerHTML = subject.topics.map(t=>`
-    <div class="topic-btn" onclick="startLesson('${t}')">
-      ${t}${t===dayTopic ? ' ⭐' : ''}
-    </div>
+
+function getSubjectById(id){
+  return subjects.find(s=>s.id===id);
+}
+
+function renderSubtopics(){
+  const subject = getSubject();
+  document.getElementById('subtopicList').innerHTML = subject.topics.map(t=>`
+    <div class="subtopic-btn ${t===state.currentTopic ? 'active' : ''}" onclick="startLesson('${t}')">${t}</div>
   `).join('');
 }
 
-function resetLessonCard(){
-  document.getElementById('lessonMeta').textContent = 'Choose a topic to begin.';
-  document.getElementById('questionText').textContent = 'Tap a day or topic to start.';
+function resetLesson(){
+  document.getElementById('lessonMeta').textContent = 'Pick a subtopic to begin.';
+  document.getElementById('questionText').textContent = 'Questions will appear here inside the subject.';
   document.getElementById('answersBox').innerHTML = '';
   document.getElementById('feedback').textContent = '';
   document.getElementById('lessonBar').style.width = '0%';
+  document.getElementById('worksheetBox').classList.add('hidden');
 }
 
 function randomInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
@@ -545,13 +388,12 @@ function makeQuestion(subjectId, topic){
 function startLesson(topic){
   state.currentTopic = topic;
   state.questionIndex = 0;
+  renderSubtopics();
   document.getElementById('worksheetBox').classList.add('hidden');
-  document.getElementById('lessonMeta').textContent = `${getSubject().emoji} ${getSubject().title} • Day ${state.currentDay} • ${topic}`;
+  document.getElementById('lessonMeta').textContent = `${getSubject().emoji} ${getSubject().title} • ${topic}`;
   nextQuestion(false);
 }
-function skipQuestion(){
-  nextQuestion();
-}
+
 function nextQuestion(increment=true){
   if(increment) state.questionIndex++;
   if(state.questionIndex >= state.totalQuestions){
@@ -565,6 +407,7 @@ function nextQuestion(increment=true){
   document.getElementById('lessonBar').style.width = `${(state.questionIndex/state.totalQuestions)*100}%`;
   readQuestion();
 }
+
 function checkAnswer(el, choice){
   const correct = String(choice) === String(currentQ.answer);
   document.querySelectorAll('.answer').forEach(a=>{
@@ -575,55 +418,50 @@ function checkAnswer(el, choice){
     el.style.outline='4px solid #7fdc6c';
     state.stars += 1;
     document.getElementById('feedback').textContent = 'Great job! ⭐';
-    speak(praiseText(), 1.0);
+    const praise = praiseText();
+    speak(praise, 1.0);
+    updateCounters();
+    saveState();
+    setTimeout(()=>nextQuestion(), 1800);
+    return;
   } else {
     el.style.outline='4px solid #ff7f7f';
     const good = [...document.querySelectorAll('.answer')].find(a=>a.textContent===String(currentQ.answer));
     if(good) good.style.outline='4px solid #7fdc6c';
     document.getElementById('feedback').textContent = `Nice try! The answer is ${currentQ.answer}.`;
     speak(`Nice try! The answer is ${currentQ.answer}.`, 0.96);
+    updateCounters();
+    saveState();
+    setTimeout(()=>nextQuestion(), 1900);
+    return;
   }
-  updateCounters();
-  saveState();
-  setTimeout(()=>nextQuestion(), 900);
 }
+
 function finishLesson(){
-  document.getElementById('questionText').textContent = `Amazing, Skyla! You finished Day ${state.currentDay} in ${getSubject().title}.`;
+  document.getElementById('questionText').textContent = `Amazing, Skyla! You finished ${state.currentTopic} in ${getSubject().title}.`;
   document.getElementById('answersBox').innerHTML = '';
-  document.getElementById('feedback').textContent = 'Lesson complete! 🎉';
+  document.getElementById('feedback').textContent = 'Subtopic complete! 🎉';
   document.getElementById('lessonBar').style.width = '100%';
-  if(!state.completed[state.currentSubject]) state.completed[state.currentSubject] = [];
-  if(!state.completed[state.currentSubject].includes(state.currentDay)){
-    state.completed[state.currentSubject].push(state.currentDay);
-    state.completed[state.currentSubject].sort((a,b)=>a-b);
-  }
-  updateCounters();
-  saveState();
-  renderSubjectDays();
-  speak("Skyla, you're awesome! Lesson complete!", 1.0);
+  speak("Skyla, you're awesome! Subtopic complete!", 1.0);
 }
+
+function skipQuestion(){ nextQuestion(); }
 function readQuestion(){
   const text = document.getElementById('questionText').textContent;
   if(text) speak(text, 0.92);
 }
-function playRandomTopic(){
-  const subject = getSubject();
-  const t = subject.topics[Math.floor(Math.random()*subject.topics.length)];
-  startLesson(t);
-}
-function getSubject(){
-  return subjects.find(s=>s.id===state.currentSubject);
-}
+
 function buildWorksheet(){
   const lines = [];
   for(let i=1;i<=15;i++){
     const q = makeQuestion(state.currentSubject, state.currentTopic);
     lines.push(`<div>${i}. ${q.question} _______________________</div>`);
   }
-  document.getElementById('worksheetTitle').textContent = `${getSubject().title} • ${state.currentTopic} • Day ${state.currentDay}`;
+  document.getElementById('worksheetTitle').textContent = `${getSubject().title} • ${state.currentTopic}`;
   document.getElementById('worksheetContent').innerHTML = lines.join('');
   document.getElementById('worksheetBox').classList.remove('hidden');
 }
+
 function printWorksheet(){
   buildWorksheet();
   setTimeout(()=>window.print(),150);
