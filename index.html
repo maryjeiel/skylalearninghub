@@ -5,108 +5,304 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Hello, Aenielle Skyla! Learning Adventure</title>
 <style>
-  :root{--bg1:#fff7ef;--bg2:#eef8ff;--card:#ffffff;--ink:#24324a;--muted:#65718a;--shadow:0 10px 30px rgba(36,50,74,.12);--radius:24px}
+  :root{
+    --bg:#f6f8ff;
+    --card:#ffffff;
+    --ink:#26324a;
+    --muted:#6c7892;
+    --pink:#ffd7e8;
+    --peach:#ffe0c2;
+    --yellow:#ffe68f;
+    --blue:#cfe9ff;
+    --green:#d8f7c8;
+    --purple:#e4dcff;
+    --shadow:0 14px 34px rgba(38,50,74,.12);
+    --radius:26px;
+  }
   *{box-sizing:border-box}
-  body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(135deg,var(--bg1),var(--bg2));min-height:100vh}
-  .wrap{max-width:1300px;margin:0 auto;padding:20px}
-  .hero{background:linear-gradient(135deg,#fff,#fff3e8);border-radius:32px;padding:24px;box-shadow:var(--shadow);display:grid;grid-template-columns:1.4fr .9fr;gap:20px;align-items:center}
-  .hero h1{font-size:clamp(30px,5vw,54px);margin:0 0 10px}
-  .hero p{font-size:18px;line-height:1.5;color:var(--muted);margin:0 0 18px}
-  .hero-visual{background:linear-gradient(135deg,#ffd9c7,#dff4ff);border-radius:28px;min-height:230px;display:flex;align-items:center;justify-content:center;font-size:78px;text-align:center;padding:18px}
-  .stats,.toolbar,.chips{display:flex;flex-wrap:wrap;gap:12px}
+  body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+      radial-gradient(circle at top left, #fff2d8, transparent 24%),
+      radial-gradient(circle at top right, #e8f6ff, transparent 22%),
+      linear-gradient(180deg,#fefcff,#f3f7ff);
+    color:var(--ink);
+    min-height:100vh;
+  }
+  .app{
+    max-width:1200px;
+    margin:0 auto;
+    padding:18px;
+  }
+  .screen{display:none}
+  .screen.active{display:block}
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:16px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .brand-bubble{
+    width:62px;height:62px;border-radius:20px;
+    background:linear-gradient(135deg,var(--yellow),var(--peach));
+    display:flex;align-items:center;justify-content:center;
+    font-size:30px;box-shadow:var(--shadow);
+  }
+  .hero{
+    background:linear-gradient(135deg,#ffffff,#fff5ea);
+    border-radius:34px;
+    padding:22px;
+    box-shadow:var(--shadow);
+    display:grid;
+    grid-template-columns:1.3fr .9fr;
+    gap:18px;
+    align-items:center;
+  }
+  .hero h1{margin:0 0 8px;font-size:clamp(28px,4vw,48px)}
+  .hero p{margin:0;color:var(--muted);font-size:18px;line-height:1.5}
+  .hero-art{
+    min-height:210px;border-radius:28px;
+    background:linear-gradient(135deg,#ffd9ee,#dff2ff);
+    display:flex;align-items:center;justify-content:center;
+    font-size:74px;
+  }
+  .stats,.row,.chips,.day-row{display:flex;flex-wrap:wrap;gap:12px}
   .stats{margin-top:16px}
-  .pill,.chip{background:#fff;border-radius:999px;box-shadow:var(--shadow);font-weight:700}
-  .pill{padding:10px 14px;display:flex;gap:8px;align-items:center}
-  .chip{padding:6px 10px;font-size:13px}
-  .toolbar{margin:18px 0 24px}
-  button{border:none;border-radius:18px;padding:14px 18px;font-size:16px;font-weight:700;cursor:pointer;color:var(--ink);background:#fff;box-shadow:var(--shadow)}
-  button.primary{background:linear-gradient(135deg,#ffb18f,#ffd166)}
-  button.secondary{background:linear-gradient(135deg,#bce8ff,#d7f2ff)}
-  button.success{background:linear-gradient(135deg,#b8f0ab,#dbf8d2)}
-  button.purple{background:linear-gradient(135deg,#dfd2ff,#efe8ff)}
+  .pill{
+    padding:10px 14px;background:#fff;border-radius:999px;
+    box-shadow:var(--shadow);font-weight:700
+  }
+  button{
+    border:none;border-radius:18px;padding:14px 18px;
+    font-size:16px;font-weight:700;cursor:pointer;
+    color:var(--ink);box-shadow:var(--shadow);
+    background:#fff;
+  }
+  button.primary{background:linear-gradient(135deg,#ffbd95,#ffe08f)}
+  button.secondary{background:linear-gradient(135deg,#ccecff,#e4f4ff)}
+  button.green{background:linear-gradient(135deg,#c8efb2,#e4f9d8)}
+  button.purple{background:linear-gradient(135deg,#e1d7ff,#f1ebff)}
   button.small{padding:10px 12px;font-size:14px;border-radius:14px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-  .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
-  .subject-card{min-height:210px;display:flex;flex-direction:column;justify-content:space-between}
-  .subject-emoji{font-size:44px}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+    margin-top:18px;
+  }
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:18px;
+    box-shadow:var(--shadow);
+  }
+  .subject-card{
+    min-height:220px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    background:linear-gradient(180deg,#ffffff,#fbfdff);
+  }
+  .subject-icon{font-size:44px}
   .subject-title{font-size:24px;font-weight:800;margin:8px 0}
-  .subject-desc{color:var(--muted);line-height:1.45;min-height:56px}
-  .topic-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
-  .topic{border-radius:20px;padding:16px;background:linear-gradient(135deg,#ffffff,#f8fbff);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px}
-  .topic h4{margin:0;font-size:18px}
-  .muted{color:var(--muted)}
-  .section-title{display:flex;align-items:center;justify-content:space-between;margin:28px 0 14px}
-  .section-title h2{margin:0;font-size:30px}
-  .day-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-  .day-card{background:#fff;border-radius:22px;padding:14px;box-shadow:var(--shadow);cursor:pointer;border:3px solid transparent}
-  .day-card.done{border-color:#98e788}
-  .day-card.active{border-color:#ffd166}
-  .day-card h4{margin:0 0 6px;font-size:18px}
+  .subject-desc{color:var(--muted);line-height:1.45;min-height:60px}
+  .chip{
+    background:#f4f7ff;
+    border-radius:999px;
+    padding:7px 10px;
+    font-size:13px;
+    font-weight:700;
+  }
+  .layout{
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:16px;
+    align-items:start;
+  }
+  .panel{
+    background:#fff;
+    border-radius:28px;
+    padding:18px;
+    box-shadow:var(--shadow);
+  }
+  .panel h2,.panel h3{margin:0 0 10px}
+  .subject-head{
+    display:flex;align-items:center;gap:14px;margin-bottom:10px;
+  }
+  .subject-badge{
+    width:68px;height:68px;border-radius:22px;background:linear-gradient(135deg,var(--blue),var(--purple));
+    display:flex;align-items:center;justify-content:center;font-size:34px;
+  }
+  .day-card{
+    padding:14px;border-radius:20px;background:#f8fbff;
+    cursor:pointer;border:3px solid transparent;margin-bottom:10px;
+  }
+  .day-card.active{border-color:#ffd565;background:#fffaf0}
+  .day-card.done{border-color:#95e37f}
+  .day-card h4{margin:0 0 4px}
   .day-card p{margin:0;color:var(--muted);font-size:14px}
-  .lesson-box{background:linear-gradient(135deg,#fff,#fef7ed);border-radius:28px;padding:22px;box-shadow:var(--shadow)}
-  .question{font-size:32px;font-weight:800;line-height:1.3;margin:10px 0 18px}
-  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
-  .answer{background:#fff;border-radius:20px;padding:16px;box-shadow:var(--shadow);font-size:20px;font-weight:700;text-align:center;cursor:pointer}
-  .feedback{font-size:24px;font-weight:800;min-height:34px;margin-top:14px}
-  .progress{height:18px;background:#edf2ff;border-radius:999px;overflow:hidden;margin:16px 0}
-  .bar{height:100%;background:linear-gradient(90deg,#8ad17d,#ffd166);width:0%;transition:width .3s ease}
-  .worksheet{padding:24px;background:#fff;border-radius:24px;box-shadow:var(--shadow)}
-  .printable{background:#fff;border:2px dashed #cfd8ea;border-radius:18px;padding:16px;line-height:1.9}
-  .footer-space{height:50px}.hidden{display:none}
-  @media (max-width:900px){.hero{grid-template-columns:1fr}.hero-visual{min-height:160px;font-size:58px}.question{font-size:26px}}
-  @media print{body{background:#fff}.hero,.toolbar,.grid,.day-grid,#lessonArea,.section-title button{display:none !important}#worksheetArea{display:block !important}.wrap{max-width:100%;padding:0}.worksheet{box-shadow:none}}
+  .topic-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:12px;
+    margin-top:10px;
+  }
+  .topic-btn{
+    padding:14px;border-radius:18px;background:linear-gradient(135deg,#ffffff,#f7fbff);
+    box-shadow:var(--shadow);font-weight:700;cursor:pointer;text-align:left;
+  }
+  .lesson{
+    background:linear-gradient(135deg,#fff,#fff7ef);
+    border-radius:28px;padding:20px;box-shadow:var(--shadow);
+    min-height:520px;
+  }
+  .lesson-meta{color:var(--muted);font-weight:700}
+  .progress{
+    margin:14px 0;height:18px;border-radius:999px;background:#edf2ff;overflow:hidden;
+  }
+  .bar{
+    height:100%;width:0%;
+    background:linear-gradient(90deg,#9be17c,#ffd565);
+    transition:width .25s ease;
+  }
+  .question{
+    font-size:34px;font-weight:800;line-height:1.3;margin:16px 0 18px;
+  }
+  .answers{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+  }
+  .answer{
+    background:#fff;border-radius:22px;padding:16px;box-shadow:var(--shadow);
+    font-size:22px;font-weight:800;text-align:center;cursor:pointer;
+    transition:transform .12s ease, opacity .12s ease;
+  }
+  .answer:hover{transform:translateY(-2px)}
+  .feedback{
+    min-height:34px;margin-top:14px;font-size:24px;font-weight:800;
+  }
+  .worksheet{
+    background:#fff;border-radius:24px;padding:18px;box-shadow:var(--shadow);
+    margin-top:16px;
+  }
+  .printable{
+    border:2px dashed #d8deef;border-radius:18px;padding:14px;line-height:1.9;background:#fff;
+  }
+  .hidden{display:none}
+  @media (max-width:980px){
+    .hero,.layout{grid-template-columns:1fr}
+    .hero-art{min-height:150px;font-size:58px}
+    .question{font-size:28px}
+  }
+  @media print{
+    body{background:#fff}
+    .topbar,.hero,.layout>.panel:first-child,.row,#subjectTopics,#lessonCard .row{display:none !important}
+    #worksheetBox{display:block !important}
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <section class="hero">
-    <div>
-      <h1>Hello, Aenielle Skyla! 🌈</h1>
-      <p>Welcome to your colorful 30-day learning adventure. Pick a subject, play fun lessons, listen to questions, earn stars, and print worksheets anytime.</p>
-      <div class="stats">
-        <div class="pill">⭐ <span id="starCount">0</span> stars</div>
-        <div class="pill">✅ <span id="doneCount">0</span> days done</div>
-        <div class="pill">📚 10 subjects</div>
-        <div class="pill">🧠 40+ topics</div>
+<div class="app">
+
+  <section id="homeScreen" class="screen active">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-bubble">🌈</div>
+        <div>
+          <div style="font-size:28px;font-weight:900">Hello, Aenielle Skyla!</div>
+          <div style="color:var(--muted);font-weight:700">Tap a subject to start playing</div>
+        </div>
       </div>
-      <div class="toolbar">
-        <button class="primary" onclick="scrollToId('subjectsSection')">Start Learning</button>
-        <button class="secondary" onclick="scrollToId('daysSection')">30-Day Plan</button>
-        <button class="success" onclick="showRandomLesson()">Surprise Game</button>
-        <button class="purple" onclick="speakGreeting()">Hear My Name</button>
+      <div class="row">
+        <div class="pill">⭐ <span id="starCountHome">0</span></div>
+        <div class="pill">✅ <span id="doneCountHome">0</span></div>
       </div>
     </div>
-    <div class="hero-visual">🦋📚🧮🌟</div>
+
+    <div class="hero">
+      <div>
+        <h1>Your Learning App 📚</h1>
+        <p>Every subject has its own Day 1, Day 2, Day 3, and more. Tap any subject, choose a day, answer questions, hear fun praise, and move straight to the next one.</p>
+        <div class="stats">
+          <div class="pill">10 Subjects</div>
+          <div class="pill">Each subject has days</div>
+          <div class="pill">Auto next question</div>
+          <div class="pill">Voice praise</div>
+        </div>
+        <div class="row" style="margin-top:16px">
+          <button class="primary" onclick="openSubject('math')">Start with Math</button>
+          <button class="secondary" onclick="showRandomSubject()">Surprise Subject</button>
+        </div>
+      </div>
+      <div class="hero-art">🦋🧮📖🎨</div>
+    </div>
+
+    <div class="grid" id="subjectGrid"></div>
   </section>
 
-  <div class="section-title"><h2>Subjects</h2><button class="small" onclick="scrollToId('subjectsSection')">Show Subjects</button></div>
-  <section id="subjectsSection" class="grid"></section>
+  <section id="subjectScreen" class="screen">
+    <div class="topbar">
+      <div class="row">
+        <button class="small" onclick="goHome()">⬅ Home</button>
+        <button class="small secondary" onclick="speakGreeting()">Hear My Name</button>
+      </div>
+      <div class="row">
+        <div class="pill">⭐ <span id="starCountSubject">0</span></div>
+        <div class="pill">✅ <span id="doneCountSubject">0</span></div>
+      </div>
+    </div>
 
-  <div class="section-title"><h2>30-Day Learning Plan</h2><button class="small" onclick="resetProgress()">Reset Progress</button></div>
-  <section id="daysSection" class="day-grid"></section>
+    <div class="layout">
+      <div class="panel">
+        <div class="subject-head">
+          <div class="subject-badge" id="subjectBadge">🧮</div>
+          <div>
+            <h2 id="subjectTitle">Math</h2>
+            <div class="muted" id="subjectDesc">Pick a day and a topic.</div>
+          </div>
+        </div>
+        <h3>Days</h3>
+        <div id="subjectDays"></div>
+      </div>
 
-  <div class="section-title"><h2 id="topicHeader">Topics</h2><button class="small" onclick="printWorksheet()">Print Worksheet</button></div>
-  <section id="topicsSection" class="topic-list"></section>
+      <div>
+        <div class="panel" id="subjectTopics">
+          <div class="row" style="justify-content:space-between;align-items:center">
+            <h3 id="topicsHeading">Topics</h3>
+            <button class="small purple" onclick="printWorksheet()">Print Worksheet</button>
+          </div>
+          <div class="topic-grid" id="topicGrid"></div>
+        </div>
 
-  <div class="section-title"><h2>Lesson Time</h2><button class="small" onclick="readQuestion()">Read Question</button></div>
-  <section id="lessonArea" class="lesson-box hidden">
-    <div class="muted" id="lessonMeta">Pick a topic to begin.</div>
-    <div class="progress"><div class="bar" id="lessonBar"></div></div>
-    <div class="question" id="questionText"></div>
-    <div class="answers" id="answersBox"></div>
-    <div class="feedback" id="feedback"></div>
-    <div class="toolbar">
-      <button class="primary" onclick="nextQuestion()">Next Question</button>
-      <button class="secondary" onclick="readQuestion()">Read Again</button>
-      <button class="success" onclick="showRandomLesson()">New Random Topic</button>
+        <div class="lesson" id="lessonCard">
+          <div class="lesson-meta" id="lessonMeta">Choose a topic to begin.</div>
+          <div class="progress"><div class="bar" id="lessonBar"></div></div>
+          <div class="question" id="questionText">Pick a topic on the left or above.</div>
+          <div class="answers" id="answersBox"></div>
+          <div class="feedback" id="feedback"></div>
+          <div class="row" style="margin-top:14px">
+            <button class="primary" onclick="skipQuestion()">Skip</button>
+            <button class="secondary" onclick="readQuestion()">Read Question</button>
+            <button class="green" onclick="playPraiseSample()">Praise Sound</button>
+            <button class="purple" onclick="playRandomTopic()">Random Topic</button>
+          </div>
+        </div>
+
+        <div class="worksheet hidden" id="worksheetBox">
+          <h3 id="worksheetTitle">Worksheet</h3>
+          <div class="printable" id="worksheetContent"></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="worksheetArea" class="worksheet hidden">
-    <h3 id="worksheetTitle">Printable Worksheet</h3>
-    <div class="printable" id="worksheetContent"></div>
-  </section>
-  <div class="footer-space"></div>
 </div>
 
 <script>
@@ -122,227 +318,319 @@ const subjects = [
   {id:'social', emoji:'🤝', title:'Good Manners', desc:'Kindness, feelings, safety, and daily habits for kids.', topics:['Feelings','Kind Words','Safety','Healthy Habits']},
   {id:'geography', emoji:'🌍', title:'World Around Me', desc:'Land, water, home, community helpers, and places around us.', topics:['Land and Water','My Home','Helpers','Places','Directions']}
 ];
-const monthPlan = Array.from({length:30}, (_,i)=> {
-  const s = subjects[i % subjects.length];
-  return {day:i+1, subject:s.title, emoji:s.emoji, topic:s.topics[i % s.topics.length]};
+
+const subjectDaysMap = {};
+subjects.forEach(s=>{
+  subjectDaysMap[s.id] = Array.from({length:12}, (_,i)=>({
+    day:i+1,
+    label:`Day ${i+1}`,
+    topic:s.topics[i % s.topics.length]
+  }));
 });
+
 let state = {
-  currentSubject: subjects[0],
-  currentTopic: subjects[0].topics[0],
-  questionIndex: 0,
-  totalInLesson: 12,
-  stars: Number(localStorage.getItem('aenielle_stars') || 0),
-  completedDays: JSON.parse(localStorage.getItem('aenielle_days') || '[]'),
-  activeDay: 1
+  stars:Number(localStorage.getItem('skyla_stars') || 0),
+  completed:JSON.parse(localStorage.getItem('skyla_completed') || '{}'),
+  currentSubject:'math',
+  currentDay:1,
+  currentTopic:'Counting',
+  questionIndex:0,
+  totalQuestions:15
 };
-function saveState(){localStorage.setItem('aenielle_stars', state.stars);localStorage.setItem('aenielle_days', JSON.stringify(state.completedDays));}
-function scrollToId(id){window.scrollTo({top: document.getElementById(id).offsetTop - 20, behavior:'smooth'});}
-function renderSubjects(){
-  document.getElementById('subjectsSection').innerHTML = subjects.map(s=>`
+
+let currentQ = null;
+
+function saveState(){
+  localStorage.setItem('skyla_stars', state.stars);
+  localStorage.setItem('skyla_completed', JSON.stringify(state.completed));
+}
+function completedCount(){
+  let total = 0;
+  Object.values(state.completed).forEach(arr=> total += arr.length);
+  return total;
+}
+function updateCounters(){
+  document.getElementById('starCountHome').textContent = state.stars;
+  document.getElementById('starCountSubject').textContent = state.stars;
+  document.getElementById('doneCountHome').textContent = completedCount();
+  document.getElementById('doneCountSubject').textContent = completedCount();
+}
+function switchScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function goHome(){
+  switchScreen('homeScreen');
+}
+function speak(text, rate=0.95){
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate = rate;
+  speechSynthesis.speak(u);
+}
+function speakGreeting(){
+  speak("Hello, Aenielle Skyla! Welcome to your learning app!", 0.92);
+}
+function praiseText(){
+  const list = [
+    "Skyla, you're awesome!",
+    "Wow! Amazing!",
+    "Great job, Skyla!",
+    "You did it!",
+    "Fantastic work!",
+    "Yay! You got it right!"
+  ];
+  return list[Math.floor(Math.random()*list.length)];
+}
+function playPraiseSample(){
+  speak(praiseText(), 1.0);
+}
+function showRandomSubject(){
+  const subject = subjects[Math.floor(Math.random()*subjects.length)];
+  openSubject(subject.id);
+}
+function renderHomeSubjects(){
+  const grid = document.getElementById('subjectGrid');
+  grid.innerHTML = subjects.map(s=>`
     <div class="card subject-card">
       <div>
-        <div class="subject-emoji">${s.emoji}</div>
+        <div class="subject-icon">${s.emoji}</div>
         <div class="subject-title">${s.title}</div>
         <div class="subject-desc">${s.desc}</div>
         <div class="chips">${s.topics.slice(0,4).map(t=>`<span class="chip">${t}</span>`).join('')}</div>
       </div>
       <button class="primary" onclick="openSubject('${s.id}')">Open ${s.title}</button>
-    </div>`).join('');
+    </div>
+  `).join('');
 }
-function renderDays(){
-  document.getElementById('daysSection').innerHTML = monthPlan.map(d=>{
-    const done = state.completedDays.includes(d.day) ? 'done':'';
-    const active = state.activeDay === d.day ? 'active':'';
-    return `<div class="day-card ${done} ${active}" onclick="openDay(${d.day})"><h4>${d.emoji} Day ${d.day}</h4><p>${d.subject}</p><p>${d.topic}</p></div>`;
+
+function openSubject(id){
+  state.currentSubject = id;
+  state.currentDay = 1;
+  const subject = subjects.find(s=>s.id===id);
+  state.currentTopic = subjectDaysMap[id][0].topic;
+  document.getElementById('subjectBadge').textContent = subject.emoji;
+  document.getElementById('subjectTitle').textContent = subject.title;
+  document.getElementById('subjectDesc').textContent = subject.desc;
+  document.getElementById('topicsHeading').textContent = subject.title + ' Topics';
+  renderSubjectDays();
+  renderSubjectTopics();
+  resetLessonCard();
+  updateCounters();
+  switchScreen('subjectScreen');
+}
+
+function renderSubjectDays(){
+  const days = subjectDaysMap[state.currentSubject];
+  const completed = state.completed[state.currentSubject] || [];
+  document.getElementById('subjectDays').innerHTML = days.map(d=>{
+    const active = d.day === state.currentDay ? 'active' : '';
+    const done = completed.includes(d.day) ? 'done' : '';
+    return `<div class="day-card ${active} ${done}" onclick="selectDay(${d.day})">
+      <h4>${d.label}</h4>
+      <p>${d.topic}</p>
+    </div>`;
   }).join('');
-  document.getElementById('doneCount').textContent = state.completedDays.length;
 }
-function renderTopics(subject){
-  document.getElementById('topicHeader').textContent = subject.title + ' Topics';
-  document.getElementById('topicsSection').innerHTML = subject.topics.map(t=>`
-    <div class="topic">
-      <h4>${t}</h4>
-      <div class="muted">Play a fresh activity with many possible questions.</div>
-      <button class="secondary" onclick="startLesson('${subject.id}','${t}')">Play ${t}</button>
-      <button class="small" onclick="buildWorksheet('${subject.id}','${t}')">Worksheet</button>
-    </div>`).join('');
+function selectDay(day){
+  state.currentDay = day;
+  const d = subjectDaysMap[state.currentSubject].find(x=>x.day===day);
+  state.currentTopic = d.topic;
+  renderSubjectDays();
+  renderSubjectTopics();
+  startLesson(state.currentTopic);
 }
-function openSubject(id){state.currentSubject = subjects.find(s=>s.id===id);renderTopics(state.currentSubject);scrollToId('topicsSection');}
-function openDay(day){
-  state.activeDay = day;
-  const d = monthPlan.find(x=>x.day===day);
-  const subject = subjects.find(s=>s.title===d.subject);
-  state.currentSubject = subject;
-  renderTopics(subject);
-  renderDays();
-  startLesson(subject.id, d.topic, day);
+function renderSubjectTopics(){
+  const subject = subjects.find(s=>s.id===state.currentSubject);
+  const dayTopic = subjectDaysMap[state.currentSubject].find(x=>x.day===state.currentDay).topic;
+  document.getElementById('topicGrid').innerHTML = subject.topics.map(t=>`
+    <div class="topic-btn" onclick="startLesson('${t}')">
+      ${t}${t===dayTopic ? ' ⭐' : ''}
+    </div>
+  `).join('');
 }
+
+function resetLessonCard(){
+  document.getElementById('lessonMeta').textContent = 'Choose a topic to begin.';
+  document.getElementById('questionText').textContent = 'Tap a day or topic to start.';
+  document.getElementById('answersBox').innerHTML = '';
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('lessonBar').style.width = '0%';
+}
+
 function randomInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 function shuffle(arr){ return [...arr].sort(()=>Math.random()-0.5); }
-function mcq(question, options, answer){ return {question, options: shuffle(options), answer}; }
-function choose(list){ const item = list[randomInt(0, list.length-1)]; return {question:item[0], options: shuffle(item[1]), answer:item[2]}; }
+function mcq(question, options, answer){ return {question, options:shuffle(options), answer}; }
+function choose(list){ const item = list[randomInt(0,list.length-1)]; return {question:item[0], options:shuffle(item[1]), answer:item[2]}; }
+
 function makeQuestion(subjectId, topic){
   const banks = {
     math: {
-      Counting: ()=>{const n=randomInt(1,99); return mcq(`What number comes after ${n}?`, [String(n+1),String(n-1),String(n+2),String(n+3)], String(n+1));},
-      Addition: ()=>{const a=randomInt(1,20), b=randomInt(1,20), ans=a+b; return mcq(`What is ${a} + ${b}?`, [String(ans),String(ans+1),String(ans-1),String(ans+2)], String(ans));},
-      Subtraction: ()=>{const a=randomInt(6,20), b=randomInt(1,5), ans=a-b; return mcq(`What is ${a} - ${b}?`, [String(ans),String(ans+1),String(ans-1),String(ans+2)], String(ans));},
-      Shapes: ()=>choose([['Which shape has 3 sides?',['Triangle','Circle','Square','Oval'],'Triangle'],['Which shape is round?',['Circle','Rectangle','Triangle','Square'],'Circle'],['Which shape has 4 equal sides?',['Square','Triangle','Oval','Circle'],'Square']]),
-      Patterns: ()=>choose([['What comes next? Red, Blue, Red, Blue, ...',['Red','Blue','Green','Yellow'],'Red'],['What comes next? 2, 4, 6, 8, ...',['10','9','12','7'],'10'],['What comes next? ⭐ 🌙 ⭐ 🌙 ...',['⭐','🌙','☁️','☀️'],'⭐']]),
-      Time: ()=>choose([['Which one happens in the morning?',['Breakfast','Dinner','Sleeping','Bath at night'],'Breakfast'],['Which hand tells the hour?',['Short hand','Long hand','Blue hand','Tiny dot'],'Short hand'],['How many hours are in one day?',['24','10','7','12'],'24']]),
-      Money: ()=>choose([['Which one is money?',['Coin','Stone','Leaf','Spoon'],'Coin'],['Two coins are how many items?',['2','1','3','4'],'2'],['What do we use money for?',['To buy things','To sleep','To jump','To sing'],'To buy things']]),
-      'Word Problems': ()=>{const a=randomInt(1,8), b=randomInt(1,8), ans=a+b; return mcq(`Mia has ${a} apples. She gets ${b} more. How many apples does she have now?`, [String(ans),String(ans+1),String(ans-1),String(ans+2)], String(ans));}
+      Counting: ()=>{const n=randomInt(1,199); return mcq(`What number comes after ${n}?`, [String(n+1),String(n-1),String(n+2),String(n+3)], String(n+1));},
+      Addition: ()=>{const a=randomInt(1,40), b=randomInt(1,30), ans=a+b; return mcq(`What is ${a} + ${b}?`, [String(ans),String(ans+1),String(ans-1),String(ans+2)], String(ans));},
+      Subtraction: ()=>{const a=randomInt(10,50), b=randomInt(1,9), ans=a-b; return mcq(`What is ${a} - ${b}?`, [String(ans),String(ans+1),String(ans-1),String(ans+2)], String(ans));},
+      Shapes: ()=>choose([['Which shape has 3 sides?',['Triangle','Circle','Square','Oval'],'Triangle'],['Which shape is round?',['Circle','Rectangle','Triangle','Square'],'Circle'],['Which shape has 4 equal sides?',['Square','Triangle','Oval','Circle'],'Square'],['Which shape has 4 long sides?',['Rectangle','Circle','Triangle','Star'],'Rectangle']]),
+      Patterns: ()=>choose([['What comes next? Red, Blue, Red, Blue, ...',['Red','Blue','Green','Yellow'],'Red'],['What comes next? 2, 4, 6, 8, ...',['10','9','12','7'],'10'],['What comes next? ⭐ 🌙 ⭐ 🌙 ...',['⭐','🌙','☁️','☀️'],'⭐'],['What comes next? 5, 10, 15, ...',['20','18','16','14'],'20']]),
+      Time: ()=>choose([['Which one happens in the morning?',['Breakfast','Dinner','Sleeping','Bath at night'],'Breakfast'],['Which hand tells the hour?',['Short hand','Long hand','Blue hand','Tiny dot'],'Short hand'],['How many hours are in one day?',['24','10','7','12'],'24'],['What do we do at bedtime?',['Sleep','Eat lunch','Go to school','Swim'],'Sleep']]),
+      Money: ()=>choose([['Which one is money?',['Coin','Stone','Leaf','Spoon'],'Coin'],['Two coins are how many items?',['2','1','3','4'],'2'],['What do we use money for?',['To buy things','To sleep','To jump','To sing'],'To buy things'],['Which one is a bill?',['Paper money','Banana','Rock','Book'],'Paper money']]),
+      'Word Problems': ()=>{const a=randomInt(1,12), b=randomInt(1,12), ans=a+b; return mcq(`Skyla has ${a} apples. She gets ${b} more. How many apples does she have now?`, [String(ans),String(ans+1),String(ans-1),String(ans+2)], String(ans));}
     },
     reading: {
       Alphabet: ()=>{const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'; const i=randomInt(0,24); return mcq(`Which letter comes after ${letters[i]}?`, [letters[i+1],letters[i],letters[i+2]||'Z',letters[Math.max(0,i-1)]], letters[i+1]);},
-      'Beginning Sounds': ()=>choose([['Which word starts with /b/?',['ball','sun','cat','pig'],'ball'],['Which word starts with /m/?',['moon','dog','fish','hat'],'moon'],['Which word starts with /t/?',['top','leg','van','pen'],'top']]),
-      'Ending Sounds': ()=>choose([['Which word ends with /g/?',['pig','sun','hat','bed'],'pig'],['Which word ends with /t/?',['cat','jam','log','bee'],'cat'],['Which word ends with /n/?',['sun','cup','dog','fish'],'sun']]),
-      Rhyming: ()=>choose([['Which word rhymes with cat?',['hat','dog','sun','pen'],'hat'],['Which word rhymes with bee?',['tree','cup','bag','top'],'tree'],['Which word rhymes with log?',['frog','leaf','car','bed'],'frog']]),
-      'Sight Words': ()=>choose([['Pick the sight word "the".',['the','tho','tha','thi'],'the'],['Pick the sight word "and".',['and','end','ant','add'],'and'],['Pick the sight word "was".',['was','saw','wax','has'],'was']]),
-      'Short Stories': ()=>choose([['Sam has a red ball. What color is Sam’s ball?',['Red','Blue','Green','Yellow'],'Red'],['Lia sees a dog. What animal does Lia see?',['Dog','Cat','Fish','Bird'],'Dog'],['Ben eats a banana. What does Ben eat?',['Banana','Apple','Cake','Rice'],'Banana']])
+      'Beginning Sounds': ()=>choose([['Which word starts with /b/?',['ball','sun','cat','pig'],'ball'],['Which word starts with /m/?',['moon','dog','fish','hat'],'moon'],['Which word starts with /t/?',['top','leg','van','pen'],'top'],['Which word starts with /s/?',['sun','bag','dog','cap'],'sun']]),
+      'Ending Sounds': ()=>choose([['Which word ends with /g/?',['pig','sun','hat','bed'],'pig'],['Which word ends with /t/?',['cat','jam','log','bee'],'cat'],['Which word ends with /n/?',['sun','cup','dog','fish'],'sun'],['Which word ends with /p/?',['cup','dog','tree','bee'],'cup']]),
+      Rhyming: ()=>choose([['Which word rhymes with cat?',['hat','dog','sun','pen'],'hat'],['Which word rhymes with bee?',['tree','cup','bag','top'],'tree'],['Which word rhymes with log?',['frog','leaf','car','bed'],'frog'],['Which word rhymes with sun?',['fun','book','pen','red'],'fun']]),
+      'Sight Words': ()=>choose([['Pick the sight word "the".',['the','tho','tha','thi'],'the'],['Pick the sight word "and".',['and','end','ant','add'],'and'],['Pick the sight word "was".',['was','saw','wax','has'],'was'],['Pick the sight word "you".',['you','yap','yum','yet'],'you']]),
+      'Short Stories': ()=>choose([['Sam has a red ball. What color is Sam’s ball?',['Red','Blue','Green','Yellow'],'Red'],['Lia sees a dog. What animal does Lia see?',['Dog','Cat','Fish','Bird'],'Dog'],['Ben eats a banana. What does Ben eat?',['Banana','Apple','Cake','Rice'],'Banana'],['Ana wears a hat. What does Ana wear?',['Hat','Shoes','Coat','Bag'],'Hat']])
     },
     writing: {
-      'Letter Tracing': ()=>choose([['Which one is a letter?',['A','1','?','7'],'A'],['Which letter can you trace?',['B','%','3','!'],'B'],['Pick the letter C.',['C','G','O','Q'],'C']]),
-      'Word Building': ()=>choose([['Which letters make "cat"?',['c a t','t a p','b e d','s u n'],'c a t'],['Which letters make "sun"?',['s u n','s i t','c u p','b o x'],'s u n'],['Which letters make "dog"?',['d o g','d i g','l o g','f o x'],'d o g']]),
-      'Sentence Building': ()=>choose([['Which is a full sentence?',['I like cats.','cat blue','run fast dog','apple the'],'I like cats.'],['Which sentence starts with a capital letter?',['She is happy.','she is happy.','happy she is.','is she happy'],'She is happy.'],['Which sentence ends with a period?',['We play.','we play','Play we','ball'],'We play.']]),
-      Punctuation: ()=>choose([['What goes at the end of a sentence?',['.','A','7','/'],'.'],['Which one is a question mark?',['?','!','.',','],'?'],['Which one is an exclamation mark?',['!','?','.',':'],'!']]),
-      'Capital Letters': ()=>choose([['Which word starts with a capital letter?',['Apple','apple','aPPle','applE'],'Apple'],['Which is correct?',['My name is Ana.','my name is Ana.','my Name is ana.','My name is ana'],'My name is Ana.'],['Which letter is uppercase?',['B','b','p','d'],'B']])
+      'Letter Tracing': ()=>choose([['Which one is a letter?',['A','1','?','7'],'A'],['Which letter can you trace?',['B','%','3','!'],'B'],['Pick the letter C.',['C','G','O','Q'],'C'],['Pick the letter M.',['M','W','N','H'],'M']]),
+      'Word Building': ()=>choose([['Which letters make "cat"?',['c a t','t a p','b e d','s u n'],'c a t'],['Which letters make "sun"?',['s u n','s i t','c u p','b o x'],'s u n'],['Which letters make "dog"?',['d o g','d i g','l o g','f o x'],'d o g'],['Which letters make "hat"?',['h a t','h e n','c a n','p e n'],'h a t']]),
+      'Sentence Building': ()=>choose([['Which is a full sentence?',['I like cats.','cat blue','run fast dog','apple the'],'I like cats.'],['Which sentence starts with a capital letter?',['She is happy.','she is happy.','happy she is.','is she happy'],'She is happy.'],['Which sentence ends with a period?',['We play.','we play','Play we','ball'],'We play.'],['Which is correct?',['I see a bird.','i see bird','bird see i','see a bird'],'I see a bird.']]),
+      Punctuation: ()=>choose([['What goes at the end of a sentence?',['.','A','7','/'],'.'],['Which one is a question mark?',['?','!','.',','],'?'],['Which one is an exclamation mark?',['!','?','.',':'],'!'],['Which is a comma?',[',','.','!','?'],',']]),
+      'Capital Letters': ()=>choose([['Which word starts with a capital letter?',['Apple','apple','aPPle','applE'],'Apple'],['Which is correct?',['My name is Ana.','my name is Ana.','my Name is ana.','My name is ana'],'My name is Ana.'],['Which letter is uppercase?',['B','b','p','d'],'B'],['Which name starts right?',['Skyla','skyla','sKYLA','skyla'],'Skyla']])
     },
     spelling: {
-      'CVC Words': ()=>choose([['Which is a CVC word?',['cat','tree','plane','green'],'cat'],['Which is a CVC word?',['dog','train','apple','light'],'dog'],['Which is a CVC word?',['sun','bread','cloud','chair'],'sun']]),
-      'Missing Letters': ()=>choose([['Fill in: c _ t',['a','o','u','e'],'a'],['Fill in: d _ g',['o','a','u','e'],'o'],['Fill in: s _ n',['u','a','o','e'],'u']]),
-      'Animal Words': ()=>choose([['Which word is an animal?',['tiger','table','spoon','window'],'tiger'],['Which word is an animal?',['rabbit','pencil','bed','book'],'rabbit'],['Which word is an animal?',['zebra','chair','plate','shoe'],'zebra']]),
-      'Color Words': ()=>choose([['Which word is a color?',['blue','chair','bread','apple'],'blue'],['Which word is a color?',['green','table','spoon','cloud'],'green'],['Which word is a color?',['yellow','window','pillow','paper'],'yellow']]),
-      'Family Words': ()=>choose([['Who is part of a family?',['mother','robot','tree','car'],'mother'],['Who is part of a family?',['brother','apple','cup','book'],'brother'],['Who is part of a family?',['sister','lamp','door','sock'],'sister']])
+      'CVC Words': ()=>choose([['Which is a CVC word?',['cat','tree','plane','green'],'cat'],['Which is a CVC word?',['dog','train','apple','light'],'dog'],['Which is a CVC word?',['sun','bread','cloud','chair'],'sun'],['Which is a CVC word?',['pig','spoon','flower','tiger'],'pig']]),
+      'Missing Letters': ()=>choose([['Fill in: c _ t',['a','o','u','e'],'a'],['Fill in: d _ g',['o','a','u','e'],'o'],['Fill in: s _ n',['u','a','o','e'],'u'],['Fill in: h _ t',['a','o','u','e'],'a']]),
+      'Animal Words': ()=>choose([['Which word is an animal?',['tiger','table','spoon','window'],'tiger'],['Which word is an animal?',['rabbit','pencil','bed','book'],'rabbit'],['Which word is an animal?',['zebra','chair','plate','shoe'],'zebra'],['Which word is an animal?',['monkey','book','cup','bag'],'monkey']]),
+      'Color Words': ()=>choose([['Which word is a color?',['blue','chair','bread','apple'],'blue'],['Which word is a color?',['green','table','spoon','cloud'],'green'],['Which word is a color?',['yellow','window','pillow','paper'],'yellow'],['Which word is a color?',['purple','banana','sock','garden'],'purple']]),
+      'Family Words': ()=>choose([['Who is part of a family?',['mother','robot','tree','car'],'mother'],['Who is part of a family?',['brother','apple','cup','book'],'brother'],['Who is part of a family?',['sister','lamp','door','sock'],'sister'],['Who is part of a family?',['father','clock','banana','leaf'],'father']])
     },
     science: {
-      Animals: ()=>choose([['Which one is a mammal?',['Dog','Fish','Lizard','Snake'],'Dog'],['Which animal can fly?',['Bird','Cow','Dog','Cat'],'Bird'],['Which animal lives in water?',['Fish','Lion','Horse','Ant'],'Fish']]),
-      Plants: ()=>choose([['What helps a plant grow?',['Water','Toy','Spoon','Pillow'],'Water'],['Which part is green on many plants?',['Leaf','Wheel','Box','Clock'],'Leaf'],['Plants grow from a...',['Seed','Shoe','Cloud','Chair'],'Seed']]),
-      Weather: ()=>choose([['What falls from clouds?',['Rain','Shoes','Apples','Books'],'Rain'],['What gives us light in the day?',['Sun','Moon','Bed','Tree'],'Sun'],['Which weather can be very windy?',['Storm','Soup','Toy','Song'],'Storm']]),
-      'Body Parts': ()=>choose([['What do you use to see?',['Eyes','Toes','Knees','Elbows'],'Eyes'],['What do you use to hear?',['Ears','Hands','Feet','Teeth'],'Ears'],['What do you use to walk?',['Legs','Hair','Nose','Tongue'],'Legs']]),
-      'Five Senses': ()=>choose([['Which sense uses the nose?',['Smell','Taste','Touch','See'],'Smell'],['Which sense uses the tongue?',['Taste','Hear','See','Smell'],'Taste'],['Which sense uses the skin?',['Touch','Hear','See','Taste'],'Touch']]),
-      'Solar System': ()=>choose([['What do we live on?',['Earth','Mars','Sun','Moon'],'Earth'],['What shines in the sky during the day?',['Sun','Star fish','Rock','Cloud'],'Sun'],['What goes around Earth?',['Moon','Bus','Chair','Tree'],'Moon']])
+      Animals: ()=>choose([['Which one is a mammal?',['Dog','Fish','Lizard','Snake'],'Dog'],['Which animal can fly?',['Bird','Cow','Dog','Cat'],'Bird'],['Which animal lives in water?',['Fish','Lion','Horse','Ant'],'Fish'],['Which animal says moo?',['Cow','Duck','Bee','Cat'],'Cow']]),
+      Plants: ()=>choose([['What helps a plant grow?',['Water','Toy','Spoon','Pillow'],'Water'],['Which part is green on many plants?',['Leaf','Wheel','Box','Clock'],'Leaf'],['Plants grow from a...',['Seed','Shoe','Cloud','Chair'],'Seed'],['What grows on a tree?',['Leaf','Book','Spoon','Toy'],'Leaf']]),
+      Weather: ()=>choose([['What falls from clouds?',['Rain','Shoes','Apples','Books'],'Rain'],['What gives us light in the day?',['Sun','Moon','Bed','Tree'],'Sun'],['Which weather can be very windy?',['Storm','Soup','Toy','Song'],'Storm'],['What do we use on a rainy day?',['Umbrella','Pillow','Spoon','Brush'],'Umbrella']]),
+      'Body Parts': ()=>choose([['What do you use to see?',['Eyes','Toes','Knees','Elbows'],'Eyes'],['What do you use to hear?',['Ears','Hands','Feet','Teeth'],'Ears'],['What do you use to walk?',['Legs','Hair','Nose','Tongue'],'Legs'],['What helps you smell?',['Nose','Foot','Ear','Arm'],'Nose']]),
+      'Five Senses': ()=>choose([['Which sense uses the nose?',['Smell','Taste','Touch','See'],'Smell'],['Which sense uses the tongue?',['Taste','Hear','See','Smell'],'Taste'],['Which sense uses the skin?',['Touch','Hear','See','Taste'],'Touch'],['Which sense uses the eyes?',['See','Taste','Smell','Touch'],'See']]),
+      'Solar System': ()=>choose([['What do we live on?',['Earth','Mars','Sun','Moon'],'Earth'],['What shines in the sky during the day?',['Sun','Star fish','Rock','Cloud'],'Sun'],['What goes around Earth?',['Moon','Bus','Chair','Tree'],'Moon'],['What do we see at night?',['Moon','Bus','Spoon','Shoe'],'Moon']])
     },
     logic: {
-      'Odd One Out': ()=>choose([['Which one does not belong?',['Banana','Apple','Car','Orange'],'Car'],['Which one does not belong?',['Dog','Cat','Fish','Chair'],'Chair'],['Which one does not belong?',['Circle','Square','Triangle','Cookie'],'Cookie']]),
-      Sorting: ()=>choose([['Which one belongs with fruits?',['Apple','Shoe','Book','Pencil'],'Apple'],['Which one belongs with school items?',['Book','Banana','Pillow','Fish'],'Book'],['Which one belongs with animals?',['Lion','Cup','Door','Clock'],'Lion']]),
-      'Memory Match': ()=>choose([['Which matches day and night?',['Sun and Moon','Cup and Spoon','Hat and Shoe','Pen and Box'],'Sun and Moon'],['Which matches foot and shoe?',['Foot and Shoe','Fish and Tree','Book and Spoon','Bag and Plate'],'Foot and Shoe'],['Which matches bird and nest?',['Bird and Nest','Dog and Cloud','Leaf and Chair','Moon and Bed'],'Bird and Nest']]),
-      'What Comes Next': ()=>choose([['What comes next? 1, 2, 3, ...',['4','5','2','6'],'4'],['What comes next? A, B, C, ...',['D','E','F','G'],'D'],['What comes next? Small, Medium, ...',['Large','Tiny','Blue','Round'],'Large']]),
-      'Compare Sizes': ()=>choose([['Which is bigger?',['Elephant','Ant','Bee','Mouse'],'Elephant'],['Which is smaller?',['Ant','Dog','Cow','Horse'],'Ant'],['Which is taller?',['Giraffe','Cat','Duck','Rat'],'Giraffe']])
+      'Odd One Out': ()=>choose([['Which one does not belong?',['Banana','Apple','Car','Orange'],'Car'],['Which one does not belong?',['Dog','Cat','Fish','Chair'],'Chair'],['Which one does not belong?',['Circle','Square','Triangle','Cookie'],'Cookie'],['Which one does not belong?',['Spoon','Fork','Plate','Lion'],'Lion']]),
+      Sorting: ()=>choose([['Which one belongs with fruits?',['Apple','Shoe','Book','Pencil'],'Apple'],['Which one belongs with school items?',['Book','Banana','Pillow','Fish'],'Book'],['Which one belongs with animals?',['Lion','Cup','Door','Clock'],'Lion'],['Which one belongs in the kitchen?',['Spoon','Hat','Truck','Leaf'],'Spoon']]),
+      'Memory Match': ()=>choose([['Which matches day and night?',['Sun and Moon','Cup and Spoon','Hat and Shoe','Pen and Box'],'Sun and Moon'],['Which matches foot and shoe?',['Foot and Shoe','Fish and Tree','Book and Spoon','Bag and Plate'],'Foot and Shoe'],['Which matches bird and nest?',['Bird and Nest','Dog and Cloud','Leaf and Chair','Moon and Bed'],'Bird and Nest'],['Which matches fish and water?',['Fish and Water','Cat and Sky','Book and Milk','Hat and Door'],'Fish and Water']]),
+      'What Comes Next': ()=>choose([['What comes next? 1, 2, 3, ...',['4','5','2','6'],'4'],['What comes next? A, B, C, ...',['D','E','F','G'],'D'],['What comes next? Small, Medium, ...',['Large','Tiny','Blue','Round'],'Large'],['What comes next? Monday, Tuesday, ...',['Wednesday','Friday','Sunday','Night'],'Wednesday']]),
+      'Compare Sizes': ()=>choose([['Which is bigger?',['Elephant','Ant','Bee','Mouse'],'Elephant'],['Which is smaller?',['Ant','Dog','Cow','Horse'],'Ant'],['Which is taller?',['Giraffe','Cat','Duck','Rat'],'Giraffe'],['Which is shorter?',['Pencil','Tree','House','Bus'],'Pencil']])
     },
     art: {
-      Colors: ()=>choose([['Which one is the color red?',['Red','Blue','Green','Black'],'Red'],['Which color is the sun often drawn as?',['Yellow','Purple','Brown','Gray'],'Yellow'],['What color are many leaves?',['Green','Pink','Black','Silver'],'Green']]),
-      'Shape Art': ()=>choose([['Which shape can make a house roof?',['Triangle','Circle','Oval','Star'],'Triangle'],['Which shape can make wheels?',['Circle','Square','Rectangle','Triangle'],'Circle'],['Which shape can make a window?',['Square','Oval','Star','Heart'],'Square']]),
-      'Draw This': ()=>choose([['What would you draw in the sky?',['Cloud','Shoe','Chair','Fork'],'Cloud'],['What would you draw in the ocean?',['Fish','Bed','Clock','Bag'],'Fish'],['What would you draw in a garden?',['Flower','Laptop','Plate','Socks'],'Flower']]),
-      'Color Match': ()=>choose([['What color matches grass?',['Green','Purple','Gray','Pink'],'Green'],['What color matches the sky?',['Blue','Brown','Orange','Black'],'Blue'],['What color matches a banana?',['Yellow','Red','Gray','Purple'],'Yellow']])
+      Colors: ()=>choose([['Which one is the color red?',['Red','Blue','Green','Black'],'Red'],['Which color is the sun often drawn as?',['Yellow','Purple','Brown','Gray'],'Yellow'],['What color are many leaves?',['Green','Pink','Black','Silver'],'Green'],['What color is the sky?',['Blue','Brown','Gray','Orange'],'Blue']]),
+      'Shape Art': ()=>choose([['Which shape can make a house roof?',['Triangle','Circle','Oval','Star'],'Triangle'],['Which shape can make wheels?',['Circle','Square','Rectangle','Triangle'],'Circle'],['Which shape can make a window?',['Square','Oval','Star','Heart'],'Square'],['Which shape can make a ball?',['Circle','Rectangle','Triangle','Square'],'Circle']]),
+      'Draw This': ()=>choose([['What would you draw in the sky?',['Cloud','Shoe','Chair','Fork'],'Cloud'],['What would you draw in the ocean?',['Fish','Bed','Clock','Bag'],'Fish'],['What would you draw in a garden?',['Flower','Laptop','Plate','Socks'],'Flower'],['What would you draw at night?',['Moon','Spoon','Apple','Chair'],'Moon']]),
+      'Color Match': ()=>choose([['What color matches grass?',['Green','Purple','Gray','Pink'],'Green'],['What color matches the sky?',['Blue','Brown','Orange','Black'],'Blue'],['What color matches a banana?',['Yellow','Red','Gray','Purple'],'Yellow'],['What color matches a strawberry?',['Red','Blue','Black','White'],'Red']])
     },
     music: {
-      Instruments: ()=>choose([['Which one is an instrument?',['Drum','Chair','Apple','Sock'],'Drum'],['Which one can you strum?',['Guitar','Book','Ball','Cup'],'Guitar'],['Which one has piano keys?',['Piano','Window','Truck','Table'],'Piano']]),
-      'Loud or Soft': ()=>choose([['A whisper is...',['Soft','Loud','Fast','Round'],'Soft'],['A lion roar is...',['Loud','Soft','Tiny','Slow'],'Loud'],['Clapping very hard is...',['Loud','Soft','Wet','Cold'],'Loud']]),
-      'Fast or Slow': ()=>choose([['A lullaby is usually...',['Slow','Fast','Heavy','Long'],'Slow'],['Running music can be...',['Fast','Slow','Tiny','Square'],'Fast'],['A turtle beat may feel...',['Slow','Fast','Red','Tall'],'Slow']]),
-      'Sound Match': ()=>choose([['Which animal says moo?',['Cow','Dog','Cat','Duck'],'Cow'],['Which animal says quack?',['Duck','Sheep','Horse','Bee'],'Duck'],['Which animal says meow?',['Cat','Cow','Pig','Lion'],'Cat']])
+      Instruments: ()=>choose([['Which one is an instrument?',['Drum','Chair','Apple','Sock'],'Drum'],['Which one can you strum?',['Guitar','Book','Ball','Cup'],'Guitar'],['Which one has piano keys?',['Piano','Window','Truck','Table'],'Piano'],['Which one can you shake?',['Maracas','Book','Pillow','Spoon'],'Maracas']]),
+      'Loud or Soft': ()=>choose([['A whisper is...',['Soft','Loud','Fast','Round'],'Soft'],['A lion roar is...',['Loud','Soft','Tiny','Slow'],'Loud'],['Clapping very hard is...',['Loud','Soft','Wet','Cold'],'Loud'],['A lullaby voice is...',['Soft','Loud','Sharp','Huge'],'Soft']]),
+      'Fast or Slow': ()=>choose([['A lullaby is usually...',['Slow','Fast','Heavy','Long'],'Slow'],['Running music can be...',['Fast','Slow','Tiny','Square'],'Fast'],['A turtle beat may feel...',['Slow','Fast','Red','Tall'],'Slow'],['A race song can sound...',['Fast','Slow','Round','Tiny'],'Fast']]),
+      'Sound Match': ()=>choose([['Which animal says moo?',['Cow','Dog','Cat','Duck'],'Cow'],['Which animal says quack?',['Duck','Sheep','Horse','Bee'],'Duck'],['Which animal says meow?',['Cat','Cow','Pig','Lion'],'Cat'],['Which animal says baa?',['Sheep','Dog','Duck','Bee'],'Sheep']])
     },
     social: {
-      Feelings: ()=>choose([['When you smile, you may feel...',['Happy','Sleepy','Broken','Square'],'Happy'],['When you lose a toy, you may feel...',['Sad','Round','Purple','Tall'],'Sad'],['When something is scary, you may feel...',['Afraid','Hungry only','Long','Bouncy'],'Afraid']]),
-      'Kind Words': ()=>choose([['Which is a kind word?',['Please','Go away!','Mine only!','No!'],'Please'],['What do you say when someone helps you?',['Thank you','Bye tree','Jump now','Nothing'],'Thank you'],['What do you say when you bump someone?',['Sorry','Ha ha','Move!','Later'],'Sorry']]),
-      Safety: ()=>choose([['What do you do before crossing the road?',['Look both ways','Run fast','Close eyes','Jump'],'Look both ways'],['What should you wear on a bike?',['Helmet','Pillow','Slippers only','Blanket'],'Helmet'],['Who can help in an emergency?',['A trusted adult','A toy','A shoe','A cloud'],'A trusted adult']]),
-      'Healthy Habits': ()=>choose([['What helps keep teeth clean?',['Brushing teeth','Eating candy','Skipping water','No sleep'],'Brushing teeth'],['What helps your body grow strong?',['Healthy food','Only soda','No sleep','No water'],'Healthy food'],['What should you do at night?',['Sleep','Jump all night','Skip rest','Run outside'],'Sleep']])
+      Feelings: ()=>choose([['When you smile, you may feel...',['Happy','Sleepy','Broken','Square'],'Happy'],['When you lose a toy, you may feel...',['Sad','Round','Purple','Tall'],'Sad'],['When something is scary, you may feel...',['Afraid','Hungry only','Long','Bouncy'],'Afraid'],['When you get a gift, you may feel...',['Happy','Wet','Square','Tiny'],'Happy']]),
+      'Kind Words': ()=>choose([['Which is a kind word?',['Please','Go away!','Mine only!','No!'],'Please'],['What do you say when someone helps you?',['Thank you','Bye tree','Jump now','Nothing'],'Thank you'],['What do you say when you bump someone?',['Sorry','Ha ha','Move!','Later'],'Sorry'],['What do you say before asking?',['Please','Now!','Mine!','Stop!'],'Please']]),
+      Safety: ()=>choose([['What do you do before crossing the road?',['Look both ways','Run fast','Close eyes','Jump'],'Look both ways'],['What should you wear on a bike?',['Helmet','Pillow','Slippers only','Blanket'],'Helmet'],['Who can help in an emergency?',['A trusted adult','A toy','A shoe','A cloud'],'A trusted adult'],['What should you do with hot things?',['Ask an adult','Touch fast','Kick it','Throw it'],'Ask an adult']]),
+      'Healthy Habits': ()=>choose([['What helps keep teeth clean?',['Brushing teeth','Eating candy','Skipping water','No sleep'],'Brushing teeth'],['What helps your body grow strong?',['Healthy food','Only soda','No sleep','No water'],'Healthy food'],['What should you do at night?',['Sleep','Jump all night','Skip rest','Run outside'],'Sleep'],['What should you drink often?',['Water','Paint','Sand','Soap'],'Water']])
     },
     geography: {
-      'Land and Water': ()=>choose([['Which one is water?',['River','Road','House','Tree'],'River'],['Which one is land?',['Mountain','Fish','Boat','Rain'],'Mountain'],['Where does a boat go?',['Water','Road','Bed','Roof'],'Water']]),
-      'My Home': ()=>choose([['Where do you sleep?',['Bedroom','Kitchen sink','Garden only','Driveway'],'Bedroom'],['Where do you cook food?',['Kitchen','Bathroom','Roof','Closet'],'Kitchen'],['Where do you wash your hands?',['Bathroom','Bed','Garage','Tree'],'Bathroom']]),
-      Helpers: ()=>choose([['Who helps put out fires?',['Firefighter','Chef','Pilot','Painter'],'Firefighter'],['Who helps when you are sick?',['Doctor','Singer','Driver','Tailor'],'Doctor'],['Who teaches in school?',['Teacher','Fish','Farmer','Cloud'],'Teacher']]),
-      Places: ()=>choose([['Where do you borrow books?',['Library','Zoo cage','Kitchen','Bus stop'],'Library'],['Where do you buy food?',['Market','Bedroom','Garage','Playground'],'Market'],['Where do animals live for people to visit?',['Zoo','Bakery','Classroom','Office'],'Zoo']]),
-      Directions: ()=>choose([['Which way is up?',['↑','↓','←','→'],'↑'],['Which way is left?',['←','→','↑','↓'],'←'],['Which way is right?',['→','←','↑','↓'],'→']])
+      'Land and Water': ()=>choose([['Which one is water?',['River','Road','House','Tree'],'River'],['Which one is land?',['Mountain','Fish','Boat','Rain'],'Mountain'],['Where does a boat go?',['Water','Road','Bed','Roof'],'Water'],['Which is a body of water?',['Lake','Chair','Bus','Shoe'],'Lake']]),
+      'My Home': ()=>choose([['Where do you sleep?',['Bedroom','Kitchen sink','Garden only','Driveway'],'Bedroom'],['Where do you cook food?',['Kitchen','Bathroom','Roof','Closet'],'Kitchen'],['Where do you wash your hands?',['Bathroom','Bed','Garage','Tree'],'Bathroom'],['Where do you eat meals?',['Dining area','Roof','Closet','Garden'],'Dining area']]),
+      Helpers: ()=>choose([['Who helps put out fires?',['Firefighter','Chef','Pilot','Painter'],'Firefighter'],['Who helps when you are sick?',['Doctor','Singer','Driver','Tailor'],'Doctor'],['Who teaches in school?',['Teacher','Fish','Farmer','Cloud'],'Teacher'],['Who helps keep peace?',['Police officer','Banana','Painter','Rabbit'],'Police officer']]),
+      Places: ()=>choose([['Where do you borrow books?',['Library','Zoo cage','Kitchen','Bus stop'],'Library'],['Where do you buy food?',['Market','Bedroom','Garage','Playground'],'Market'],['Where do animals live for people to visit?',['Zoo','Bakery','Classroom','Office'],'Zoo'],['Where do children learn?',['School','Garage','Pond','Cave'],'School']]),
+      Directions: ()=>choose([['Which way is up?',['↑','↓','←','→'],'↑'],['Which way is left?',['←','→','↑','↓'],'←'],['Which way is right?',['→','←','↑','↓'],'→'],['Which way is down?',['↓','↑','←','→'],'↓']])
     }
   };
   return banks[subjectId][topic]();
 }
-let currentQ = null;
-function startLesson(subjectId, topic, fromDay=null){
-  state.currentSubject = subjects.find(s=>s.id===subjectId);
+
+function startLesson(topic){
   state.currentTopic = topic;
   state.questionIndex = 0;
-  document.getElementById('lessonArea').classList.remove('hidden');
-  document.getElementById('feedback').textContent = '';
-  document.getElementById('lessonMeta').textContent = `${state.currentSubject.emoji} ${state.currentSubject.title} • ${topic} • 12 questions`;
+  document.getElementById('worksheetBox').classList.add('hidden');
+  document.getElementById('lessonMeta').textContent = `${getSubject().emoji} ${getSubject().title} • Day ${state.currentDay} • ${topic}`;
   nextQuestion(false);
-  if(fromDay) state.activeDay = fromDay;
-  renderDays();
-  scrollToId('lessonArea');
+}
+function skipQuestion(){
+  nextQuestion();
 }
 function nextQuestion(increment=true){
   if(increment) state.questionIndex++;
-  if(state.questionIndex >= state.totalInLesson){ finishLesson(); return; }
-  currentQ = makeQuestion(state.currentSubject.id, state.currentTopic);
+  if(state.questionIndex >= state.totalQuestions){
+    finishLesson();
+    return;
+  }
+  currentQ = makeQuestion(state.currentSubject, state.currentTopic);
   document.getElementById('questionText').textContent = currentQ.question;
-  document.getElementById('answersBox').innerHTML = currentQ.options.map(opt=>`<div class="answer" onclick="checkAnswer(this, '${String(opt).replace(/'/g, "\'")}')">${opt}</div>`).join('');
+  document.getElementById('answersBox').innerHTML = currentQ.options.map(opt=>`<div class="answer" onclick="checkAnswer(this, '${String(opt).replace(/'/g, "\\'")}')">${opt}</div>`).join('');
   document.getElementById('feedback').textContent = '';
-  document.getElementById('lessonBar').style.width = `${(state.questionIndex/state.totalInLesson)*100}%`;
+  document.getElementById('lessonBar').style.width = `${(state.questionIndex/state.totalQuestions)*100}%`;
   readQuestion();
 }
 function checkAnswer(el, choice){
   const correct = String(choice) === String(currentQ.answer);
-  document.querySelectorAll('.answer').forEach(a=>a.style.pointerEvents='none');
+  document.querySelectorAll('.answer').forEach(a=>{
+    a.style.pointerEvents='none';
+    a.style.opacity='0.96';
+  });
   if(correct){
-    el.style.outline='4px solid #7ed957';
+    el.style.outline='4px solid #7fdc6c';
     state.stars += 1;
     document.getElementById('feedback').textContent = 'Great job! ⭐';
+    speak(praiseText(), 1.0);
   } else {
-    el.style.outline='4px solid #ff7b7b';
+    el.style.outline='4px solid #ff7f7f';
     const good = [...document.querySelectorAll('.answer')].find(a=>a.textContent===String(currentQ.answer));
-    if(good) good.style.outline='4px solid #7ed957';
+    if(good) good.style.outline='4px solid #7fdc6c';
     document.getElementById('feedback').textContent = `Nice try! The answer is ${currentQ.answer}.`;
+    speak(`Nice try! The answer is ${currentQ.answer}.`, 0.96);
   }
-  document.getElementById('starCount').textContent = state.stars;
+  updateCounters();
   saveState();
+  setTimeout(()=>nextQuestion(), 900);
 }
 function finishLesson(){
-  document.getElementById('questionText').textContent = `Awesome work, Aenielle Skyla! You finished ${state.currentTopic}.`;
+  document.getElementById('questionText').textContent = `Amazing, Skyla! You finished Day ${state.currentDay} in ${getSubject().title}.`;
   document.getElementById('answersBox').innerHTML = '';
-  document.getElementById('feedback').textContent = 'You earned more stars and completed a lesson! 🎉';
+  document.getElementById('feedback').textContent = 'Lesson complete! 🎉';
   document.getElementById('lessonBar').style.width = '100%';
-  if(!state.completedDays.includes(state.activeDay)){ state.completedDays.push(state.activeDay); state.completedDays.sort((a,b)=>a-b); }
-  saveState(); renderDays();
+  if(!state.completed[state.currentSubject]) state.completed[state.currentSubject] = [];
+  if(!state.completed[state.currentSubject].includes(state.currentDay)){
+    state.completed[state.currentSubject].push(state.currentDay);
+    state.completed[state.currentSubject].sort((a,b)=>a-b);
+  }
+  updateCounters();
+  saveState();
+  renderSubjectDays();
+  speak("Skyla, you're awesome! Lesson complete!", 1.0);
 }
 function readQuestion(){
-  if(!('speechSynthesis' in window)) return;
-  const text = document.getElementById('questionText').textContent || 'Hello, Aenielle Skyla!';
-  speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.rate = 0.92;
-  speechSynthesis.speak(utter);
+  const text = document.getElementById('questionText').textContent;
+  if(text) speak(text, 0.92);
 }
-function speakGreeting(){
-  if(!('speechSynthesis' in window)) return;
-  speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance('Hello, Aenielle Skyla! Welcome to your learning adventure!');
-  utter.rate = 0.9;
-  speechSynthesis.speak(utter);
+function playRandomTopic(){
+  const subject = getSubject();
+  const t = subject.topics[Math.floor(Math.random()*subject.topics.length)];
+  startLesson(t);
 }
-function showRandomLesson(){
-  const subject = subjects[randomInt(0, subjects.length-1)];
-  const topic = subject.topics[randomInt(0, subject.topics.length-1)];
-  openSubject(subject.id); startLesson(subject.id, topic);
+function getSubject(){
+  return subjects.find(s=>s.id===state.currentSubject);
 }
-function buildWorksheet(subjectId=null, topic=null){
-  const sid = subjectId || state.currentSubject.id;
-  const top = topic || state.currentTopic;
+function buildWorksheet(){
   const lines = [];
-  for(let i=1;i<=15;i++){ const q = makeQuestion(sid, top); lines.push(`<div>${i}. ${q.question} ________________________</div>`); }
-  document.getElementById('worksheetTitle').textContent = `${top} Worksheet for Aenielle Skyla`;
+  for(let i=1;i<=15;i++){
+    const q = makeQuestion(state.currentSubject, state.currentTopic);
+    lines.push(`<div>${i}. ${q.question} _______________________</div>`);
+  }
+  document.getElementById('worksheetTitle').textContent = `${getSubject().title} • ${state.currentTopic} • Day ${state.currentDay}`;
   document.getElementById('worksheetContent').innerHTML = lines.join('');
-  document.getElementById('worksheetArea').classList.remove('hidden');
-  scrollToId('worksheetArea');
+  document.getElementById('worksheetBox').classList.remove('hidden');
 }
-function printWorksheet(){ buildWorksheet(); setTimeout(()=>window.print(), 150); }
-function resetProgress(){
-  if(!confirm('Reset stars and completed days?')) return;
-  state.stars = 0; state.completedDays = []; saveState();
-  document.getElementById('starCount').textContent = '0'; renderDays();
+function printWorksheet(){
+  buildWorksheet();
+  setTimeout(()=>window.print(),150);
 }
-document.getElementById('starCount').textContent = state.stars;
-renderSubjects(); renderDays(); renderTopics(subjects[0]);
+
+renderHomeSubjects();
+updateCounters();
 </script>
 </body>
 </html>
